@@ -1,0 +1,10 @@
+{
+  "name": "janice-divina-realestate",
+  "version": "1.0.0",
+  "description": "Janice Divina Liad — REALTOR® Website | HomeSmart PV & Associates",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve public",
+    "build": "echo 'Static site — no build needed'"
+  }
+}
