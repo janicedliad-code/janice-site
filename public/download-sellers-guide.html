@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Download Your Seller's Guide — Janice Divina Liad</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#FAF6EF;color:#4A3728;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.card{background:#fff;border-radius:20px;padding:48px 40px;max-width:520px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(139,28,42,0.08);}
+.header{background:linear-gradient(135deg,#8B1C2A,#5a1018);border-radius:14px;padding:24px;margin-bottom:28px;}
+.header h1{color:#fff;font-size:22px;font-family:Georgia,serif;margin-bottom:4px;}
+.header p{color:#C9A84C;font-size:13px;}
+.icon{font-size:48px;margin-bottom:16px;}
+h2{font-family:Georgia,serif;color:#8B1C2A;font-size:20px;margin-bottom:10px;}
+p{font-size:14px;line-height:1.7;margin-bottom:16px;color:#4A3728;}
+.download-btn{display:inline-block;background:#8B1C2A;color:#fff;padding:14px 32px;border-radius:10px;font-size:16px;font-weight:700;text-decoration:none;margin:12px 0;transition:all 0.3s;}
+.download-btn:hover{background:#6B1520;transform:translateY(-1px);}
+.contact{background:#FAF6EF;border-radius:12px;padding:18px;margin-top:20px;font-size:13px;color:#8A7060;}
+.contact a{color:#8B1C2A;text-decoration:none;font-weight:600;}
+.gold{color:#C9A84C;font-family:Georgia,serif;font-style:italic;font-size:15px;margin-top:16px;}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid #C9A84C;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.status{font-size:12px;color:#8A7060;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <h1>Your Seller's Guide is Ready!</h1>
+    <p>From Janice Divina Liad, REALTOR®</p>
+  </div>
+  <div class="icon">🏠</div>
+  <h2>Thank you for downloading!</h2>
+  <p>Your free Home Seller's Guide is downloading now. Inside you'll find everything you need to sell your home with confidence.</p>
+  <a href="/sellers-guide.pdf" class="download-btn" id="downloadBtn" download>📥 Download Seller's Guide</a>
+  <p class="status" id="status"><span class="spinner"></span>Tracking your download...</p>
+  <div class="contact">
+    <p><strong>Questions?</strong> I'm here to help!</p>
+    <p>📞 <a href="tel:2093059401">(209) 305-9401</a> · ✉️ <a href="mailto:jdivinare@outlook.com">jdivinare@outlook.com</a></p>
+    <p>🌐 <a href="https://janicedivinarealestate.com">janicedivinarealestate.com</a></p>
+  </div>
+  <p class="gold">Faith · Family · Forward</p>
+</div>
+
+<script>
+var SB_URL="https://sutapxqrjwvxoelemkyf.supabase.co";
+var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+
+// Get email from URL parameter
+var params = new URLSearchParams(window.location.search);
+var email = params.get("email") || "";
+var name = params.get("name") || "";
+
+// Track the download in Supabase
+async function trackDownload() {
+  if (!email) {
+    document.getElementById("status").textContent = "✅ Download ready!";
+    return;
+  }
+  try {
+    // Find the lead by email and update with download timestamp
+    var res = await fetch(SB_URL + "/rest/v1/website_leads?email=eq." + encodeURIComponent(email) + "&order=created_at.desc&limit=1", {
+      headers: {"apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY}
+    });
+    if (res.ok) {
+      var leads = await res.json();
+      if (leads.length > 0) {
+        var leadId = leads[0].id;
+        var currentNotes = leads[0].notes || "";
+        var downloadNote = "📥 Seller's Guide downloaded on " + new Date().toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric", hour:"numeric", minute:"2-digit"});
+        var updatedNotes = currentNotes ? currentNotes + " | " + downloadNote : downloadNote;
+        
+        await fetch(SB_URL + "/rest/v1/website_leads?id=eq." + leadId, {
+          method: "PATCH",
+          headers: {"Content-Type": "application/json", "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY},
+          body: JSON.stringify({notes: updatedNotes})
+        });
+        document.getElementById("status").textContent = "✅ Download tracked!";
+        console.log("Download tracked for:", email);
+      }
+    }
+  } catch(e) {
+    console.log("Track error:", e);
+    document.getElementById("status").textContent = "✅ Download ready!";
+  }
+}
+
+// Auto-start download after short delay
+setTimeout(function() {
+  var link = document.createElement("a");
+  link.href = "/sellers-guide.pdf";
+  link.download = "Janice-Divina-Liad-Sellers-Guide.pdf";
+  link.click();
+}, 1500);
+
+trackDownload();
+</script>
+</body>
+</html>
