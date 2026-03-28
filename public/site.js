@@ -4,22 +4,68 @@ console.log("✅ Janice Site JS loaded");
 var SUPABASE_URL="https://sutapxqrjwvxoelemkyf.supabase.co";
 var SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
 
-function saveLead(data){
-  fetch(SUPABASE_URL+"/rest/v1/website_leads",{
-    method:"POST",
-    headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Prefer":"return=minimal"},
-    body:JSON.stringify(data)
-  }).then(function(res){
-    if(!res.ok)console.error("Supabase error:",res.status);
-    else console.log("Lead saved:",data.source,data.name);
-  }).catch(function(e){console.error("Save failed:",e);});
-  /* Send emails via Edge Function */
+
+/* ── SMART SAVE: Merge leads with same email ── */
+async function saveLead(data){
+  var sourceLabels={buyer_guide:"Buyer's Guide",seller_guide:"Seller's Guide",home_worth:"Home Value Request",buyer_readiness:"Buyer Readiness Tool",consultation:"Book Consultation",contact_form:"Contact Form"};
+  var sourceLabel = sourceLabels[data.source] || data.source;
+  var timestamp = new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+
+  if(data.email){
+    try{
+      var checkRes = await fetch(SUPABASE_URL+"/rest/v1/website_leads?email=eq."+encodeURIComponent(data.email)+"&order=created_at.desc&limit=1",{
+        headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY}
+      });
+      if(checkRes.ok){
+        var existing = await checkRes.json();
+        if(existing.length > 0){
+          var lead = existing[0];
+          var newNote = sourceLabel + " (" + timestamp + ")";
+          var updatedNotes = lead.notes ? lead.notes + " | " + newNote : newNote;
+          var updatedSource = lead.source;
+          if(lead.source !== data.source){ updatedSource = data.source; }
+          var patchData = { notes: updatedNotes, source: updatedSource };
+          if(data.phone && !lead.phone) patchData.phone = data.phone;
+          if(data.address && !lead.address) patchData.address = data.address;
+          if(data.name && !lead.name) patchData.name = data.name;
+          await fetch(SUPABASE_URL+"/rest/v1/website_leads?id=eq."+lead.id,{
+            method:"PATCH",
+            headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},
+            body:JSON.stringify(patchData)
+          });
+          console.log("Lead MERGED:",data.source,data.email);
+          sendEdgeFunctionEmail(data);
+          return;
+        }
+      }
+    }catch(e){console.log("Merge check error:",e);}
+  }
+
+  try{
+    var noteText = sourceLabel + " (" + timestamp + ")";
+    var postData = {
+      name: data.name || "", email: data.email || "", phone: data.phone || "",
+      source: data.source || "other", address: data.address || "",
+      notes: data.notes ? data.notes + " | " + noteText : noteText, status: "new"
+    };
+    var res = await fetch(SUPABASE_URL+"/rest/v1/website_leads",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Prefer":"return=minimal"},
+      body:JSON.stringify(postData)
+    });
+    if(!res.ok) console.error("Supabase error:",res.status);
+    else console.log("Lead CREATED:",data.source,data.name);
+  }catch(e){console.error("Save failed:",e);}
+  sendEdgeFunctionEmail(data);
+}
+
+function sendEdgeFunctionEmail(data){
   fetch(SUPABASE_URL+"/functions/v1/send-lead-email",{
     method:"POST",
     headers:{"Content-Type":"application/json","Authorization":"Bearer "+SUPABASE_KEY},
     body:JSON.stringify(data)
   }).then(function(res){
-    if(res.ok)console.log("Emails sent for:",data.name);
+    if(res.ok) console.log("Emails sent for:",data.name);
     else console.error("Email error:",res.status);
   }).catch(function(e){console.error("Email failed:",e);});
 }
