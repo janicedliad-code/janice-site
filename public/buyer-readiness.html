@@ -144,7 +144,7 @@ function D(){
   return{ti,te,td,net,hp,da,tn,gap,mo,dti,cs,util,uv,checks,rp,rc,rl,p,dn,prin,rate,pi,tax,ins,needsPmi,pmi,tot,totInt,amort,term,nm};
 }
 function harvest(){["name","email","phone","city","reviewName","reviewText"].forEach(k=>{const e=$(k);if(e)S[k]=e.value;});}
-function go(i){harvest();S.tab=i;paint();}
+function go(i){harvest();S.tab=i;paint();if(S.email)saveQuizProgress(false);}
 function numField(label,stateKey,subKey,pre,note,placeholder){
   const id=subKey?stateKey+"_"+subKey:stateKey;const rawVal=subKey?S[stateKey][subKey]:S[stateKey];const displayVal=rawVal?Number((rawVal||"").toString().replace(/,/g,"")).toLocaleString("en-US"):"";
   return '<div class="fld">'+(label?'<label>'+label+'</label>':'')+(note?'<div class="note">'+note+'</div>':'')+'<div class="iw">'+(pre?'<span class="ipre">'+pre+'</span>':'')+'<input type="text" inputmode="decimal" id="'+id+'" value="'+displayVal+'" placeholder="'+(placeholder||"0")+'" autocomplete="off" data-raw="'+(rawVal||"")+'"></div></div>';
@@ -223,14 +223,93 @@ function paint(){
   ["name","email","phone","city","reviewName","reviewText"].forEach(function(k){var e=$(k);if(e)e.addEventListener("input",function(){S[k]=this.value;});});
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function updateLeadScore(){try{if(!S.email)return;fetch("https://sutapxqrjwvxoelemkyf.supabase.co/rest/v1/website_leads?email=eq."+encodeURIComponent(S.email)+"&source=eq.buyer_readiness",{method:"PATCH",headers:{"Content-Type":"application/json","apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c"},body:JSON.stringify({readiness_score:D().rp,notes:"Readiness: "+D().rp+"% | Income: "+fmt(D().ti)+"/mo | Credit: "+(D().cs||"N/A")+" | DTI: "+D().dti.toFixed(1)+"%"})});}catch(e){}}
+/* ── SUPABASE CONFIG ── */
+const SB="https://sutapxqrjwvxoelemkyf.supabase.co";
+const SK="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+const SBH={"Content-Type":"application/json","apikey":SK,"Authorization":"Bearer "+SK};
+
+/* ── SAVE QUIZ PROGRESS (full data + last step) ── */
+async function saveQuizProgress(isComplete){
+  if(!S.email)return;
+  var d=D();
+  var ts=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  var status=isComplete?"Completed":"In Progress (step "+S.tab+"/"+(TABS.length-1)+")";
+  var noteText="Buyer Readiness ("+ts+") — "+status+". First-time: "+(S.firstTime==="yes"?"Yes":"No")+". Type: "+S.homeType+". Timeline: "+S.timeline+" mo."+(d.rp?" Readiness: "+d.rp+"%":"");
+  var payload={
+    name: S.name || "",
+    email: S.email,
+    phone: S.phone || "",
+    source: "buyer_readiness",
+    city: S.city || null,
+    first_time: S.firstTime === "yes",
+    home_type: S.homeType || null,
+    timeline: S.timeline || null,
+    readiness_score: d.rp || null,
+    readiness_label: d.rl || null,
+    monthly_income: d.ti || null,
+    monthly_expenses: d.te || null,
+    monthly_debt: d.td || null,
+    dti_percent: d.dti ? Math.round(d.dti * 10) / 10 : null,
+    credit_score: d.cs || null,
+    credit_utilization_percent: d.util,
+    savings_current: num(S.savings) || null,
+    savings_monthly: num(S.monthly) || null,
+    target_home_price: d.hp || null,
+    down_payment_percent: S.downPct || null,
+    down_payment_amount: d.da || null,
+    total_funds_needed: d.tn || null,
+    funds_gap: d.gap || null,
+    months_to_save: d.mo || null,
+    late_payments: S.latePayments || null,
+    collections_count: S.collections || null,
+    loan_type: S.loanType || null,
+    last_step_completed: S.tab,
+    quiz_data: {
+      incomes: S.incomes,
+      budget: S.bgt,
+      debts: {car:num(S.car),student:num(S.student),cards:num(S.cards),other:num(S.otherDebt)},
+      has_checked_credit: S.hasChecked,
+      total_balance: num(S.totalBalance),
+      total_limit: num(S.totalLimit),
+      checks: d.checks.map(function(c){return{label:c.l,pass:c.pass,great:c.great,detail:c.d}})
+    }
+  };
+  try{
+    var chk=await fetch(SB+"/rest/v1/website_leads?email=eq."+encodeURIComponent(S.email)+"&order=created_at.desc&limit=1",{headers:{"apikey":SK,"Authorization":"Bearer "+SK}});
+    if(chk.ok){
+      var ex=await chk.json();
+      if(ex.length>0){
+        var ld=ex[0];
+        payload.notes=ld.notes?ld.notes+" | "+noteText:noteText;
+        if(ld.phone && !payload.phone)payload.phone=ld.phone;
+        await fetch(SB+"/rest/v1/website_leads?id=eq."+ld.id,{method:"PATCH",headers:SBH,body:JSON.stringify(payload)});
+        console.log("Quiz progress MERGED:",S.email,"step",S.tab,isComplete?"(COMPLETE)":"");
+        if(isComplete)fetch(SB+"/functions/v1/send-lead-email",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+SK},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness"})});
+        return;
+      }
+    }
+    payload.notes=noteText;
+    payload.status="new";
+    await fetch(SB+"/rest/v1/website_leads",{method:"POST",headers:{...SBH,"Prefer":"return=minimal"},body:JSON.stringify(payload)});
+    console.log("Quiz progress CREATED:",S.email,"step",S.tab,isComplete?"(COMPLETE)":"");
+    fetch(SB+"/functions/v1/send-lead-email",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+SK},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness"})});
+  }catch(e){console.log("Quiz save error:",e);}
+}
+
+function updateLeadScore(){saveQuizProgress(true);}
 function sendText(){updateLeadScore();var msg=window._textBody||"Hi! Please check my home buyer readiness results.";window.open("sms:"+R.phone+"?body="+encodeURIComponent(msg),"_blank");}
 function sendEmail(){updateLeadScore();var subj=encodeURIComponent("Home Buyer Readiness Report — "+(S.name||"New Client"));var body=encodeURIComponent(window._sumTxt||"Please see my home buyer readiness report.");window.open("mailto:"+R.email+"?subject="+subj+"&body="+body,"_blank");}
 function shareText(){var msg="🏡 I just got my free Home Buyer Readiness Score! It only takes 5 minutes. Check yours here: "+APP_URL;window.open("sms:?body="+encodeURIComponent(msg),"_blank");}
 function doPrint(){window.print();}
 function copyLink(){var btn=$("copyBtn");var done=function(){if(btn){btn.textContent="✅ Copied!";setTimeout(function(){btn.textContent="📋 Copy Link to Share";},2000);}};if(navigator.clipboard){navigator.clipboard.writeText(APP_URL).then(done).catch(function(){fallbackCopy();done();});}else{fallbackCopy();done();}}
 function fallbackCopy(){var t=document.createElement("textarea");t.value=APP_URL;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.focus();t.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(t);}
-async function submitLead(){harvest();if(!S.name||!S.email||!S.phone){alert("Please fill in your name, email, and phone number to continue.");return;}var SB="https://sutapxqrjwvxoelemkyf.supabase.co";var SK="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";var ts=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});var noteText="Buyer Readiness ("+ts+"). First-time: "+(S.firstTime==="yes"?"Yes":"No")+". Type: "+S.homeType+". Timeline: "+S.timeline+" mo.";try{var chk=await fetch(SB+"/rest/v1/website_leads?email=eq."+encodeURIComponent(S.email)+"&order=created_at.desc&limit=1",{headers:{"apikey":SK,"Authorization":"Bearer "+SK}});if(chk.ok){var ex=await chk.json();if(ex.length>0){var ld=ex[0];var nn=ld.notes?ld.notes+" | "+noteText:noteText;await fetch(SB+"/rest/v1/website_leads?id=eq."+ld.id,{method:"PATCH",headers:{"Content-Type":"application/json","apikey":SK,"Authorization":"Bearer "+SK},body:JSON.stringify({notes:nn,source:"buyer_readiness",phone:ld.phone||S.phone})});console.log("Lead MERGED: buyer_readiness",S.email);fetch(SB+"/functions/v1/send-lead-email",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+SK},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness"})});S.tab=2;paint();return;}}await fetch(SB+"/rest/v1/website_leads",{method:"POST",headers:{"Content-Type":"application/json","apikey":SK,"Authorization":"Bearer "+SK,"Prefer":"return=minimal"},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness",city:S.city||null,notes:noteText,status:"new"})});console.log("Lead CREATED: buyer_readiness",S.name);fetch(SB+"/functions/v1/send-lead-email",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+SK},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness"})});}catch(e){console.log("Save error:",e);}S.tab=2;paint();}
+async function submitLead(){
+  harvest();
+  if(!S.name||!S.email||!S.phone){alert("Please fill in your name, email, and phone number to continue.");return;}
+  await saveQuizProgress(true);
+  S.tab=2;
+  paint();
+}
 function submitReview(){harvest();if(!S.rating){alert("Please select a star rating.");return;}S.reviewDone=true;var subj=encodeURIComponent("⭐ Review ("+S.rating+"/5) — "+(S.reviewName||S.name||"Tool User"));var body=encodeURIComponent("REVIEW — Home Buyer Readiness Tool\n\nFrom: "+(S.reviewName||S.name||"Anonymous")+(S.email?" ("+S.email+")":"")+"\nRating: "+"⭐".repeat(S.rating)+" ("+S.rating+"/5)\n\nFeedback:\n"+(S.reviewText||"No written feedback")+"\n\nReadiness Score: "+D().rp+"%\nDate: "+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}));window.open("mailto:"+R.email+"?subject="+subj+"&body="+body,"_blank");paint();}
 paint();
 </script>
