@@ -260,6 +260,57 @@ footer{background:#0D0505;color:rgba(255,255,255,0.35);text-align:center;padding
   <div class="stat-item"><div class="stat-number">SJC</div><div class="stat-label">San Joaquin Specialist</div></div>
 </div>
 
+<!-- TODAY'S MORTGAGE RATES — auto-populated from Janice's OS Finances Settings.
+     Data source: Supabase Edge Function (get-mortgage-rates). Updates instantly when
+     she enters new rates weekly. Cards with no rate are hidden. -->
+<section class="rates-section" id="rates" style="background:var(--charcoal);color:#fff;padding:60px 5%;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:36px;">
+      <div style="font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px;">Today's Mortgage Rates</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;margin-bottom:10px;">Weekly rate snapshot</h2>
+      <p id="rates-week-of" style="color:rgba(255,255,255,0.55);font-size:0.9rem;"></p>
+    </div>
+    <div id="rates-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:900px;margin:0 auto;">
+      <!-- populated by JS -->
+      <div style="text-align:center;color:rgba(255,255,255,0.4);grid-column:1/-1;padding:24px;font-size:0.85rem;">Loading rates…</div>
+    </div>
+    <p id="rates-note" style="max-width:700px;margin:20px auto 0;text-align:center;font-size:0.88rem;color:rgba(255,255,255,0.65);font-style:italic;line-height:1.7;"></p>
+    <p style="max-width:700px;margin:14px auto 0;text-align:center;font-size:0.72rem;color:rgba(255,255,255,0.4);line-height:1.6;">Rates shown are weekly averages and do not represent a guarantee. Your actual rate depends on credit, loan amount, property, and current market conditions. Contact me for a personalized quote from trusted lenders.</p>
+  </div>
+</section>
+<script>
+(function(){
+  var RATES_URL = "https://sutapxqrjwvxoelemkyf.supabase.co/functions/v1/get-mortgage-rates";
+  var LABELS = { "30yr":"30-Yr Fixed", "15yr":"15-Yr Fixed", "fha":"FHA", "va":"VA", "jumbo":"Jumbo", "arm":"7/6 ARM" };
+  fetch(RATES_URL).then(function(r){ return r.json(); }).then(function(d){
+    var grid = document.getElementById("rates-grid");
+    var weekOfEl = document.getElementById("rates-week-of");
+    var noteEl = document.getElementById("rates-note");
+    var rates = (d && d.rates) || {};
+    var cards = [];
+    Object.keys(LABELS).forEach(function(k){
+      var r = rates[k];
+      if (!r || r.rate == null) return;
+      var change = r.change;
+      var changeColor = change == null ? "rgba(255,255,255,0.5)" : change > 0 ? "#FF8888" : change < 0 ? "#88D9A6" : "rgba(255,255,255,0.5)";
+      var changeSign = change == null ? "" : (change > 0 ? "+" : "") + change.toFixed(2);
+      cards.push('<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.3);border-radius:12px;padding:18px 14px;text-align:center;"><div style="font-size:0.7rem;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:8px;">' + LABELS[k] + '</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:1.9rem;font-weight:700;color:#C9A84C;letter-spacing:-0.01em;">' + r.rate.toFixed(2) + '%</div>' + (changeSign ? '<div style="font-size:0.78rem;color:' + changeColor + ';font-weight:600;margin-top:2px;">' + changeSign + '</div>' : '') + '</div>');
+    });
+    if (cards.length === 0) {
+      grid.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);grid-column:1/-1;padding:24px;font-size:0.85rem;">Rates coming soon. Contact Janice for current quotes.</div>';
+    } else {
+      grid.innerHTML = cards.join("");
+    }
+    if (d && d.week_of) {
+      try { var dt = new Date(d.week_of + "T12:00:00"); weekOfEl.textContent = "Week of " + dt.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}); } catch(e){}
+    }
+    if (d && d.note) { noteEl.textContent = '"' + d.note + '"'; }
+  }).catch(function(){
+    document.getElementById("rates-grid").innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);grid-column:1/-1;padding:24px;font-size:0.85rem;">Rates temporarily unavailable. Contact Janice for current quotes.</div>';
+  });
+})();
+</script>
+
 <!-- ABOUT — Keeps your photo -->
 <section class="about" id="about">
   <div class="about-grid">
