@@ -3,8 +3,35 @@ console.log("✅ Janice Site JS loaded");
 var SUPABASE_URL="https://sutapxqrjwvxoelemkyf.supabase.co";
 var SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
 
+/* ── Experiment attribution (Ship 7d, Apr 2026) ──
+   Any page loaded with ?exp=<slug> fires a visit tracker and stores the slug
+   on a module-level variable so form submissions can attach it.
+   No localStorage/cookies per project rule — the slug lives in-page memory only.
+   If they navigate away + come back, the tag is lost. That's OK for an ad landing
+   flow where the form is on the first page they hit. */
+var __experimentSlug = null;
+function __captureExperiment(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var exp = params.get("exp");
+    if (!exp) return;
+    exp = String(exp).trim().toLowerCase();
+    if (exp.length < 2 || exp.length > 100) return;
+    __experimentSlug = exp;
+    // Fire visit tracker (fire-and-forget — never blocks the page)
+    fetch(SUPABASE_URL + "/functions/v1/track-experiment-visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ exp: exp }),
+    }).catch(function(){});
+    console.log("Experiment tracked:", exp);
+  } catch (e) { /* silent */ }
+}
+function getExperimentSlug(){ return __experimentSlug; }
+
 /* ── FIX: Prevent browser autopopulate across forms ── */
 document.addEventListener("DOMContentLoaded",function(){
+  __captureExperiment();
   document.querySelectorAll("input").forEach(function(inp){
     inp.setAttribute("autocomplete","off");
     inp.setAttribute("autocomplete","new-password");
@@ -50,6 +77,8 @@ async function saveLead(data){
     address: data.address || "",
     notes: data.notes ? data.notes + " | " + noteText : noteText,
     motivation: data.motivation || defaultMotivation,
+    /* Experiment attribution (Ship 7d) — passed through if present */
+    exp: data.exp || getExperimentSlug() || null,
     /* Form-specific extras ride in quiz_data jsonb column via `extras` */
     extras: {
       consultation_type: data.consultation_type || null,

@@ -346,6 +346,20 @@ function paint(){
 }
 /* ── SUPABASE CONFIG ── */
 const SB="https://sutapxqrjwvxoelemkyf.supabase.co";
+
+/* Ship 7d — fire visit tracker if page loaded with ?exp=<slug> */
+(function(){
+  try {
+    var exp = (new URLSearchParams(window.location.search)).get("exp");
+    if (exp && exp.length >= 2 && exp.length <= 100) {
+      fetch(SB + "/functions/v1/track-experiment-visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ exp: exp.trim().toLowerCase() }),
+      }).catch(function(){});
+    }
+  } catch (e) {}
+})();
 const SK="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
 const SBH={"Content-Type":"application/json","apikey":SK,"Authorization":"Bearer "+SK};
 
@@ -405,6 +419,8 @@ async function saveQuizProgress(isComplete){
     source: "buyer_readiness",
     city: payload.city,
     notes: noteText,
+    /* Experiment attribution (Ship 7d) — captured from ?exp= on URL load */
+    exp: (new URLSearchParams(window.location.search)).get("exp") || null,
     /* Motivation derives from readiness score:
          90+ ready, 70+ soon, 50+ 3-12mo, <50 exploring */
     motivation: (payload.readiness_score >= 90) ? "ready"

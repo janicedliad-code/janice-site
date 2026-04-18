@@ -236,6 +236,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charco
 // See memory: project_priority_filter.md
 var SUPABASE_URL = "https://sutapxqrjwvxoelemkyf.supabase.co";
 
+/* Ship 7d — fire visit tracker if page loaded with ?exp=<slug> */
+(function(){
+  try {
+    var exp = (new URLSearchParams(window.location.search)).get("exp");
+    if (exp && exp.length >= 2 && exp.length <= 100) {
+      fetch(SUPABASE_URL + "/functions/v1/track-experiment-visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ exp: exp.trim().toLowerCase() }),
+      }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+
 var refCount = 0;
 var MAX_REFS = 3;
 
@@ -389,6 +403,8 @@ form.addEventListener("submit", async function(e){
       source: "referral",
       notes: notesText,
       motivation: motivation,
+      /* Experiment attribution (Ship 7d) */
+      exp: (new URLSearchParams(window.location.search)).get("exp") || null,
       extras: {
         referred_by_name: referrerName,
         referred_by_phone: referrerPhone,

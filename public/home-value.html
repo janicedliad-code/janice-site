@@ -269,6 +269,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charco
 // See memory: project_priority_filter.md
 var SUPABASE_URL = "https://sutapxqrjwvxoelemkyf.supabase.co";
 
+/* Ship 7d — fire visit tracker if page loaded with ?exp=<slug> */
+(function(){
+  try {
+    var exp = (new URLSearchParams(window.location.search)).get("exp");
+    if (exp && exp.length >= 2 && exp.length <= 100) {
+      fetch(SUPABASE_URL + "/functions/v1/track-experiment-visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ exp: exp.trim().toLowerCase() }),
+      }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+
 // Tier-specific promise copy. Must match what Janice can actually deliver.
 var PROMISES = {
   selling_0_3mo: {
@@ -335,6 +349,8 @@ form.addEventListener("submit", async function(e){
     source: "home_value_flow",
     motivation: motivation,
     notes: notes || null,
+    /* Experiment attribution (Ship 7d) */
+    exp: (new URLSearchParams(window.location.search)).get("exp") || null,
     extras: {
       newsletter_optin: newsletter
     }
