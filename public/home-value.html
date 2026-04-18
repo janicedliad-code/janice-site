@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>What's Your Home Worth? | Janice Divina Liad, REALTOR®</title>
+<meta name="description" content="Get a personalized Comparative Market Analysis for your home, prepared by Janice Divina Liad — REALTOR® in Manteca, Tracy, Ripon, and Modesto. No auto-valuation guesswork. Real comps, real insight."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://janicedivinarealestate.com/home-value.html"/>
+<meta property="og:title" content="What's Your Home Worth? — Janice Divina Liad"/>
+<meta property="og:description" content="Personalized CMA for Central Valley homes. Real comps, not a Zillow guess."/>
+<meta property="og:image" content="https://janicedivinarealestate.com/images/janice-headshot.jpg"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;--crimson-light:#A52535;--crimson-pale:#F9F0F1;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;
+  --radius:14px;--radius-lg:20px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);--shadow-lg:0 10px 40px rgba(26,16,8,0.12);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* Nav */
+.nav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+.nav-brand{display:flex;flex-direction:column;text-decoration:none}
+.nav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.nav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.nav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;transition:var(--transition);font-weight:500}
+.nav-back:hover{background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.3)}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a0a0a 0%,#4a1018 50%,var(--crimson) 100%);color:#fff;padding:50px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80') center/cover no-repeat;opacity:0.1;z-index:0}
+.hero-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding:5px 16px;border:1px solid rgba(201,168,76,0.5);border-radius:99px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:16px;letter-spacing:-0.01em}
+.hero h1 .script{font-family:'Dancing Script',cursive;color:#E5B056;font-size:clamp(2rem,4.5vw,2.8rem);display:block}
+.hero p.sub{font-size:1rem;color:rgba(255,255,255,0.85);max-width:560px;margin:0 auto;line-height:1.7}
+.hero .tag{margin-top:22px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:var(--gold);letter-spacing:0.05em}
+
+/* Main content */
+.main{max-width:640px;margin:-30px auto 60px;padding:0 20px;position:relative;z-index:10}
+
+/* Card */
+.card{background:var(--white);border-radius:var(--radius-lg);padding:36px 32px;box-shadow:var(--shadow-lg);border:1px solid rgba(221,213,200,0.5)}
+.card-intro{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--crimson);margin-bottom:10px;line-height:1.4}
+.card-lede{font-size:0.95rem;color:var(--text-mid);margin-bottom:28px;line-height:1.7}
+.card-lede strong{color:var(--charcoal)}
+
+/* Divider */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--silver),transparent);margin:26px 0}
+
+/* Form fields */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:0.72rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px}
+.field input[type=text],.field input[type=email],.field input[type=tel],.field textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:12px 14px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+.field input:focus,.field textarea:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+.field textarea{min-height:80px;resize:vertical;line-height:1.6}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.row-2{grid-template-columns:1fr}}
+
+/* Motivation radio cards */
+.motivation-group{display:flex;flex-direction:column;gap:8px}
+.mot{display:block;cursor:pointer;background:var(--cream);border:1.5px solid var(--silver);border-radius:12px;padding:14px 16px;transition:var(--transition)}
+.mot:hover{border-color:var(--gold);background:var(--gold-soft)}
+.mot input{display:none}
+.mot .mot-title{display:flex;align-items:center;gap:10px;font-size:0.95rem;font-weight:600;color:var(--charcoal)}
+.mot .dot{width:10px;height:10px;border-radius:5px;background:var(--silver);flex-shrink:0;transition:var(--transition)}
+.mot .mot-sub{font-size:0.8rem;color:var(--text-light);margin-top:4px;margin-left:20px;line-height:1.5}
+.mot input:checked + .mot-title .dot{background:var(--crimson);box-shadow:0 0 0 4px rgba(139,28,42,0.15)}
+.mot:has(input:checked){border-color:var(--crimson);background:#fff;box-shadow:0 2px 8px rgba(139,28,42,0.1)}
+
+/* Checkbox for newsletter */
+.check{display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:12px;background:var(--cream);border-radius:10px;border:1px solid var(--silver);transition:var(--transition)}
+.check:hover{border-color:var(--gold)}
+.check input{margin-top:3px;accent-color:var(--crimson);width:16px;height:16px}
+.check span{font-size:0.85rem;color:var(--text-mid);line-height:1.6}
+.check strong{color:var(--charcoal)}
+
+/* Submit */
+.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;border:none;border-radius:12px;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:var(--transition);box-shadow:0 4px 16px rgba(139,28,42,0.25);font-family:inherit}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,28,42,0.35)}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+.form-note{font-size:0.75rem;color:var(--text-light);text-align:center;margin-top:14px;line-height:1.6}
+
+/* Success state */
+.success{display:none;text-align:center;padding:20px 0}
+.success.show{display:block}
+.success .checkmark{width:64px;height:64px;border-radius:32px;background:linear-gradient(135deg,var(--crimson),var(--gold));margin:0 auto 20px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700}
+.success h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--crimson);margin-bottom:12px;letter-spacing:-0.01em}
+.success .promise{font-size:1rem;color:var(--charcoal);line-height:1.7;margin-bottom:16px;font-weight:500}
+.success .detail{font-size:0.9rem;color:var(--text-mid);line-height:1.7;margin-bottom:20px;padding:16px 18px;background:var(--cream);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;text-align:left}
+.success .signature{font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--crimson);margin-top:18px}
+.success .backlink{display:inline-block;margin-top:22px;padding:10px 24px;background:transparent;color:var(--crimson);border:1.5px solid var(--crimson);border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;transition:var(--transition)}
+.success .backlink:hover{background:var(--crimson);color:#fff}
+
+/* Value prop section (above fold on scroll) */
+.value-prop{max-width:640px;margin:30px auto 0;padding:0 20px}
+.vp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media (max-width:520px){.vp-grid{grid-template-columns:1fr}}
+.vp-card{background:#fff;border:1px solid var(--silver);border-left:3px solid var(--gold);border-radius:10px;padding:16px}
+.vp-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--crimson);margin-bottom:4px}
+.vp-body{font-size:0.82rem;color:var(--text-mid);line-height:1.6}
+
+/* Footer */
+.footer{background:#1a0a0a;color:rgba(255,255,255,0.5);padding:32px 24px;text-align:center;font-size:0.8rem;line-height:1.8}
+.footer strong{color:rgba(255,255,255,0.7)}
+.footer a{color:var(--gold);text-decoration:none}
+
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <span class="nav-script">Janice Divina Liad</span>
+    <span class="nav-sub">Realtor · HomeSmart PV</span>
+  </a>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Comparative Market Analysis</span>
+    <h1>What's your home worth? <span class="script">Let's find out together.</span></h1>
+    <p class="sub">A personalized CMA — prepared by me, not a computer. Real comps from your neighborhood, real insight into what your home could sell for today.</p>
+    <div class="tag">Faith · Family · Forward</div>
+  </div>
+</section>
+
+<!-- Form -->
+<main class="main">
+  <div class="card" id="formCard">
+    <p class="card-intro">Get a real answer — not a Zillow guess.</p>
+    <p class="card-lede">Automated valuations are often off by 10–30% because they don't see your upgrades, your condition, or what's actually selling on your street <strong>right now</strong>. I'll prepare a thoughtful CMA based on real recent sales, current market conditions, and anything that makes your home unique. Free, no pressure, no obligation.</p>
+
+    <div class="divider"></div>
+
+    <form id="hvForm" autocomplete="off">
+
+      <div class="field">
+        <label for="hv_name">Your Name</label>
+        <input type="text" id="hv_name" name="name" placeholder="Maria Santos" required>
+      </div>
+
+      <div class="field">
+        <label for="hv_address">Property Address</label>
+        <input type="text" id="hv_address" name="address" placeholder="123 Main St, Manteca, CA 95336" required>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label for="hv_phone">Phone</label>
+          <input type="tel" id="hv_phone" name="phone" placeholder="(209) 555-0000">
+        </div>
+        <div class="field">
+          <label for="hv_email">Email</label>
+          <input type="email" id="hv_email" name="email" placeholder="you@email.com">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Why are you asking?</label>
+        <div class="motivation-group">
+
+          <label class="mot">
+            <input type="radio" name="motivation" value="selling_0_3mo">
+            <div class="mot-title"><span class="dot"></span>I'm selling within 3 months</div>
+            <div class="mot-sub">Let's chat this week &mdash; I'll prepare a detailed CMA right after our call.</div>
+          </label>
+
+          <label class="mot">
+            <input type="radio" name="motivation" value="selling_3_12mo">
+            <div class="mot-title"><span class="dot"></span>I'm selling in 3&ndash;12 months</div>
+            <div class="mot-sub">Perfect window. I'll reach out for a free 15-minute consultation.</div>
+          </label>
+
+          <label class="mot">
+            <input type="radio" name="motivation" value="refinance">
+            <div class="mot-title"><span class="dot"></span>Refinancing or tapping equity</div>
+            <div class="mot-sub">I'll send a value estimate you can share with your lender.</div>
+          </label>
+
+          <label class="mot">
+            <input type="radio" name="motivation" value="curious">
+            <div class="mot-title"><span class="dot"></span>Just curious about my home's value</div>
+            <div class="mot-sub">No pressure. I'll send a neighborhood snapshot when I can.</div>
+          </label>
+
+          <label class="mot">
+            <input type="radio" name="motivation" value="exploring">
+            <div class="mot-title"><span class="dot"></span>Exploring my options &mdash; no timeline yet</div>
+            <div class="mot-sub">Great place to start. Happy to chat over coffee or send a CMA, whatever helps.</div>
+          </label>
+
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="hv_notes">Anything else I should know? <span style="font-weight:500;color:var(--text-light);text-transform:none;letter-spacing:0">(optional &mdash; e.g. recent upgrades, condition, timing)</span></label>
+        <textarea id="hv_notes" name="notes" placeholder="Added solar panels in 2024, updated kitchen last year..."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="check">
+          <input type="checkbox" id="hv_newsletter" checked>
+          <span><strong>Send me the monthly market newsletter</strong> &mdash; interest rates, what's selling, and honest market commentary for the Central Valley. Unsubscribe anytime.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" id="hvSubmit">Get My Personalized CMA &rarr;</button>
+
+      <p class="form-note">I respond personally. Your info is never sold, shared, or used for cold outreach.</p>
+
+    </form>
+  </div>
+
+  <!-- Success (hidden until submit) -->
+  <div class="card success" id="successCard">
+    <div class="checkmark">&#x2713;</div>
+    <h2 id="successTitle">Got it!</h2>
+    <p class="promise" id="successPromise">I'll be in touch.</p>
+    <div class="detail" id="successDetail"></div>
+    <div class="signature">&mdash; Janice</div>
+    <a href="/" class="backlink">Back to site</a>
+  </div>
+</main>
+
+<!-- Value prop cards (below form) -->
+<section class="value-prop">
+  <div class="vp-grid">
+    <div class="vp-card">
+      <div class="vp-title">Local, not automated</div>
+      <div class="vp-body">I know the difference between the north side of Manteca and the south. Your CMA reflects what's actually happening in your neighborhood, not a regional average.</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-title">Personal, not pushy</div>
+      <div class="vp-body">You tell me what you want &mdash; a call, an email, a sit-down, or just a number. I work at your pace. No auto-drip sales sequences.</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-title">Real comps, real conditions</div>
+      <div class="vp-body">I pull the last 90 days of MetroList sales, filter for truly comparable homes, and adjust for what makes yours different.</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-title">Free. Always.</div>
+      <div class="vp-body">A CMA is never something I charge for. It's how I serve your family when you're curious, and how I help when you're ready.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p><strong>Janice Divina Liad</strong> &middot; REALTOR&reg; &middot; DRE #02099146</p>
+  <p>HomeSmart PV &amp; Associates &middot; Serving Manteca, Tracy, Lathrop, Ripon, Modesto &amp; the Central Valley</p>
+  <p style="margin-top:12px"><a href="tel:2093059401">(209) 305-9401</a> &middot; <a href="mailto:janicedivina@janicedivinarealestate.com">janicedivina@janicedivinarealestate.com</a></p>
+  <p style="margin-top:8px"><a href="/">janicedivinarealestate.com</a></p>
+</footer>
+
+<script>
+// ── Route through the OS lead-router (same endpoint the other forms use) ──
+// See memory: project_priority_filter.md
+var SUPABASE_URL = "https://sutapxqrjwvxoelemkyf.supabase.co";
+
+// Tier-specific promise copy. Must match what Janice can actually deliver.
+var PROMISES = {
+  selling_0_3mo: {
+    title: "Got it &mdash; let's talk this week!",
+    promise: "I'll personally call or text you within 1 business day to set up a 15&ndash;20 minute chat.",
+    detail: "After our call I'll have your detailed CMA ready within 24 hours &mdash; with real comps, market conditions, and my honest take on what your home could sell for today."
+  },
+  selling_3_12mo: {
+    title: "Great timing.",
+    promise: "I'll reach out within 2 business days to schedule a free 15-minute consultation.",
+    detail: "We'll talk about your timeline, what you want in your next home, and what small moves between now and listing day could maximize your sale price. Or if you'd rather just get the CMA first, let me know in the reply."
+  },
+  refinance: {
+    title: "On it.",
+    promise: "I'll have a value estimate ready for you within 3 business days.",
+    detail: "You'll receive it by email in a format you can share with your lender. If there's something specific your loan officer asked for, just reply to my email and let me know."
+  },
+  curious: {
+    title: "Thanks for reaching out.",
+    promise: "I'll send you a home snapshot within a week.",
+    detail: "You'll get a neighborhood sales summary, your home's approximate value range, and what's active or pending near you. You'll also start seeing my monthly market newsletter so you stay informed until you're ready."
+  },
+  exploring: {
+    title: "That's a great place to be.",
+    promise: "I'll reach out within 2 business days &mdash; and let you pick the pace.",
+    detail: "A coffee, a phone call, or just a CMA by email &mdash; whatever feels right. Most of my best clients started exactly where you are, just exploring. No pressure at all."
+  }
+};
+
+var form = document.getElementById("hvForm");
+var submitBtn = document.getElementById("hvSubmit");
+var formCard = document.getElementById("formCard");
+var successCard = document.getElementById("successCard");
+var successTitle = document.getElementById("successTitle");
+var successPromise = document.getElementById("successPromise");
+var successDetail = document.getElementById("successDetail");
+
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  var name = document.getElementById("hv_name").value.trim();
+  var address = document.getElementById("hv_address").value.trim();
+  var phone = document.getElementById("hv_phone").value.trim();
+  var email = document.getElementById("hv_email").value.trim();
+  var notes = document.getElementById("hv_notes").value.trim();
+  var newsletter = document.getElementById("hv_newsletter").checked;
+  var motivationEl = document.querySelector('input[name="motivation"]:checked');
+  var motivation = motivationEl ? motivationEl.value : null;
+
+  // Validation
+  if (!name) { alert("Please enter your name."); return; }
+  if (!address) { alert("Please enter your property address."); return; }
+  if (!phone && !email) { alert("Please enter at least a phone or email so I can reach you."); return; }
+  if (!motivation) { alert("Please pick one option so I know how to help best."); return; }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
+
+  var payload = {
+    name: name,
+    address: address,
+    phone: phone,
+    email: email,
+    source: "home_value_flow",
+    motivation: motivation,
+    notes: notes || null,
+    extras: {
+      newsletter_optin: newsletter
+    }
+  };
+
+  try {
+    var res = await fetch(SUPABASE_URL + "/functions/v1/lead-router", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) {
+      throw new Error("Router returned " + res.status);
+    }
+    var body = await res.json();
+    console.log("Home Value lead routed:", body.priority_tier, body.is_existing_contact ? "RE-ENGAGEMENT" : "NEW");
+  } catch (err) {
+    console.error("Submission failed:", err);
+    alert("Something went wrong on our end. Please try again, or text me directly at (209) 305-9401.");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Get My Personalized CMA \u2192";
+    return;
+  }
+
+  // Show tier-appropriate success message
+  var promise = PROMISES[motivation] || PROMISES.exploring;
+  successTitle.innerHTML = promise.title;
+  successPromise.innerHTML = promise.promise;
+  successDetail.innerHTML = promise.detail;
+  formCard.style.display = "none";
+  successCard.classList.add("show");
+
+  // Smooth scroll to success message
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+
+</body>
+</html>
