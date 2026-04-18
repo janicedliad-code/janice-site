@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Refer a Friend | Janice Divina Liad, REALTOR®</title>
+<meta name="description" content="Send someone you care about to Janice Divina Liad — REALTOR® in Manteca & the Central Valley. Relationship-first real estate."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://janicedivinarealestate.com/refer.html"/>
+<meta property="og:title" content="Refer a Friend to Janice Divina Liad"/>
+<meta property="og:description" content="Send someone you love to a realtor who leads with relationship."/>
+<meta property="og:image" content="https://janicedivinarealestate.com/images/janice-headshot.jpg"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;--crimson-light:#A52535;--crimson-pale:#F9F0F1;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;
+  --radius:14px;--radius-lg:20px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);--shadow-lg:0 10px 40px rgba(26,16,8,0.12);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* Nav */
+.nav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+.nav-brand{display:flex;flex-direction:column;text-decoration:none}
+.nav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.nav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.nav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;transition:var(--transition);font-weight:500}
+.nav-back:hover{background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.3)}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a0a0a 0%,#4a1018 50%,var(--crimson) 100%);color:#fff;padding:50px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80') center/cover no-repeat;opacity:0.1;z-index:0}
+.hero-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding:5px 16px;border:1px solid rgba(201,168,76,0.5);border-radius:99px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:16px;letter-spacing:-0.01em}
+.hero h1 .script{font-family:'Dancing Script',cursive;color:#E5B056;font-size:clamp(2rem,4.5vw,2.8rem);display:block}
+.hero p.sub{font-size:1rem;color:rgba(255,255,255,0.85);max-width:560px;margin:0 auto;line-height:1.7}
+.hero .tag{margin-top:22px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:var(--gold);letter-spacing:0.05em}
+
+/* Main content */
+.main{max-width:640px;margin:-30px auto 70px;padding:0 20px;position:relative;z-index:10}
+
+/* Card */
+.card{background:var(--white);border-radius:var(--radius-lg);padding:36px 32px;box-shadow:var(--shadow-lg);border:1px solid rgba(221,213,200,0.5)}
+.card-intro{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--crimson);margin-bottom:10px;line-height:1.4}
+.card-lede{font-size:0.95rem;color:var(--text-mid);margin-bottom:28px;line-height:1.7}
+.card-lede strong{color:var(--charcoal)}
+
+/* Section header */
+.section-head{display:flex;align-items:center;gap:10px;margin:30px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--silver)}
+.section-head .dot{width:8px;height:8px;border-radius:4px;background:var(--gold)}
+.section-head .label{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--crimson);letter-spacing:-0.01em}
+.section-head:first-of-type{margin-top:0}
+
+/* Form fields */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:0.72rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px}
+.field input[type=text],.field input[type=email],.field input[type=tel],.field select,.field textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:12px 14px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+.field textarea{min-height:70px;resize:vertical;line-height:1.6}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.row-2{grid-template-columns:1fr}}
+
+/* Referral card block */
+.ref-block{background:var(--cream);border:1px solid var(--silver);border-radius:14px;padding:20px;margin-bottom:14px;position:relative}
+.ref-block-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ref-block-num{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--crimson);letter-spacing:0.02em}
+.ref-remove{background:none;border:none;color:var(--text-light);cursor:pointer;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:inherit;transition:var(--transition)}
+.ref-remove:hover{color:var(--crimson)}
+
+/* Add-another button */
+.add-another{width:100%;background:transparent;border:1.5px dashed var(--silver);color:var(--text-mid);padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--transition);margin-top:4px;letter-spacing:0.03em}
+.add-another:hover{border-color:var(--gold);color:var(--crimson);background:var(--gold-soft)}
+.add-another:disabled{opacity:0.4;cursor:not-allowed}
+
+/* Submit */
+.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;border:none;border-radius:12px;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:var(--transition);box-shadow:0 4px 16px rgba(139,28,42,0.25);font-family:inherit;margin-top:16px}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,28,42,0.35)}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+.form-note{font-size:0.75rem;color:var(--text-light);text-align:center;margin-top:14px;line-height:1.6;font-style:italic}
+
+/* Success state */
+.success{display:none;text-align:center;padding:20px 0}
+.success.show{display:block}
+.success .checkmark{width:64px;height:64px;border-radius:32px;background:linear-gradient(135deg,var(--crimson),var(--gold));margin:0 auto 20px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700}
+.success h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--crimson);margin-bottom:12px;letter-spacing:-0.01em}
+.success .promise{font-size:1rem;color:var(--charcoal);line-height:1.7;margin-bottom:16px;font-weight:500}
+.success .detail{font-size:0.9rem;color:var(--text-mid);line-height:1.7;margin-bottom:20px;padding:16px 18px;background:var(--cream);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;text-align:left}
+.success .signature{font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--crimson);margin-top:18px}
+.success .backlink{display:inline-block;margin-top:22px;padding:10px 24px;background:transparent;color:var(--crimson);border:1.5px solid var(--crimson);border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;transition:var(--transition)}
+.success .backlink:hover{background:var(--crimson);color:#fff}
+
+/* Value prop cards */
+.value-prop{max-width:640px;margin:30px auto 70px;padding:0 20px}
+.vp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media (max-width:520px){.vp-grid{grid-template-columns:1fr}}
+.vp-card{background:#fff;border:1px solid var(--silver);border-left:3px solid var(--gold);border-radius:10px;padding:16px}
+.vp-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--crimson);margin-bottom:4px}
+.vp-body{font-size:0.82rem;color:var(--text-mid);line-height:1.6}
+
+/* Footer */
+.footer{background:#1a0a0a;color:rgba(255,255,255,0.5);padding:32px 24px;text-align:center;font-size:0.8rem;line-height:1.8}
+.footer strong{color:rgba(255,255,255,0.7)}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <span class="nav-script">Janice Divina Liad</span>
+    <span class="nav-sub">Realtor · HomeSmart PV</span>
+  </a>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Refer a Friend</span>
+    <h1>Know someone looking for a home? <span class="script">Send them my way.</span></h1>
+    <p class="sub">If you know a family member, friend, coworker, or neighbor who's even <em>thinking</em> about buying or selling &mdash; even just curious &mdash; I'd love to help them the way I helped you.</p>
+    <div class="tag">Faith · Family · Forward</div>
+  </div>
+</section>
+
+<!-- Form -->
+<main class="main">
+  <div class="card" id="formCard">
+    <p class="card-intro">Every referral is a gift.</p>
+    <p class="card-lede">I treat the people you send me the way I treat my own family &mdash; no pressure, no cold scripts, no rush. If they're just exploring, I'll serve them like that. If they're ready, I'll be their advocate. <strong>Either way, they'll feel cared for.</strong></p>
+
+    <form id="rfForm" autocomplete="off">
+
+      <!-- ABOUT YOU -->
+      <div class="section-head">
+        <span class="dot"></span>
+        <span class="label">About you</span>
+      </div>
+
+      <div class="field">
+        <label for="rf_name">Your Name</label>
+        <input type="text" id="rf_name" name="rf_name" placeholder="Your full name" required>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label for="rf_phone">Your Phone</label>
+          <input type="tel" id="rf_phone" name="rf_phone" placeholder="(209) 555-0000">
+        </div>
+        <div class="field">
+          <label for="rf_email">Your Email</label>
+          <input type="email" id="rf_email" name="rf_email" placeholder="you@email.com">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rf_how_know">How do you know Janice? <span style="font-weight:500;color:var(--text-light);text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input type="text" id="rf_how_know" name="rf_how_know" placeholder="Past client, friend, coworker, church, etc.">
+      </div>
+
+      <!-- WHO YOU'RE REFERRING -->
+      <div class="section-head">
+        <span class="dot"></span>
+        <span class="label">Who you're referring</span>
+      </div>
+
+      <div id="refList">
+        <!-- First referral (required) — added by JS; keeping the structure dynamic so we can add up to 3 -->
+      </div>
+
+      <button type="button" class="add-another" id="addRefBtn" onclick="addRef()">+ Add another friend (up to 3)</button>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="btn-submit" id="rfSubmit">Send Referral &rarr;</button>
+
+      <p class="form-note">Janice will reach out to them gently, at their pace. You'll get a personal thank-you from her too.</p>
+
+    </form>
+  </div>
+
+  <!-- Success (hidden until submit) -->
+  <div class="card success" id="successCard">
+    <div class="checkmark">&#x2713;</div>
+    <h2>Thank you so much!</h2>
+    <p class="promise" id="successPromise">Your referrals are on their way to me.</p>
+    <div class="detail" id="successDetail"></div>
+    <div class="signature">&mdash; Janice</div>
+    <a href="/" class="backlink">Back to site</a>
+  </div>
+</main>
+
+<!-- Value prop cards -->
+<section class="value-prop">
+  <div class="vp-grid">
+    <div class="vp-card">
+      <div class="vp-title">No pressure, ever</div>
+      <div class="vp-body">I meet people where they are. If they're three years from buying, I serve them like that. If they're ready this weekend, I'm on it.</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-title">You'll hear from me</div>
+      <div class="vp-body">I'll send you a personal thank-you within a few days &mdash; not a mass email. Just me, saying thanks.</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-title">I respect their pace</div>
+      <div class="vp-body">If they said "just curious," I believe them. No aggressive follow-up. Just warm, honest answers when they want them.</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-title">Relationship first</div>
+      <div class="vp-body">You trusted me with your home. I'll take amazing care of anyone you trust with me &mdash; that's a promise.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p><strong>Janice Divina Liad</strong> &middot; REALTOR&reg; &middot; DRE #02099146</p>
+  <p>HomeSmart PV &amp; Associates &middot; Serving Manteca, Tracy, Lathrop, Ripon, Modesto &amp; the Central Valley</p>
+  <p style="margin-top:12px"><a href="tel:2093059401">(209) 305-9401</a> &middot; <a href="mailto:janicedivina@janicedivinarealestate.com">janicedivina@janicedivinarealestate.com</a></p>
+  <p style="margin-top:8px"><a href="/">janicedivinarealestate.com</a></p>
+</footer>
+
+<script>
+// ── Referral Form ──
+// Routes each referred person through the OS lead-router as a separate
+// lead with source='referral'. Also attaches the referrer's name to
+// each lead so Janice can thank them in her Referral Tracker.
+// See memory: project_priority_filter.md
+var SUPABASE_URL = "https://sutapxqrjwvxoelemkyf.supabase.co";
+
+var refCount = 0;
+var MAX_REFS = 3;
+
+function refTemplate(i){
+  return [
+    '<div class="ref-block" data-idx="'+i+'">',
+    '  <div class="ref-block-head">',
+    '    <span class="ref-block-num">Friend #'+i+'</span>',
+    (i > 1 ? '    <button type="button" class="ref-remove" onclick="removeRef('+i+')">Remove</button>' : ''),
+    '  </div>',
+    '  <div class="field">',
+    '    <label for="f'+i+'_name">Their Name</label>',
+    '    <input type="text" id="f'+i+'_name" placeholder="First and last name" required>',
+    '  </div>',
+    '  <div class="row-2">',
+    '    <div class="field">',
+    '      <label for="f'+i+'_phone">Their Phone</label>',
+    '      <input type="tel" id="f'+i+'_phone" placeholder="(209) 555-0000">',
+    '    </div>',
+    '    <div class="field">',
+    '      <label for="f'+i+'_email">Their Email</label>',
+    '      <input type="email" id="f'+i+'_email" placeholder="their@email.com">',
+    '    </div>',
+    '  </div>',
+    '  <div class="row-2">',
+    '    <div class="field">',
+    '      <label for="f'+i+'_relation">How you know them</label>',
+    '      <select id="f'+i+'_relation">',
+    '        <option value="">Pick one...</option>',
+    '        <option value="family">Family member</option>',
+    '        <option value="friend">Friend</option>',
+    '        <option value="coworker">Coworker</option>',
+    '        <option value="neighbor">Neighbor</option>',
+    '        <option value="church">Church or community</option>',
+    '        <option value="other">Other</option>',
+    '      </select>',
+    '    </div>',
+    '    <div class="field">',
+    '      <label for="f'+i+'_situation">Their situation</label>',
+    '      <select id="f'+i+'_situation">',
+    '        <option value="">Pick one...</option>',
+    '        <option value="thinking_buying">Thinking about buying</option>',
+    '        <option value="thinking_selling">Thinking about selling</option>',
+    '        <option value="just_curious">Just curious / exploring</option>',
+    '        <option value="home_value">Wants to know their home value</option>',
+    '        <option value="relocating">Relocating soon</option>',
+    '        <option value="first_time">First-time buyer with questions</option>',
+    '        <option value="investor">Investor looking for properties</option>',
+    '        <option value="not_sure">Not sure yet</option>',
+    '      </select>',
+    '    </div>',
+    '  </div>',
+    '  <div class="field">',
+    '    <label for="f'+i+'_notes">Anything else I should know? <span style="font-weight:500;color:var(--text-light);text-transform:none;letter-spacing:0">(optional)</span></label>',
+    '    <textarea id="f'+i+'_notes" placeholder="How did this come up? Any timing or context that would help me reach out thoughtfully?"></textarea>',
+    '  </div>',
+    '</div>',
+  ].join('\n');
+}
+
+function addRef(){
+  if (refCount >= MAX_REFS) return;
+  refCount++;
+  var list = document.getElementById("refList");
+  list.insertAdjacentHTML("beforeend", refTemplate(refCount));
+  if (refCount >= MAX_REFS) {
+    document.getElementById("addRefBtn").disabled = true;
+    document.getElementById("addRefBtn").textContent = "(maximum 3 referrals)";
+  }
+}
+
+function removeRef(i){
+  var el = document.querySelector('.ref-block[data-idx="'+i+'"]');
+  if (el) el.remove();
+  // We don't renumber — the submit handler reads each existing block by data-idx, so gaps are fine.
+  document.getElementById("addRefBtn").disabled = false;
+  document.getElementById("addRefBtn").textContent = "+ Add another friend (up to 3)";
+}
+
+// Bootstrap: first friend block always present
+addRef();
+
+// Map situation -> motivation tier for lead-router
+var situationToMotivation = {
+  thinking_buying: "exploring",
+  thinking_selling: "exploring",
+  just_curious: "curious",
+  home_value: "curious",
+  relocating: "soon",
+  first_time: "exploring",
+  investor: "exploring",
+  not_sure: "exploring",
+};
+
+var form = document.getElementById("rfForm");
+var submitBtn = document.getElementById("rfSubmit");
+var formCard = document.getElementById("formCard");
+var successCard = document.getElementById("successCard");
+var successPromise = document.getElementById("successPromise");
+var successDetail = document.getElementById("successDetail");
+
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  var referrerName = document.getElementById("rf_name").value.trim();
+  var referrerPhone = document.getElementById("rf_phone").value.trim();
+  var referrerEmail = document.getElementById("rf_email").value.trim();
+  var howKnow = document.getElementById("rf_how_know").value.trim();
+
+  if (!referrerName) { alert("Please enter your name so I can thank you properly."); return; }
+
+  // Collect each referral block
+  var blocks = document.querySelectorAll("#refList .ref-block");
+  var refs = [];
+  for (var i = 0; i < blocks.length; i++) {
+    var idx = blocks[i].getAttribute("data-idx");
+    var fName = document.getElementById("f"+idx+"_name").value.trim();
+    if (!fName) continue;  // skip empty ones silently
+    refs.push({
+      name: fName,
+      phone: document.getElementById("f"+idx+"_phone").value.trim(),
+      email: document.getElementById("f"+idx+"_email").value.trim(),
+      relation: document.getElementById("f"+idx+"_relation").value,
+      situation: document.getElementById("f"+idx+"_situation").value,
+      notes: document.getElementById("f"+idx+"_notes").value.trim(),
+    });
+  }
+
+  if (!refs.length) {
+    alert("Please add at least one friend's name.");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
+
+  var sentCount = 0;
+  for (var r = 0; r < refs.length; r++) {
+    var friend = refs[r];
+    var motivation = situationToMotivation[friend.situation] || "exploring";
+    var notesText = "Referred by " + referrerName +
+      (howKnow ? " (" + howKnow + ")" : "") +
+      (friend.relation ? " · Relation: " + friend.relation : "") +
+      (friend.situation ? " · Situation: " + friend.situation.replace(/_/g," ") : "") +
+      (friend.notes ? "\n\n" + friend.notes : "");
+
+    var payload = {
+      name: friend.name,
+      phone: friend.phone,
+      email: friend.email,
+      source: "referral",
+      notes: notesText,
+      motivation: motivation,
+      extras: {
+        referred_by_name: referrerName,
+        referred_by_phone: referrerPhone,
+        referred_by_email: referrerEmail,
+        referred_by_how_know: howKnow,
+        relation: friend.relation,
+        situation: friend.situation,
+      },
+    };
+
+    try {
+      var res = await fetch(SUPABASE_URL + "/functions/v1/lead-router", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        sentCount++;
+        var body = await res.json();
+        console.log("Referral routed:", friend.name, body.priority_tier || "(no tier)", body.is_existing_contact ? "RE-ENGAGEMENT" : "NEW");
+      } else {
+        console.error("Router error for " + friend.name + ":", res.status);
+      }
+    } catch (err) {
+      console.error("Referral submission failed for " + friend.name + ":", err);
+    }
+  }
+
+  if (sentCount === 0) {
+    alert("Something went wrong on our end. Please try again, or text Janice directly at (209) 305-9401.");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Send Referral \u2192";
+    return;
+  }
+
+  // Show success
+  var plural = sentCount === 1 ? "" : "s";
+  successPromise.innerHTML = "Your " + sentCount + " referral" + plural + " " + (sentCount === 1 ? "is" : "are") + " on their way to me.";
+  successDetail.innerHTML = "I'll reach out to " + (sentCount === 1 ? "them" : "each of them") + " gently &mdash; at their pace, not mine. " +
+    "And you'll hear from me personally within a few days with a thank-you. No form-letter, no mass email. " +
+    "That's how I take care of the people you trust me with.";
+  formCard.style.display = "none";
+  successCard.classList.add("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+
+</body>
+</html>

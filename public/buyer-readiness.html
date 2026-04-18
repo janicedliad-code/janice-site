@@ -4,99 +4,201 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Home Buyer Readiness | Janice Divina Liad</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
+/* Redesigned Apr 18, 2026 to match home-value.html aesthetic.
+   Teal is the secondary accent here (vs crimson-only on home-value) so the
+   financial quiz feels distinct — more analytical, cooler, trustworthy. */
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;--crimson-pale:#F9F0F1;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --teal:#2D7A72;--teal-dark:#1E5450;--teal-soft:#E8F3F1;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;--amber:#B8862A;--red:#B53A3A;
+  --radius:12px;--radius-lg:18px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);--shadow-lg:0 10px 40px rgba(26,16,8,0.12);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;background:#FDF8F0;color:#1a1a1a;min-height:100vh}
-.hdr{background:linear-gradient(135deg,#8B1C2A,#5a1018);color:#fff;padding:20px 18px 16px}
-.hdr h1{font-size:19px;font-weight:900;margin:4px 0}
-.hdr p{font-size:12px;opacity:.8;margin:0 0 10px}
-.eyebrow{font-size:10px;letter-spacing:2px;opacity:.7;text-transform:uppercase;margin-bottom:4px}
-.prog-wrap{background:rgba(255,255,255,.25);border-radius:99px;height:6px}
-.prog-bar{height:6px;background:#C9A84C;border-radius:99px;transition:width .4s}
-.prog-txt{font-size:11px;opacity:.8;margin-top:5px}
-.tabs{overflow-x:auto;display:flex;gap:5px;padding:10px 12px;background:#fff;border-bottom:1px solid #eee}
-.tabs::-webkit-scrollbar{height:0}
-.tb{padding:7px 11px;border:none;border-radius:99px;cursor:pointer;font-weight:600;font-size:11px;white-space:nowrap;flex-shrink:0;background:#eee;color:#777}
-.tb.on{background:#8B1C2A;color:#fff}
-.wrap{padding:14px;max-width:580px;margin:0 auto}
-.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:14px}
-.card.gold{background:#fffbf0;border:1px solid #C9A84C}
-.card.navy{background:linear-gradient(135deg,#1a2a4a,#2a3f6a);color:#fff}
-.card.red{background:linear-gradient(135deg,#8B1C2A,#5a1018);color:#fff}
-.card.teal{background:linear-gradient(135deg,#1a5c35,#2d8a4e);color:#fff}
-.st{color:#8B1C2A;font-size:15px;font-weight:800;border-bottom:2px solid #C9A84C;padding-bottom:7px;margin-bottom:14px}
-.fld{margin-bottom:14px}
-label{font-size:13px;font-weight:600;color:#444;display:block;margin-bottom:4px}
-.note{font-size:11px;color:#999;margin:0 0 5px;line-height:1.5}
-.iw{display:flex;align-items:center;border:1.5px solid #ddd;border-radius:10px;overflow:hidden;background:#fff}
-.iw:focus-within{border-color:#8B1C2A}
-.ipre{padding:10px 12px;background:#f5f5f5;font-size:13px;color:#888;border-right:1px solid #ddd;user-select:none;white-space:nowrap}
-.iw input{flex:1;border:none;outline:none;padding:10px 12px;font-size:15px;background:transparent;color:#222;width:100%;min-width:0;text-align:left}
-input[type=text],input[type=email],input[type=tel]{width:100%;border:1.5px solid #ddd;border-radius:10px;padding:10px 12px;font-size:15px;outline:none;color:#222;font-family:inherit;background:#fff}
-input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus{border-color:#8B1C2A}
-select{width:100%;border:1.5px solid #ddd;border-radius:10px;padding:10px 12px;font-size:14px;outline:none;background:#fff;color:#222;font-family:inherit}
-select:focus{border-color:#8B1C2A}
-textarea{width:100%;border:1.5px solid #ddd;border-radius:10px;padding:10px 12px;font-size:14px;outline:none;font-family:inherit;resize:vertical;min-height:90px;color:#222}
-textarea:focus{border-color:#8B1C2A}
-.btn{padding:12px 22px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;transition:opacity .2s}
-.btn:hover{opacity:.85}
-.bp{background:#8B1C2A;color:#fff}
-.bs{background:#eee;color:#555}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* Top nav — mirrors home-value */
+.topnav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+.topnav-brand{display:flex;flex-direction:column;text-decoration:none}
+.topnav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.topnav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.topnav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;transition:var(--transition);font-weight:500}
+.topnav-back:hover{background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.3)}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#0a1a1a 0%,#15403c 50%,var(--teal-dark) 100%);color:#fff;padding:50px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80') center/cover no-repeat;opacity:0.08;z-index:0}
+.hero-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding:5px 16px;border:1px solid rgba(201,168,76,0.5);border-radius:99px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,2.8rem);font-weight:700;line-height:1.15;margin-bottom:14px;letter-spacing:-0.01em}
+.hero h1 .script{font-family:'Dancing Script',cursive;color:#E5B056;font-size:clamp(1.8rem,4vw,2.4rem);display:block;margin-top:4px}
+.hero p.sub{font-size:0.98rem;color:rgba(255,255,255,0.85);max-width:540px;margin:0 auto;line-height:1.7}
+.hero .tag{margin-top:20px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.9rem;color:var(--gold);letter-spacing:0.05em}
+
+/* Progress bar (below hero) */
+.progstrip{max-width:960px;margin:0 auto;padding:0 20px}
+.progstrip-inner{background:#fff;border-radius:0 0 var(--radius-lg) var(--radius-lg);padding:14px 24px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:-30px;position:relative;z-index:10}
+.progstrip-text{font-size:0.78rem;color:var(--text-mid);font-weight:600;letter-spacing:0.04em}
+.progstrip-text strong{color:var(--teal-dark)}
+.progstrip-bar-wrap{flex:1;min-width:180px;height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden}
+.progstrip-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:99px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
+
+/* Shell layout: sidebar + content */
+.shell{max-width:1080px;margin:20px auto 70px;padding:0 20px;display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:flex-start}
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr;gap:14px}
+  .sidebar{position:static !important;max-height:none !important}
+}
+
+/* Sidebar (left) */
+.sidebar{background:var(--white);border-radius:var(--radius-lg);padding:20px 0;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5);position:sticky;top:80px;max-height:calc(100vh - 100px);overflow-y:auto}
+.sidebar-head{padding:0 22px 14px;border-bottom:1px solid var(--silver);margin-bottom:10px}
+.sidebar-head .t{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--crimson);letter-spacing:-0.01em}
+.sidebar-head .s{font-size:0.7rem;color:var(--text-light);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-top:3px}
+.sideitem{display:flex;align-items:center;gap:12px;padding:10px 22px;cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:inherit;transition:var(--transition);border-left:3px solid transparent;color:var(--text-mid);font-size:0.88rem;font-weight:500}
+.sideitem:hover{background:var(--teal-soft);color:var(--teal-dark)}
+.sideitem.on{background:linear-gradient(90deg,var(--teal-soft),transparent);color:var(--teal-dark);border-left-color:var(--teal);font-weight:700}
+.sideitem.done{color:var(--text-light)}
+.sideitem .dot{width:8px;height:8px;border-radius:4px;background:var(--silver);flex-shrink:0;transition:var(--transition)}
+.sideitem.on .dot{background:var(--teal);box-shadow:0 0 0 3px rgba(45,122,114,0.18)}
+.sideitem.done .dot{background:var(--green)}
+.sideitem .num{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-weight:700;color:var(--text-light);min-width:20px;text-align:right;letter-spacing:-0.01em}
+.sideitem.on .num{color:var(--crimson)}
+.sideitem.done .num{color:var(--green)}
+.sideitem .label{flex:1}
+
+/* Content area (right) */
+.content{min-width:0;display:flex;flex-direction:column;gap:16px}
+
+/* Cards — clean white w/ subtle border */
+.card{background:var(--white);border-radius:var(--radius-lg);padding:28px 28px;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5)}
+.card.gold{background:var(--gold-soft);border-color:rgba(201,168,76,0.35)}
+.card.teal{background:linear-gradient(135deg,var(--teal-dark),var(--teal));color:#fff;border:none}
+.card.red{background:linear-gradient(135deg,var(--crimson-dark),var(--crimson));color:#fff;border:none}
+.card.navy{background:linear-gradient(135deg,#1a2a4a,#2a3f6a);color:#fff;border:none}
+@media (max-width:520px){.card{padding:22px 20px}}
+
+/* Section heading — matches home-value pattern */
+.st{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--crimson);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--silver);letter-spacing:-0.01em}
+.st::before{content:'';display:inline-block;width:8px;height:8px;border-radius:4px;background:var(--teal)}
+.card.red .st,.card.navy .st,.card.teal .st{color:#fff;border-bottom-color:rgba(255,255,255,0.2)}
+.card.red .st::before,.card.navy .st::before,.card.teal .st::before{background:var(--gold)}
+
+/* Form fields — matches home-value */
+.fld{margin-bottom:16px}
+label{display:block;font-size:0.72rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:7px}
+.note{font-size:0.78rem;color:var(--text-light);margin:0 0 8px;line-height:1.6;font-style:italic;text-transform:none;letter-spacing:0}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:11px 14px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+input:focus,select:focus,textarea:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+textarea{min-height:80px;resize:vertical;line-height:1.6}
+.iw{display:flex;align-items:stretch;border:1.5px solid var(--silver);border-radius:10px;overflow:hidden;background:var(--cream);transition:var(--transition)}
+.iw:focus-within{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+.ipre{padding:11px 14px;background:rgba(201,168,76,0.12);font-size:0.9rem;color:var(--amber);font-weight:700;border-right:1px solid var(--silver);user-select:none;white-space:nowrap;display:flex;align-items:center}
+.iw input{flex:1;border:none;outline:none;padding:11px 14px;font-size:0.95rem;background:transparent;color:var(--charcoal);width:100%;min-width:0;box-shadow:none !important}
+.iw input:focus{box-shadow:none !important;background:transparent !important}
+
+/* Buttons */
+.btn{padding:12px 22px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.9rem;font-family:inherit;transition:var(--transition);letter-spacing:0.03em}
+.btn:hover{transform:translateY(-1px)}
+.bp{background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;box-shadow:0 3px 12px rgba(139,28,42,0.22)}
+.bp:hover{box-shadow:0 5px 18px rgba(139,28,42,0.30)}
+.bs{background:var(--cream);color:var(--text-mid);border:1px solid var(--silver)}
+.bs:hover{background:#fff;border-color:var(--crimson);color:var(--crimson)}
 .bg{background:#25D366;color:#fff}
 .bfull{width:100%}
-.blg{padding:14px 32px;font-size:15px;border-radius:12px}
-.nav{display:flex;justify-content:space-between;margin-top:14px;gap:10px}
-.sb{background:#f9f9f9;border-radius:10px;padding:12px;text-align:center}
-.sl{font-size:11px;color:#999}
-.sv{font-size:20px;font-weight:800}
-.cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5}
-.tip{background:#fffbf0;border:1px solid #C9A84C;border-radius:10px;padding:12px;margin-top:12px;font-size:12px;color:#666;line-height:1.7}
-.badge{border-radius:99px;padding:3px 10px;font-size:11px;font-weight:700;color:#fff}
-.bc{margin-bottom:10px;padding:11px 13px;border-radius:12px;border:1.5px solid #eee}
-.bc.over{background:#fff5f5;border-color:#ffcccc}
-.bcn{font-size:11px;color:#aaa;margin-top:2px}
-.lr{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:10px;margin-bottom:6px;background:#f9f9f9;border:1.5px solid transparent}
-.lr.on{background:#8B1C2A18;border-color:#8B1C2A}
-.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.rb{background:rgba(255,255,255,.12);border-radius:10px;padding:10px 12px}
-.rl{font-size:10px;opacity:.7}
-.rv{font-size:16px;font-weight:800}
-.aw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{padding:8px 10px;text-align:right;font-weight:700;color:#555;border-bottom:2px solid #ddd;background:#f5f5f5}
-td{padding:6px 10px;text-align:right}
-tr:nth-child(even) td{background:#fafafa}
-.pr{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid #f5f5f5}
-.pd{min-width:65px;font-size:11px;font-weight:700;color:#C9A84C;padding-top:2px}
-.lb{background:linear-gradient(135deg,#8B1C2A,#5a1018);color:#fff;border-radius:16px;padding:20px;margin-bottom:14px;text-align:center}
-.infobox{background:#f0faf4;border:1px solid #2d8a4e;border-radius:10px;padding:14px;margin-top:4px}
+.blg{padding:14px 32px;font-size:0.95rem;border-radius:12px}
+.navrow{display:flex;justify-content:space-between;margin-top:16px;gap:10px}
+
+/* Utility layouts */
+.sb{background:var(--cream);border:1px solid var(--silver);border-radius:10px;padding:14px 16px;text-align:center}
+.sl{font-size:0.7rem;color:var(--text-light);text-transform:uppercase;letter-spacing:0.08em;font-weight:700}
+.sv{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-top:4px;letter-spacing:-0.01em}
+.cr{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f5f0e8}
+.cr:last-child{border-bottom:none}
+.tip{background:var(--gold-soft);border:1px solid rgba(201,168,76,0.35);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:0.82rem;color:var(--text-mid);line-height:1.7}
+.tip strong{color:var(--crimson)}
+.badge{border-radius:99px;padding:3px 10px;font-size:0.7rem;font-weight:700;color:#fff;letter-spacing:0.04em}
+.bc{margin-bottom:10px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--silver);background:var(--cream);transition:var(--transition)}
+.bc.over{background:rgba(181,58,58,0.06);border-color:rgba(181,58,58,0.3)}
+.bcn{font-size:0.72rem;color:var(--text-light);margin-top:4px;letter-spacing:0.02em}
+.lr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;margin-bottom:6px;background:var(--cream);border:1.5px solid transparent;transition:var(--transition)}
+.lr.on{background:var(--crimson-pale);border-color:var(--crimson)}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rb{background:rgba(255,255,255,.12);border-radius:10px;padding:11px 14px}
+.rl{font-size:0.7rem;opacity:0.75;letter-spacing:0.04em}
+.rv{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-top:3px;letter-spacing:-0.01em}
+.pr{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid #f5f0e8}
+.pr:last-child{border-bottom:none}
+.pd{min-width:72px;font-size:0.72rem;font-weight:700;color:var(--amber);padding-top:2px;letter-spacing:0.04em;text-transform:uppercase}
+.lb{background:linear-gradient(135deg,var(--teal-dark),var(--teal));color:#fff;border-radius:var(--radius-lg);padding:20px 22px;margin-bottom:14px}
+.infobox{background:var(--teal-soft);border:1px solid rgba(45,122,114,0.3);border-radius:10px;padding:14px;margin-top:4px}
 .rates-row{display:flex;flex-wrap:wrap;gap:8px}
-.rate-box{background:rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;text-align:center}
-.back-link{display:inline-block;color:rgba(255,255,255,.6);font-size:11px;text-decoration:none;margin-bottom:6px;transition:color .2s}
-.back-link:hover{color:#fff}
+.rate-box{background:rgba(255,255,255,.14);border-radius:8px;padding:8px 14px;text-align:center;flex:1;min-width:72px}
+
+/* Footer */
+.footer{background:#1a0a0a;color:rgba(255,255,255,0.5);padding:32px 24px;text-align:center;font-size:0.8rem;line-height:1.8}
+.footer strong{color:rgba(255,255,255,0.7)}
+.footer a{color:var(--gold);text-decoration:none}
+
 @media print{
-  .hdr,.tabs,.nav,.no-print,.card.navy,.card.teal{display:none!important}
+  .topnav,.progstrip,.sidebar,.navrow,.no-print,.card.navy,.card.teal,.footer{display:none!important}
   body{background:#fff;font-size:12px}
+  .shell{grid-template-columns:1fr;padding:0;margin:0}
   .card{box-shadow:none!important;border:1px solid #ddd!important;margin-bottom:10px!important;padding:14px!important;page-break-inside:avoid}
-  .card.red{background:#fff!important;color:#1a1a1a!important;border:2px solid #8B1C2A!important}
-  .card.gold{background:#fffbf0!important}
-  .wrap{padding:0!important;max-width:100%!important}
-  #root>div{display:block!important}
+  .card.red{background:#fff!important;color:#1a1a1a!important;border:2px solid var(--crimson)!important}
+  .card.gold{background:var(--gold-soft)!important}
 }
 @media(max-width:400px){.rg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="hdr">
-  <a href="/" class="back-link">← janicedivinarealestate.com</a>
-  <div class="eyebrow">Faith · Family · Forward</div>
-  <h1>🏡 Home Buyer Readiness</h1>
-  <p>Your free personalized roadmap to homeownership</p>
-  <div class="prog-wrap"><div class="prog-bar" id="pbar"></div></div>
-  <div class="prog-txt" id="ptxt"></div>
+
+<!-- Top nav -->
+<nav class="topnav">
+  <a href="/" class="topnav-brand">
+    <span class="topnav-script">Janice Divina Liad</span>
+    <span class="topnav-sub">Realtor · HomeSmart PV</span>
+  </a>
+  <a href="/" class="topnav-back">← Back to site</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Home Buyer Readiness</span>
+    <h1>Am I ready to buy? <span class="script">Let's find out together.</span></h1>
+    <p class="sub">A free 10-minute walkthrough that gives you a clear readiness score and a personalized 90-day action plan &mdash; so you know exactly what to do next.</p>
+    <div class="tag">Faith &middot; Family &middot; Forward</div>
+  </div>
+</section>
+
+<!-- Progress strip -->
+<div class="progstrip">
+  <div class="progstrip-inner">
+    <div class="progstrip-text" id="ptxt"></div>
+    <div class="progstrip-bar-wrap"><div class="progstrip-bar" id="pbar"></div></div>
+  </div>
 </div>
-<div class="tabs" id="tabBar"></div>
-<div class="wrap" id="root"></div>
+
+<!-- Shell: sidebar + content -->
+<main class="shell">
+  <aside class="sidebar" id="tabBar"></aside>
+  <div class="content" id="root"></div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <p><strong>Janice Divina Liad</strong> &middot; REALTOR&reg; &middot; DRE #02099146</p>
+  <p>HomeSmart PV &amp; Associates &middot; Serving Manteca, Tracy, Lathrop, Ripon, Modesto &amp; the Central Valley</p>
+  <p style="margin-top:12px"><a href="tel:2093059401">(209) 305-9401</a> &middot; <a href="mailto:janicedivina@janicedivinarealestate.com">janicedivina@janicedivinarealestate.com</a></p>
+  <p style="margin-top:8px"><a href="/">janicedivinarealestate.com</a></p>
+</footer>
 <script>
 const R={name:"Janice Divina Liad",phone:"2093059401",email:"jdivinare@outlook.com",brokerage:"HomeSmart PV & Associates",dre:"DRE #02099146"};
 const APP_URL="https://janicedivinarealestate.com/buyer-readiness.html";
@@ -132,15 +234,15 @@ function D(){
   const amort=[];let bal=prin;for(let m=1;m<=nm;m++){const ip=bal*r;const pp=pi-ip;bal-=pp;if(m<=12||m%60===0)amort.push({m,ip,pp,bal:Math.max(bal,0)});}
   const uv=util!==null?util:20;
   const checks=[
-    {l:"Credit Score",pass:cs>=620,great:cs>=700,d:cs===0?"Not entered":cs>=700?"Excellent ✨":cs>=620?"Qualifying — aim for 700+":"Below minimum (620 needed)"},
-    {l:"Credit Utilization",pass:uv<=30,great:uv<=10,d:util===null?"Enter balances in Credit tab":uv<=10?"Excellent (under 10%)":uv<=30?"Good — aim under 10%":uv+"% — pay down cards"},
-    {l:"No Late Payments",pass:num(S.latePayments)===0,great:num(S.latePayments)===0,d:num(S.latePayments)===0?"Clean history ✅":S.latePayments+" late payment(s)"},
-    {l:"No Collections",pass:num(S.collections)===0,great:num(S.collections)===0,d:num(S.collections)===0?"No collections ✅":S.collections+" collection(s) to resolve"},
-    {l:"Debt-to-Income",pass:dti<43,great:dti<36,d:td===0?"Not entered":dti<36?"Great DTI ✅":dti<43?dti.toFixed(1)+"% — qualifying":dti.toFixed(1)+"% — over 43%"},
-    {l:"Monthly Cash Flow",pass:net>=200,great:net>=500,d:ti===0?"Not entered":net>=500?"Strong ✅":net>=200?"Adequate — build buffer":"Tighten budget first"},
-    {l:"Down Payment Ready",pass:num(S.savings)>=tn&&tn>0,great:num(S.savings)>=tn&&tn>0,d:!S.savings||!S.homePrice?"Not entered":gap<=0?"Fully funded 🎉":fmt(gap)+" still needed"}
+    {l:"Credit Score",pass:cs>=620,great:cs>=700,d:cs===0?"Not entered":cs>=700?"Excellent":cs>=620?"Qualifying \u2014 aim for 700+":"Below minimum (620 needed)"},
+    {l:"Credit Utilization",pass:uv<=30,great:uv<=10,d:util===null?"Enter balances in Credit tab":uv<=10?"Excellent (under 10%)":uv<=30?"Good \u2014 aim under 10%":uv+"% \u2014 pay down cards"},
+    {l:"No Late Payments",pass:num(S.latePayments)===0,great:num(S.latePayments)===0,d:num(S.latePayments)===0?"Clean history":S.latePayments+" late payment(s)"},
+    {l:"No Collections",pass:num(S.collections)===0,great:num(S.collections)===0,d:num(S.collections)===0?"No collections":S.collections+" collection(s) to resolve"},
+    {l:"Debt-to-Income",pass:dti<43,great:dti<36,d:td===0?"Not entered":dti<36?"Great DTI":dti<43?dti.toFixed(1)+"% \u2014 qualifying":dti.toFixed(1)+"% \u2014 over 43%"},
+    {l:"Monthly Cash Flow",pass:net>=200,great:net>=500,d:ti===0?"Not entered":net>=500?"Strong":net>=200?"Adequate \u2014 build buffer":"Tighten budget first"},
+    {l:"Down Payment Ready",pass:num(S.savings)>=tn&&tn>0,great:num(S.savings)>=tn&&tn>0,d:!S.savings||!S.homePrice?"Not entered":gap<=0?"Fully funded":fmt(gap)+" still needed"}
   ];
-  const pc=checks.filter(c=>c.pass).length,rp=Math.round(pc/checks.length*100);const rc=rp>=85?"#2d8a4e":rp>=57?"#C9A84C":"#8B1C2A";const rl=rp>=85?"🏡 Ready to Buy!":rp>=57?"🔥 Almost There!":rp>=42?"📈 Building Momentum":"🌱 Your Journey Begins";
+  const pc=checks.filter(c=>c.pass).length,rp=Math.round(pc/checks.length*100);const rc=rp>=85?"#2d8a4e":rp>=57?"#C9A84C":"#8B1C2A";const rl=rp>=85?"Ready to Buy":rp>=57?"Almost There":rp>=42?"Building Momentum":"Your Journey Begins";
   return{ti,te,td,net,hp,da,tn,gap,mo,dti,cs,util,uv,checks,rp,rc,rl,p,dn,prin,rate,pi,tax,ins,needsPmi,pmi,tot,totInt,amort,term,nm};
 }
 function harvest(){["name","email","phone","city","reviewName","reviewText"].forEach(k=>{const e=$(k);if(e)S[k]=e.value;});}
@@ -162,34 +264,41 @@ function addIncome(){harvest();S.incomes.push({label:"",amount:""});paint();}
 function removeIncome(i){harvest();if(S.incomes.length<=1)return;S.incomes.splice(i,1);paint();}
 function paint(){
   var d=D(),t=S.tab;var pct=Math.round(t/(TABS.length-1)*100);
-  $("pbar").style.width=pct+"%";$("ptxt").textContent="Step "+(t+1)+" of "+TABS.length+" — "+pct+"% complete";
-  $("tabBar").innerHTML=TABS.map(function(tb,i){return '<button class="tb'+(t===i?" on":"")+'" onclick="go('+i+')">'+tb+'</button>';}).join("");
+  $("pbar").style.width=pct+"%";
+  $("ptxt").innerHTML="Step <strong>"+(t+1)+"</strong> of "+TABS.length+" &middot; "+pct+"% complete";
+  /* Sidebar: vertical step list. Done if index < current. Active if index === current. */
+  $("tabBar").innerHTML =
+    '<div class="sidebar-head"><div class="t">Your Readiness Quiz</div><div class="s">10 steps · ~10 min</div></div>' +
+    TABS.map(function(tb,i){
+      var cls = i===t ? "on" : (i<t ? "done" : "");
+      return '<button class="sideitem '+cls+'" onclick="go('+i+')"><span class="dot"></span><span class="num">'+(i+1)+'</span><span class="label">'+tb+'</span></button>';
+    }).join("");
   var h="";
   if(t===0){
-    h='<div class="card" style="text-align:center;padding:28px"><div style="font-size:48px;margin-bottom:10px">🏡</div><h2 style="color:#8B1C2A;font-size:20px;font-weight:900;margin:0 0 10px">Welcome to Your Home Buying Journey</h2><p style="font-size:14px;color:#666;line-height:1.8;margin:0 0 16px">This <strong>free tool</strong> gives you a personalized readiness score and 90-day action plan so you know exactly what to do to buy your home.</p><div style="display:flex;flex-direction:column;gap:8px;text-align:left;background:#f9f9f9;border-radius:12px;padding:16px;margin-bottom:22px"><div style="font-size:13px;color:#555">📋 Income & budget review</div><div style="font-size:13px;color:#555">💳 Credit score & action plan</div><div style="font-size:13px;color:#555">💰 Savings & down payment goal</div><div style="font-size:13px;color:#555">📊 Debt-to-income analysis</div><div style="font-size:13px;color:#555">🏦 Live mortgage payment calculator</div><div style="font-size:13px;color:#555">🗺️ Your personalized 90-day plan</div></div><button class="btn bp bfull blg" onclick="go(1)">Let\'s Get Started →</button></div><div class="card gold" style="text-align:center"><p style="font-size:13px;color:#666;line-height:1.9;margin:0"><em>"By wisdom a house is built, and by understanding it is established."</em><br><strong style="color:#8B1C2A">— Proverbs 24:3</strong></p><p style="font-size:12px;color:#999;margin-top:8px">'+R.name+' | '+R.brokerage+' | '+R.dre+'</p></div>';
+    h='<div class="card" style="text-align:center"><div style="width:56px;height:56px;border-radius:28px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:700">BR</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:700;color:var(--crimson);margin-bottom:10px;letter-spacing:-0.01em">Welcome to Your Home Buying Journey</h2><p style="font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin:0 auto 20px;max-width:440px">This <strong>free 10-minute walkthrough</strong> gives you a personalized readiness score and a clear 90-day action plan so you know exactly what to do next.</p><div style="display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--cream);border:1px solid var(--silver);border-radius:12px;padding:18px 20px;margin-bottom:22px;max-width:440px;margin-left:auto;margin-right:auto">'+[["Income & budget review","var(--teal)"],["Credit score & action plan","var(--crimson)"],["Savings & down payment goal","var(--gold)"],["Debt-to-income analysis","var(--teal)"],["Live mortgage payment calculator","var(--crimson)"],["Your personalized 90-day plan","var(--gold)"]].map(function(r){return \'<div style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--text-mid)"><span style="width:6px;height:6px;border-radius:3px;background:\'+r[1]+\'"></span>\'+r[0]+\'</div>\';}).join("")+\'</div><button class="btn bp bfull blg" onclick="go(1)">Let\'s Get Started \u2192</button></div><div class="card gold" style="text-align:center"><p style="font-family:\'Cormorant Garamond\',serif;font-size:1rem;color:var(--text-mid);line-height:1.9;margin:0;font-style:italic">"By wisdom a house is built, and by understanding it is established."</p><p style="font-size:0.75rem;color:var(--amber);margin-top:8px;font-weight:700;letter-spacing:0.06em">\u2014 PROVERBS 24:3</p><p style="font-size:0.7rem;color:var(--text-light);margin-top:10px;letter-spacing:0.04em">\'+R.name+\' \u00b7 \'+R.brokerage+\' \u00b7 \'+R.dre+\'</p></div>\';
   }
   else if(t===1){
-    h='<div class="lb"><h2 style="font-size:18px;font-weight:900;margin-bottom:6px">Tell Us About You</h2><p style="font-size:13px;opacity:.85;line-height:1.7">'+R.name+' will use this to build your free personalized report and guide your next steps — no pressure, no obligation.</p></div><div class="card"><div class="st">Your Contact Information</div><div class="fld"><label>Full Name *</label><input type="text" id="name" value="'+S.name+'" placeholder="e.g. Maria Santos" autocomplete="name"></div><div class="fld"><label>Email Address *</label><input type="email" id="email" value="'+S.email+'" placeholder="e.g. maria@email.com" autocomplete="email"></div><div class="fld"><label>Phone Number *</label><input type="tel" id="phone" value="'+S.phone+'" placeholder="e.g. (209) 555-0100" autocomplete="tel"></div><div class="fld"><label>City / Area You Want to Buy In</label><input type="text" id="city" value="'+S.city+'" placeholder="e.g. Manteca, Tracy, Stockton..."></div><div class="fld"><label>First-Time Home Buyer?</label><select onchange="S.firstTime=this.value"><option value="yes"'+(S.firstTime==="yes"?" selected":"")+'>Yes — this is my first home 🏡</option><option value="no"'+(S.firstTime==="no"?" selected":"")+'>No — I\'ve owned before</option></select></div><div class="fld"><label>Type of Home?</label><select onchange="S.homeType=this.value"><option value="single"'+(S.homeType==="single"?" selected":"")+'>Single Family Home</option><option value="condo"'+(S.homeType==="condo"?" selected":"")+'>Condo / Townhouse</option><option value="multi"'+(S.homeType==="multi"?" selected":"")+'>Multi-Family</option><option value="unsure"'+(S.homeType==="unsure"?" selected":"")+'>Not sure yet</option></select></div><div class="fld"><label>When Are You Hoping to Buy?</label><select onchange="S.timeline=this.value"><option value="3"'+(S.timeline==="3"?" selected":"")+'>ASAP (0–3 months)</option><option value="6"'+(S.timeline==="6"?" selected":"")+'>Within 6 months</option><option value="12"'+(S.timeline==="12"?" selected":"")+'>Within 12 months</option><option value="24"'+(S.timeline==="24"?" selected":"")+'>1–2 years</option><option value="36"'+(S.timeline==="36"?" selected":"")+'>2+ years — still planning</option></select></div><div class="nav"><span></span><button class="btn bp" onclick="submitLead()">Save & Continue →</button></div></div>';
+    h='<div class="lb"><h2 style="font-size:18px;font-weight:900;margin-bottom:6px">Tell Us About You</h2><p style="font-size:13px;opacity:.85;line-height:1.7">'+R.name+' will use this to build your free personalized report and guide your next steps — no pressure, no obligation.</p></div><div class="card"><div class="st">Your Contact Information</div><div class="fld"><label>Full Name *</label><input type="text" id="name" value="'+S.name+'" placeholder="e.g. Maria Santos" autocomplete="name"></div><div class="fld"><label>Email Address *</label><input type="email" id="email" value="'+S.email+'" placeholder="e.g. maria@email.com" autocomplete="email"></div><div class="fld"><label>Phone Number *</label><input type="tel" id="phone" value="'+S.phone+'" placeholder="e.g. (209) 555-0100" autocomplete="tel"></div><div class="fld"><label>City / Area You Want to Buy In</label><input type="text" id="city" value="'+S.city+'" placeholder="e.g. Manteca, Tracy, Stockton..."></div><div class="fld"><label>First-Time Home Buyer?</label><select onchange="S.firstTime=this.value"><option value="yes"'+(S.firstTime==="yes"?" selected":"")+'>Yes — this is my first home 🏡</option><option value="no"'+(S.firstTime==="no"?" selected":"")+'>No — I\'ve owned before</option></select></div><div class="fld"><label>Type of Home?</label><select onchange="S.homeType=this.value"><option value="single"'+(S.homeType==="single"?" selected":"")+'>Single Family Home</option><option value="condo"'+(S.homeType==="condo"?" selected":"")+'>Condo / Townhouse</option><option value="multi"'+(S.homeType==="multi"?" selected":"")+'>Multi-Family</option><option value="unsure"'+(S.homeType==="unsure"?" selected":"")+'>Not sure yet</option></select></div><div class="fld"><label>When Are You Hoping to Buy?</label><select onchange="S.timeline=this.value"><option value="3"'+(S.timeline==="3"?" selected":"")+'>ASAP (0–3 months)</option><option value="6"'+(S.timeline==="6"?" selected":"")+'>Within 6 months</option><option value="12"'+(S.timeline==="12"?" selected":"")+'>Within 12 months</option><option value="24"'+(S.timeline==="24"?" selected":"")+'>1–2 years</option><option value="36"'+(S.timeline==="36"?" selected":"")+'>2+ years — still planning</option></select></div><div class="navrow"><span></span><button class="btn bp" onclick="submitLead()">Save & Continue →</button></div></div>';
   }
   else if(t===2){
     var incRows=S.incomes.map(function(inc,i){var dv=inc.amount?Number(inc.amount.toString().replace(/,/g,"")).toLocaleString("en-US"):"";return '<div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:10px;background:#f9f9f9;border-radius:10px;padding:10px 12px"><div style="flex:1"><div style="font-size:11px;color:#888;margin-bottom:3px">Source</div><input type="text" id="incl_'+i+'" value="'+((inc.label||"").replace(/"/g,"&quot;"))+'" placeholder="e.g. Primary Job" style="font-size:13px;padding:8px 10px"></div><div style="flex:1"><div style="font-size:11px;color:#888;margin-bottom:3px">Monthly Amount</div><div class="iw"><span class="ipre">$</span><input type="text" inputmode="decimal" id="inc_'+i+'" value="'+dv+'" placeholder="0" autocomplete="off" data-raw="'+(inc.amount||"")+'"></div></div>'+(S.incomes.length>1?'<button onclick="removeIncome('+i+')" style="background:none;border:none;color:#8B1C2A;font-size:18px;cursor:pointer;padding:4px 8px;margin-bottom:2px" title="Remove">✕</button>':'')+'</div>';}).join("");
-    h='<div class="card"><div class="st">Your Monthly Income</div><div class="fld"><label>Employment Type</label><select onchange="S.incomeType=this.value;paint()"><option value="employed"'+(S.incomeType==="employed"?" selected":"")+'>Full-time Employee (W-2)</option><option value="self"'+(S.incomeType==="self"?" selected":"")+'>Self-Employed / 1099</option><option value="both"'+(S.incomeType==="both"?" selected":"")+'>Both W-2 and Self-Employed</option><option value="other"'+(S.incomeType==="other"?" selected":"")+'>Other</option></select></div><div style="margin-bottom:14px"><label style="margin-bottom:8px">Income Sources</label><div class="note">Add all monthly income sources — jobs, side hustles, rental income, support payments, etc.</div>'+incRows+'<button class="btn bs" onclick="addIncome()" style="width:100%;margin-top:4px;font-size:13px">＋ Add Another Income Source</button></div>'+(d.ti>0?'<div class="infobox"><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;color:#888">Total Monthly Income</div><div style="font-size:26px;font-weight:900;color:#2d8a4e">'+fmt(d.ti)+'</div></div><div style="text-align:right"><div style="font-size:11px;color:#888">Annual</div><div style="font-size:16px;font-weight:700;color:#2d8a4e">'+fmt(d.ti*12)+'</div></div></div>'+((S.incomes.length>1)?'<div style="margin-top:10px;border-top:1px solid #ddd;padding-top:8px">'+S.incomes.filter(function(x){return num(x.amount)>0;}).map(function(x){return '<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;color:#555"><span>'+(x.label||"Income")+'</span><span style="font-weight:600">'+fmt(x.amount)+'/mo</span></div>';}).join("")+'</div>':"")+'</div>':"")+(S.incomeType==="self"?'<div class="tip">💡 Self-employed? Lenders use a 2-year average from tax returns. Consistency matters most.</div>':"")+'<div class="nav"><button class="btn bs" onclick="go(1)">← Back</button><button class="btn bp" onclick="go(3)">Next: Budget →</button></div></div>';
+    h='<div class="card"><div class="st">Your Monthly Income</div><div class="fld"><label>Employment Type</label><select onchange="S.incomeType=this.value;paint()"><option value="employed"'+(S.incomeType==="employed"?" selected":"")+'>Full-time Employee (W-2)</option><option value="self"'+(S.incomeType==="self"?" selected":"")+'>Self-Employed / 1099</option><option value="both"'+(S.incomeType==="both"?" selected":"")+'>Both W-2 and Self-Employed</option><option value="other"'+(S.incomeType==="other"?" selected":"")+'>Other</option></select></div><div style="margin-bottom:14px"><label style="margin-bottom:8px">Income Sources</label><div class="note">Add all monthly income sources — jobs, side hustles, rental income, support payments, etc.</div>'+incRows+'<button class="btn bs" onclick="addIncome()" style="width:100%;margin-top:4px;font-size:13px">＋ Add Another Income Source</button></div>'+(d.ti>0?'<div class="infobox"><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;color:#888">Total Monthly Income</div><div style="font-size:26px;font-weight:900;color:#2d8a4e">'+fmt(d.ti)+'</div></div><div style="text-align:right"><div style="font-size:11px;color:#888">Annual</div><div style="font-size:16px;font-weight:700;color:#2d8a4e">'+fmt(d.ti*12)+'</div></div></div>'+((S.incomes.length>1)?'<div style="margin-top:10px;border-top:1px solid #ddd;padding-top:8px">'+S.incomes.filter(function(x){return num(x.amount)>0;}).map(function(x){return '<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;color:#555"><span>'+(x.label||"Income")+'</span><span style="font-weight:600">'+fmt(x.amount)+'/mo</span></div>';}).join("")+'</div>':"")+'</div>':"")+(S.incomeType==="self"?'<div class="tip">💡 Self-employed? Lenders use a 2-year average from tax returns. Consistency matters most.</div>':"")+'<div class="navrow"><button class="btn bs" onclick="go(1)">← Back</button><button class="btn bp" onclick="go(3)">Next: Budget →</button></div></div>';
   }
   else if(t===3){
     var brows=BCATS.map(function(c){var sp=num(S.bgt[c.k]),id2=d.ti*c.p/100;var over=sp>id2&&sp>0&&d.ti>0;var ps=d.ti>0&&sp>0?((sp/d.ti)*100).toFixed(0):null;var displayVal=sp?sp.toLocaleString("en-US"):"";return '<div class="bc'+(over?" over":"")+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-weight:600;font-size:13px">'+c.i+' '+c.l+'</span>'+(ps?'<span class="badge" style="background:'+(over?"#8B1C2A":"#2d8a4e")+'">'+ps+'% '+(over?"⚠️":"✓")+'</span>':"")+'</div><div class="iw"><span class="ipre">$</span><input type="text" inputmode="decimal" id="bgt_'+c.k+'" value="'+displayVal+'" placeholder="0" autocomplete="off" data-raw="'+(S.bgt[c.k]||"")+'"></div><div class="bcn">Recommended: '+c.p+'%'+(d.ti>0?' = '+fmt(d.ti*c.p/100)+'/mo':"")+'</div></div>';}).join("");
     var ov=BCATS.map(function(c){var sp=num(S.bgt[c.k]);var id2=d.ti*c.p/100;return{i:c.i,l:c.l,over:sp>id2&&sp>0&&d.ti>0,ob:sp-id2};}).filter(function(c){return c.over;}).sort(function(a,b){return b.ob-a.ob;});
-    h='<div class="card"><div class="st">Your Monthly Budget</div><p style="font-size:12px;color:#777;margin:0 0 12px;line-height:1.6">Enter what you <strong>actually</strong> spend each month. Honesty = a better plan.</p>'+brows+'</div>'+(d.te>0?'<div class="card"><div class="st">Budget Summary</div><div style="display:flex;gap:10px;margin-bottom:10px"><div class="sb" style="flex:1"><div class="sl">Total Spending</div><div class="sv" style="color:#8B1C2A">'+fmt(d.te)+'</div></div><div class="sb" style="flex:1"><div class="sl">Remaining</div><div class="sv" style="color:'+(d.ti-d.te>0?"#2d8a4e":"#8B1C2A")+'">'+fmt(d.ti-d.te)+'</div></div></div>'+(ov.length?'<p style="font-size:12px;font-weight:700;color:#8B1C2A;margin:0 0 8px">📌 Reduce these:</p>'+ov.map(function(c){return '<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #f5f5f5"><span>'+c.i+' '+c.l+'</span><span style="color:#8B1C2A;font-weight:700">Cut '+fmt(c.ob)+'/mo</span></div>';}).join(""):"")+'</div>':"")+'<div class="nav"><button class="btn bs" onclick="go(2)">← Back</button><button class="btn bp" onclick="go(4)">Next: Debt →</button></div>';
+    h='<div class="card"><div class="st">Your Monthly Budget</div><p style="font-size:12px;color:#777;margin:0 0 12px;line-height:1.6">Enter what you <strong>actually</strong> spend each month. Honesty = a better plan.</p>'+brows+'</div>'+(d.te>0?'<div class="card"><div class="st">Budget Summary</div><div style="display:flex;gap:10px;margin-bottom:10px"><div class="sb" style="flex:1"><div class="sl">Total Spending</div><div class="sv" style="color:#8B1C2A">'+fmt(d.te)+'</div></div><div class="sb" style="flex:1"><div class="sl">Remaining</div><div class="sv" style="color:'+(d.ti-d.te>0?"#2d8a4e":"#8B1C2A")+'">'+fmt(d.ti-d.te)+'</div></div></div>'+(ov.length?'<p style="font-size:12px;font-weight:700;color:#8B1C2A;margin:0 0 8px">📌 Reduce these:</p>'+ov.map(function(c){return '<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #f5f5f5"><span>'+c.i+' '+c.l+'</span><span style="color:#8B1C2A;font-weight:700">Cut '+fmt(c.ob)+'/mo</span></div>';}).join(""):"")+'</div>':"")+'<div class="navrow"><button class="btn bs" onclick="go(2)">← Back</button><button class="btn bp" onclick="go(4)">Next: Debt →</button></div>';
   }
   else if(t===4){
-    h='<div class="card"><div class="st">Monthly Debt Payments</div><p style="font-size:12px;color:#777;margin:0 0 14px;line-height:1.6">Enter <strong>minimum monthly payments</strong> on loans and credit accounts only — not rent or living expenses.</p>'+numField("Car Payment(s)","car",null,"$","","0")+numField("Student Loan Payment(s)","student",null,"$","","0")+numField("Credit Card Minimum Payments","cards",null,"$","","0")+numField("Personal Loans / Other Debt","otherDebt",null,"$","","0")+(d.td>0?'<div style="background:#f9f9f9;border-radius:12px;padding:14px;margin-top:4px"><div style="display:flex;gap:10px"><div class="sb" style="flex:1"><div class="sl">Total Monthly Debt</div><div class="sv" style="color:#8B1C2A">'+fmt(d.td)+'</div></div><div class="sb" style="flex:1"><div class="sl">Debt-to-Income</div><div class="sv" style="color:'+(d.dti<36?"#2d8a4e":d.dti<43?"#C9A84C":"#8B1C2A")+'">'+d.dti.toFixed(1)+'%</div></div></div><div style="margin-top:10px;font-size:12px;text-align:center;font-weight:600;color:'+(d.dti<36?"#2d8a4e":d.dti<43?"#b8860b":"#8B1C2A")+'">'+(d.dti<36?"✅ Excellent DTI!":d.dti<43?"🟡 Qualifying — aim below 36%":"❌ Over 43% — reduce debt before applying")+'</div></div>':"")+'<div class="tip">💡 <strong>Avalanche method:</strong> Pay minimums on all, then put every extra dollar toward the highest-interest debt first.</div><div class="nav"><button class="btn bs" onclick="go(3)">← Back</button><button class="btn bp" onclick="go(5)">Next: Savings →</button></div></div>';
+    h='<div class="card"><div class="st">Monthly Debt Payments</div><p style="font-size:12px;color:#777;margin:0 0 14px;line-height:1.6">Enter <strong>minimum monthly payments</strong> on loans and credit accounts only — not rent or living expenses.</p>'+numField("Car Payment(s)","car",null,"$","","0")+numField("Student Loan Payment(s)","student",null,"$","","0")+numField("Credit Card Minimum Payments","cards",null,"$","","0")+numField("Personal Loans / Other Debt","otherDebt",null,"$","","0")+(d.td>0?'<div style="background:#f9f9f9;border-radius:12px;padding:14px;margin-top:4px"><div style="display:flex;gap:10px"><div class="sb" style="flex:1"><div class="sl">Total Monthly Debt</div><div class="sv" style="color:#8B1C2A">'+fmt(d.td)+'</div></div><div class="sb" style="flex:1"><div class="sl">Debt-to-Income</div><div class="sv" style="color:'+(d.dti<36?"#2d8a4e":d.dti<43?"#C9A84C":"#8B1C2A")+'">'+d.dti.toFixed(1)+'%</div></div></div><div style="margin-top:10px;font-size:12px;text-align:center;font-weight:600;color:'+(d.dti<36?"#2d8a4e":d.dti<43?"#b8860b":"#8B1C2A")+'">'+(d.dti<36?"✅ Excellent DTI!":d.dti<43?"🟡 Qualifying — aim below 36%":"❌ Over 43% — reduce debt before applying")+'</div></div>':"")+'<div class="tip">💡 <strong>Avalanche method:</strong> Pay minimums on all, then put every extra dollar toward the highest-interest debt first.</div><div class="navrow"><button class="btn bs" onclick="go(3)">← Back</button><button class="btn bp" onclick="go(5)">Next: Savings →</button></div></div>';
   }
   else if(t===5){
-    h='<div class="card"><div class="st">Savings & Down Payment Goal</div>'+numField("Target Home Price","homePrice",null,"$","","e.g. 400,000")+'<div class="fld"><label>Loan Type</label><select onchange="S.downPct=this.value;paint()"><option value="3.5"'+(S.downPct==="3.5"?" selected":"")+'>FHA — 3.5% down (min 580 credit)</option><option value="3"'+(S.downPct==="3"?" selected":"")+'>Conventional 97 — 3% down</option><option value="5"'+(S.downPct==="5"?" selected":"")+'>Conventional — 5% down</option><option value="10"'+(S.downPct==="10"?" selected":"")+'>Conventional — 10% down</option><option value="20"'+(S.downPct==="20"?" selected":"")+'>Conventional — 20% (no PMI)</option><option value="0"'+(S.downPct==="0"?" selected":"")+'>VA / USDA — 0% down (if eligible)</option></select></div>'+numField("Current Savings","savings",null,"$","All savings: checking, savings accounts, gifts, etc.","e.g. 8,000")+numField("Monthly Savings Contribution","monthly",null,"$","How much can you save each month toward your home?","e.g. 500")+(d.hp>0?'<div style="background:#f9f9f9;border-radius:12px;padding:14px;margin-top:4px">'+[["Down Payment",fmt(d.da)],["Closing Costs (~3%)",fmt(d.hp*0.03)],["Move-In Reserve (~1%)",fmt(d.hp*0.01)],["Total Needed",fmt(d.tn)],["You Have Now",fmt(num(S.savings))],["Still Needed",d.gap<=0?"✅ Funded!":fmt(d.gap)]].map(function(r){return '<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #eee;font-weight:'+(["Total Needed","Still Needed"].indexOf(r[0])>=0?700:400)+'"><span style="color:#666">'+r[0]+'</span><span style="color:'+(r[0]==="Still Needed"&&d.gap>0?"#8B1C2A":r[0]==="Still Needed"?"#2d8a4e":"#333")+'">'+r[1]+'</span></div>';}).join("")+(d.mo&&d.gap>0?'<div style="margin-top:10px;text-align:center;font-weight:700;font-size:14px;color:#C9A84C">📅 ~'+d.mo+' months at your current savings rate</div>':"")+(d.gap<=0&&d.hp>0?'<div style="margin-top:10px;text-align:center;font-weight:700;font-size:14px;color:#2d8a4e">🎉 Fully funded — let\'s find your home!</div>':"")+'</div>':"")+'<div class="nav"><button class="btn bs" onclick="go(4)">← Back</button><button class="btn bp" onclick="go(6)">Next: Credit →</button></div></div>';
+    h='<div class="card"><div class="st">Savings & Down Payment Goal</div>'+numField("Target Home Price","homePrice",null,"$","","e.g. 400,000")+'<div class="fld"><label>Loan Type</label><select onchange="S.downPct=this.value;paint()"><option value="3.5"'+(S.downPct==="3.5"?" selected":"")+'>FHA — 3.5% down (min 580 credit)</option><option value="3"'+(S.downPct==="3"?" selected":"")+'>Conventional 97 — 3% down</option><option value="5"'+(S.downPct==="5"?" selected":"")+'>Conventional — 5% down</option><option value="10"'+(S.downPct==="10"?" selected":"")+'>Conventional — 10% down</option><option value="20"'+(S.downPct==="20"?" selected":"")+'>Conventional — 20% (no PMI)</option><option value="0"'+(S.downPct==="0"?" selected":"")+'>VA / USDA — 0% down (if eligible)</option></select></div>'+numField("Current Savings","savings",null,"$","All savings: checking, savings accounts, gifts, etc.","e.g. 8,000")+numField("Monthly Savings Contribution","monthly",null,"$","How much can you save each month toward your home?","e.g. 500")+(d.hp>0?'<div style="background:#f9f9f9;border-radius:12px;padding:14px;margin-top:4px">'+[["Down Payment",fmt(d.da)],["Closing Costs (~3%)",fmt(d.hp*0.03)],["Move-In Reserve (~1%)",fmt(d.hp*0.01)],["Total Needed",fmt(d.tn)],["You Have Now",fmt(num(S.savings))],["Still Needed",d.gap<=0?"✅ Funded!":fmt(d.gap)]].map(function(r){return '<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #eee;font-weight:'+(["Total Needed","Still Needed"].indexOf(r[0])>=0?700:400)+'"><span style="color:#666">'+r[0]+'</span><span style="color:'+(r[0]==="Still Needed"&&d.gap>0?"#8B1C2A":r[0]==="Still Needed"?"#2d8a4e":"#333")+'">'+r[1]+'</span></div>';}).join("")+(d.mo&&d.gap>0?'<div style="margin-top:10px;text-align:center;font-weight:700;font-size:14px;color:#C9A84C">📅 ~'+d.mo+' months at your current savings rate</div>':"")+(d.gap<=0&&d.hp>0?'<div style="margin-top:10px;text-align:center;font-weight:700;font-size:14px;color:#2d8a4e">🎉 Fully funded — let\'s find your home!</div>':"")+'</div>':"")+'<div class="navrow"><button class="btn bs" onclick="go(4)">← Back</button><button class="btn bp" onclick="go(6)">Next: Credit →</button></div></div>';
   }
   else if(t===6){
     var tier=!d.cs?null:d.cs<580?{l:"Poor",c:"#e74c3c"}:d.cs<620?{l:"Fair",c:"#e67e22"}:d.cs<660?{l:"FHA Ready",c:"#C9A84C"}:d.cs<700?{l:"Conventional",c:"#27ae60"}:{l:"Excellent",c:"#2d8a4e"};
     var ctips=(CTIPS.find(function(x){return d.cs>=x.r[0]&&d.cs<=x.r[1];})||CTIPS[4]).t;
-    h='<div class="card"><div class="st">Your Credit Profile</div><div class="fld"><label>Have you checked your credit recently?</label><select onchange="S.hasChecked=this.value;paint()"><option value="yes"'+(S.hasChecked==="yes"?" selected":"")+'>Yes — I know my score</option><option value="no"'+(S.hasChecked==="no"?" selected":"")+'>No — I haven\'t checked</option><option value="unsure"'+(S.hasChecked==="unsure"?" selected":"")+'>Checked a while ago</option></select></div>'+(S.hasChecked==="no"?'<div class="tip">💡 Check free at <strong>AnnualCreditReport.com</strong> or <strong>Credit Karma</strong>. Soft pull — won\'t hurt your score!</div>':"")+numField("Credit Score (FICO)","creditScore",null,"🔢","Enter 0 if you don\'t know yet","e.g. 680")+(tier?'<div style="background:'+tier.c+'18;border:2px solid '+tier.c+';border-radius:12px;padding:12px;text-align:center;margin-bottom:14px"><div style="font-size:11px;color:#888">Your Credit Tier</div><div style="font-size:24px;font-weight:900;color:'+tier.c+'">'+tier.l+'</div></div>':"")+'<div class="st" style="margin-top:4px">Credit Utilization Calculator</div><p style="font-size:12px;color:#777;margin:0 0 12px;line-height:1.6">Just enter your numbers — we\'ll calculate the percentage automatically.</p><div style="background:#f9f9f9;border-radius:12px;padding:14px;margin-bottom:14px">'+numField("Total Credit Card Balances","totalBalance",null,"$","","e.g. 3,500")+numField("Total Credit Card Limits","totalLimit",null,"$","","e.g. 10,000")+(d.util!==null?'<div style="background:#fff;border-radius:10px;padding:12px;text-align:center;margin-top:4px;border:2px solid '+(d.util<=10?"#2d8a4e":d.util<=30?"#C9A84C":"#8B1C2A")+'"><div style="font-size:11px;color:#888">Your Credit Utilization</div><div style="font-size:30px;font-weight:900;color:'+(d.util<=10?"#2d8a4e":d.util<=30?"#C9A84C":"#8B1C2A")+'">'+d.util+'%</div><div style="font-size:12px;color:#888">'+(d.util<=10?"Excellent — under 10% 🏆":d.util<=30?"Good — aim for under 10%":"High — pay down to under 30%")+'</div></div>':"")+'</div><div class="fld"><label>Late payments in last 24 months?</label><select onchange="S.latePayments=this.value;paint()"><option value="0"'+(S.latePayments==="0"?" selected":"")+'>None ✅</option><option value="1"'+(S.latePayments==="1"?" selected":"")+'>1 late payment</option><option value="2"'+(S.latePayments==="2"?" selected":"")+'>2 late payments</option><option value="3"'+(S.latePayments==="3"?" selected":"")+'>3 or more</option></select></div><div class="fld"><label>Open collections or charge-offs?</label><select onchange="S.collections=this.value;paint()"><option value="0"'+(S.collections==="0"?" selected":"")+'>None ✅</option><option value="1"'+(S.collections==="1"?" selected":"")+'>1 collection</option><option value="2"'+(S.collections==="2"?" selected":"")+'>2 collections</option><option value="3"'+(S.collections==="3"?" selected":"")+'>3 or more</option></select></div><div class="nav"><button class="btn bs" onclick="go(5)">← Back</button><button class="btn bp" onclick="go(7)">Next: Calculator →</button></div></div>'+(d.cs>0?'<div class="card"><div class="st">Your Credit Action Plan</div><p style="font-size:12px;color:#888;margin-top:6px;margin-bottom:12px;line-height:1.6">Personalized steps for a score of '+d.cs+':</p>'+ctips.map(function(tip,i){return '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:13px"><span style="color:#C9A84C;font-weight:800;min-width:20px">'+(i+1)+'.</span><span style="color:#444;line-height:1.6">'+tip+'</span></div>';}).join("")+'</div>':"");
+    h='<div class="card"><div class="st">Your Credit Profile</div><div class="fld"><label>Have you checked your credit recently?</label><select onchange="S.hasChecked=this.value;paint()"><option value="yes"'+(S.hasChecked==="yes"?" selected":"")+'>Yes — I know my score</option><option value="no"'+(S.hasChecked==="no"?" selected":"")+'>No — I haven\'t checked</option><option value="unsure"'+(S.hasChecked==="unsure"?" selected":"")+'>Checked a while ago</option></select></div>'+(S.hasChecked==="no"?'<div class="tip">💡 Check free at <strong>AnnualCreditReport.com</strong> or <strong>Credit Karma</strong>. Soft pull — won\'t hurt your score!</div>':"")+numField("Credit Score (FICO)","creditScore",null,"🔢","Enter 0 if you don\'t know yet","e.g. 680")+(tier?'<div style="background:'+tier.c+'18;border:2px solid '+tier.c+';border-radius:12px;padding:12px;text-align:center;margin-bottom:14px"><div style="font-size:11px;color:#888">Your Credit Tier</div><div style="font-size:24px;font-weight:900;color:'+tier.c+'">'+tier.l+'</div></div>':"")+'<div class="st" style="margin-top:4px">Credit Utilization Calculator</div><p style="font-size:12px;color:#777;margin:0 0 12px;line-height:1.6">Just enter your numbers — we\'ll calculate the percentage automatically.</p><div style="background:#f9f9f9;border-radius:12px;padding:14px;margin-bottom:14px">'+numField("Total Credit Card Balances","totalBalance",null,"$","","e.g. 3,500")+numField("Total Credit Card Limits","totalLimit",null,"$","","e.g. 10,000")+(d.util!==null?'<div style="background:#fff;border-radius:10px;padding:12px;text-align:center;margin-top:4px;border:2px solid '+(d.util<=10?"#2d8a4e":d.util<=30?"#C9A84C":"#8B1C2A")+'"><div style="font-size:11px;color:#888">Your Credit Utilization</div><div style="font-size:30px;font-weight:900;color:'+(d.util<=10?"#2d8a4e":d.util<=30?"#C9A84C":"#8B1C2A")+'">'+d.util+'%</div><div style="font-size:12px;color:#888">'+(d.util<=10?"Excellent — under 10% 🏆":d.util<=30?"Good — aim for under 10%":"High — pay down to under 30%")+'</div></div>':"")+'</div><div class="fld"><label>Late payments in last 24 months?</label><select onchange="S.latePayments=this.value;paint()"><option value="0"'+(S.latePayments==="0"?" selected":"")+'>None ✅</option><option value="1"'+(S.latePayments==="1"?" selected":"")+'>1 late payment</option><option value="2"'+(S.latePayments==="2"?" selected":"")+'>2 late payments</option><option value="3"'+(S.latePayments==="3"?" selected":"")+'>3 or more</option></select></div><div class="fld"><label>Open collections or charge-offs?</label><select onchange="S.collections=this.value;paint()"><option value="0"'+(S.collections==="0"?" selected":"")+'>None ✅</option><option value="1"'+(S.collections==="1"?" selected":"")+'>1 collection</option><option value="2"'+(S.collections==="2"?" selected":"")+'>2 collections</option><option value="3"'+(S.collections==="3"?" selected":"")+'>3 or more</option></select></div><div class="navrow"><button class="btn bs" onclick="go(5)">← Back</button><button class="btn bp" onclick="go(7)">Next: Calculator →</button></div></div>'+(d.cs>0?'<div class="card"><div class="st">Your Credit Action Plan</div><p style="font-size:12px;color:#888;margin-top:6px;margin-bottom:12px;line-height:1.6">Personalized steps for a score of '+d.cs+':</p>'+ctips.map(function(tip,i){return '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:13px"><span style="color:#C9A84C;font-weight:800;min-width:20px">'+(i+1)+'.</span><span style="color:#444;line-height:1.6">'+tip+'</span></div>';}).join("")+'</div>':"");
   }
   else if(t===7){
     var lopts=[{v:"30yr_conv",l:"30-Year Fixed — "+RATES["30yr_conv"]+"%"},{v:"15yr_conv",l:"15-Year Fixed — "+RATES["15yr_conv"]+"%"},{v:"30yr_fha",l:"FHA 30-Year — "+RATES["30yr_fha"]+"%"},{v:"30yr_va",l:"VA 30-Year — "+RATES["30yr_va"]+"%"},{v:"5yr_arm",l:"5/1 ARM — "+RATES["5yr_arm"]+"% (intro)"},{v:"custom",l:"Custom Rate — I\'ll enter my own"}];
@@ -197,14 +306,14 @@ function paint(){
     if(d.pi>0){h+='<div class="card red"><div style="text-align:center;margin-bottom:16px"><div style="font-size:12px;opacity:.8;margin-bottom:4px">Estimated Total Monthly Payment</div><div style="font-size:52px;font-weight:900;color:#C9A84C;line-height:1">'+fmt2(d.tot)+'</div><div style="font-size:13px;opacity:.8;margin-top:4px">on a '+fmt(d.p)+' home at '+d.rate+'%</div></div><div class="rg">'+[["Principal & Interest",fmt2(d.pi)],["Est. Property Tax",fmt2(d.tax)+"/mo"],["Est. Insurance",fmt2(d.ins)+"/mo"],d.pmi>0?["PMI (under 20% down)",fmt2(d.pmi)+"/mo"]:["Down Payment",fmt(d.dn)]].map(function(r){return '<div class="rb"><div class="rl">'+r[0]+'</div><div class="rv">'+r[1]+'</div></div>';}).join("")+'</div></div>';
     h+='<div class="card"><div class="st">Loan Summary</div>'+[["Home Price",fmt(d.p)],["Down Payment",fmt(d.dn)+" ("+S.downPct+"%)"],["Loan Amount",fmt(d.prin)],["Interest Rate",d.rate+"%"],["Loan Term",d.term+" years"],["Total Interest Paid",fmt2(d.totInt)],["Total Paid Over Loan",fmt2(d.pi*d.nm)]].map(function(r){return '<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #f5f5f5"><span style="color:#666">'+r[0]+'</span><span style="font-weight:700;color:'+(r[0]==="Total Interest Paid"?"#8B1C2A":"#333")+'">'+r[1]+'</span></div>';}).join("")+'</div>';
     h+='<div class="card"><div class="st">Rate Comparison</div><p style="font-size:12px;color:#777;margin:0 0 12px">How different loan types affect your monthly P&I:</p>'+[{l:"30yr Fixed",r:RATES["30yr_conv"],t:30},{l:"15yr Fixed",r:RATES["15yr_conv"],t:15},{l:"FHA 30yr",r:RATES["30yr_fha"],t:30},{l:"VA 30yr",r:RATES["30yr_va"],t:30}].map(function(row){var rr=row.r/100/12,nn=row.t*12,mp=d.prin&&rr?d.prin*(rr*Math.pow(1+rr,nn))/(Math.pow(1+rr,nn)-1):0;var sel=RATES[S.loanType]===row.r;return '<div class="lr'+(sel?" on":"")+'"><div><div style="font-weight:600;font-size:13px">'+row.l+'</div><div style="font-size:11px;color:#888">'+row.r+'% · '+row.t+' yrs</div></div><div style="text-align:right"><div style="font-weight:800;font-size:16px;color:'+(sel?"#8B1C2A":"#333")+'">'+fmt2(mp)+'/mo</div>'+(sel?'<span class="badge" style="background:#8B1C2A">Selected</span>':"")+'</div></div>';}).join("")+'</div>';}
-    h+='<div class="nav"><button class="btn bs" onclick="go(6)">← Back</button><button class="btn bp" onclick="go(8)">See My Plan →</button></div>';
+    h+='<div class="navrow"><button class="btn bs" onclick="go(6)">← Back</button><button class="btn bp" onclick="go(8)">See My Plan →</button></div>';
   }
   else if(t===8){
     var fc=d.checks.filter(function(c){return !c.pass;});
-    var sumTxt="HOME BUYER READINESS REPORT\nClient: "+(S.name||"N/A")+(S.phone?" | "+S.phone:"")+(S.email?" | "+S.email:"")+"\nDate: "+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+"\n"+(S.city?"Target: "+S.city+" · ":"")+S.timeline+" month goal\n\nREADINESS SCORE: "+d.rp+"% — "+d.rl.replace(/[🏡🔥📈🌱]/g,"").trim()+"\n\nFINANCIAL SNAPSHOT\n• Income: "+fmt(d.ti)+"/mo | Expenses: "+fmt(d.te)+" | Debt: "+fmt(d.td)+"\n• Net Cash Flow: "+fmt(d.net)+"\n• Savings Gap: "+(d.gap<=0?"Fully Funded!":fmt(d.gap))+(d.tot>0?"\n\nMORTGAGE ESTIMATE\n• Home: "+fmt(d.p)+" | Est. Payment: "+fmt2(d.tot)+"/mo at "+d.rate+"%":"")+"\n\nCHECKLIST\n"+d.checks.map(function(c){return (c.great?"✅":c.pass?"🟡":"❌")+" "+c.l+": "+c.d;}).join("\n")+"\n\nPrepared by: "+R.name+" | "+R.brokerage+" | "+R.dre;
+    var sumTxt="HOME BUYER READINESS REPORT\nClient: "+(S.name||"N/A")+(S.phone?" | "+S.phone:"")+(S.email?" | "+S.email:"")+"\nDate: "+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+"\n"+(S.city?"Target: "+S.city+" · ":"")+S.timeline+" month goal\n\nREADINESS SCORE: "+d.rp+"% — "+d.rl.replace(/[🏡🔥📈🌱]/g,"").trim()+"\n\nFINANCIAL SNAPSHOT\n• Income: "+fmt(d.ti)+"/mo | Expenses: "+fmt(d.te)+" | Debt: "+fmt(d.td)+"\n• Net Cash Flow: "+fmt(d.net)+"\n• Savings Gap: "+(d.gap<=0?"Fully Funded!":fmt(d.gap))+(d.tot>0?"\n\nMORTGAGE ESTIMATE\n• Home: "+fmt(d.p)+" | Est. Payment: "+fmt2(d.tot)+"/mo at "+d.rate+"%":"")+"\n\nCHECKLIST\n"+d.checks.map(function(c){return (c.great?"[READY]":c.pass?"[OK]":"[NOT YET]")+" "+c.l+": "+c.d;}).join("\n")+"\n\nPrepared by: "+R.name+" | "+R.brokerage+" | "+R.dre;
     var textBody="Hi "+R.name+"! My Score: "+d.rp+"% | Income: "+fmt(d.ti)+"/mo | Savings: "+fmt(num(S.savings))+" | Credit: "+(d.cs||"TBD")+" | DTI: "+d.dti.toFixed(1)+"%"+(d.tot>0?" | Pmt: "+fmt2(d.tot)+"/mo":"")+" — "+(S.name||"New Client");
     h='<div class="card" style="text-align:center;padding:22px 20px">'+(S.name?'<div style="font-size:14px;color:#888;margin-bottom:4px">Your Report, <strong style="color:#8B1C2A">'+S.name+'</strong></div>':"")+'<div style="font-size:56px;font-weight:900;color:'+d.rc+';line-height:1">'+d.rp+'%</div><div style="font-size:16px;font-weight:800;color:#333;margin-top:6px">'+d.rl+'</div>'+(S.city?'<div style="font-size:12px;color:#888;margin-top:3px">Target: '+S.city+' · '+S.timeline+' month goal</div>':"")+(d.tot>0?'<div style="margin-top:12px;background:#f9f9f9;border-radius:12px;padding:10px 16px;display:inline-block"><div style="font-size:11px;color:#888">Est. Monthly Payment</div><div style="font-size:22px;font-weight:900;color:#8B1C2A">'+fmt2(d.tot)+'/mo</div><div style="font-size:11px;color:#aaa">on a '+fmt(d.p)+' home at '+d.rate+'%</div></div>':"")+'</div>';
-    h+='<div class="card"><div class="st">Readiness Checklist</div>'+d.checks.map(function(c){return '<div class="cr"><span style="font-size:18px;flex-shrink:0">'+(c.great?"✅":c.pass?"🟡":"❌")+'</span><div><div style="font-weight:700;font-size:13px">'+c.l+'</div><div style="font-size:11px;color:#888">'+c.d+'</div></div></div>';}).join("")+'</div>';
+    h+='<div class="card"><div class="st">Readiness Checklist</div>'+d.checks.map(function(c){var col=c.great?"var(--green)":c.pass?"var(--gold)":"var(--red)";return '<div class="cr"><span style="display:inline-block;width:10px;height:10px;border-radius:5px;background:'+col+';flex-shrink:0;margin-top:6px"></span><div><div style="font-weight:700;font-size:0.88rem;color:var(--charcoal)">'+c.l+'</div><div style="font-size:0.78rem;color:var(--text-light);margin-top:2px">'+c.d+'</div></div></div>';}).join("")+'</div>';
     if(fc.length)h+='<div class="card"><div class="st">Your Priority Next Steps</div>'+fc.map(function(c,i){return '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5"><span style="color:#8B1C2A;font-weight:800;min-width:20px">'+(i+1)+'.</span><div style="font-size:13px;color:#444;line-height:1.6"><strong style="color:#8B1C2A">'+c.l+':</strong> '+c.d+'</div></div>';}).join("")+'</div>';
     h+='<div class="card"><div class="st">Your 90-Day Plan</div>'+[["Week 1–2","Pull free credit report. Dispute errors. List all debts by interest rate."],["Week 3–4","Open a \'Home Fund\' savings account. Set up an automatic monthly transfer."],["Month 2","Cut top 2 overspending categories. Redirect those dollars toward your home fund."],["Month 2","Pay one credit card below 30% utilization. Set all accounts to autopay."],["Month 3","Meet with a lender. Get your free pre-qualification letter."],["Month 3","Connect with your REALTOR®. Start touring homes in your area!"]].map(function(r){return '<div class="pr"><span class="pd">'+r[0]+'</span><span style="font-size:12px;color:#444;line-height:1.6">'+r[1]+'</span></div>';}).join("")+'</div>';
     h+='<div class="card navy"><div style="text-align:center;margin-bottom:14px"><div style="font-size:15px;font-weight:800;margin-bottom:3px">📤 Send Results to Your REALTOR®</div><div style="font-size:12px;opacity:.8">Share your report with '+R.name+'</div></div><div style="display:flex;flex-direction:column;gap:10px"><button class="btn bg bfull" onclick="sendText()">💬 Text My Results to '+R.name+'</button><button class="btn bp bfull" onclick="sendEmail()">✉️ Email My Results to '+R.name+'</button><button class="btn bfull" style="background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);color:#fff" onclick="doPrint()">🖨️ Print / Save as PDF</button></div></div>';
@@ -216,7 +325,7 @@ function paint(){
     if(S.reviewDone){
       h='<div class="card" style="text-align:center;padding:32px"><div style="font-size:52px;margin-bottom:12px">🙏</div><h2 style="color:#8B1C2A;font-size:20px;font-weight:900;margin:0 0 10px">Thank You'+(S.reviewName||S.name?", "+(S.reviewName||S.name):"")+'!</h2><p style="font-size:14px;color:#666;line-height:1.8;margin:0 0 18px">Your feedback helps '+R.name+' serve more families on their home buying journey.</p><div style="background:#fffbf0;border:1px solid #C9A84C;border-radius:12px;padding:16px;margin-bottom:18px"><div style="font-size:26px;margin-bottom:6px">'+"⭐".repeat(S.rating)+'</div>'+(S.reviewText?'<p style="font-size:13px;color:#555;font-style:italic;margin:0">"'+S.reviewText+'"</p>':"")+'</div><button class="btn bp" onclick="go(8)">← Back to My Plan</button></div>';
     } else {
-      h='<div class="card"><div class="st">Leave a Review</div><p style="font-size:13px;color:#666;line-height:1.7;margin:0 0 16px">How was your experience with this tool? Your feedback helps '+R.name+' serve more families.</p><div style="text-align:center;margin-bottom:16px"><div style="font-size:14px;font-weight:600;color:#444;margin-bottom:10px">How would you rate this tool?</div><div style="display:flex;gap:4px;justify-content:center">'+[1,2,3,4,5].map(function(n){return '<button onclick="S.rating='+n+';paint()" style="font-size:36px;background:none;border:none;cursor:pointer;padding:2px">'+(S.rating>=n?"⭐":"☆")+'</button>';}).join("")+'</div>'+(S.rating?'<div style="font-size:13px;color:#888;margin-top:6px">'+["","😕 Not helpful","😐 It was okay","🙂 Pretty good","😊 Very helpful","🤩 Absolutely loved it!"][S.rating]+'</div>':"")+'</div><div class="fld"><label>Your Name (optional)</label><input type="text" id="reviewName" value="'+S.reviewName+'" placeholder="e.g. Maria S."></div><div class="fld"><label>Share your experience (optional)</label><textarea id="reviewText" placeholder="e.g. This tool helped me understand exactly what I needed to do...">'+S.reviewText+'</textarea></div><button class="btn bp bfull blg" onclick="submitReview()" style="margin-top:6px">Submit Review 🙏</button></div><div class="card gold" style="text-align:center"><p style="font-size:13px;color:#666;line-height:1.9;margin:0"><em>"By wisdom a house is built, and by understanding it is established."</em><br><strong style="color:#8B1C2A">— Proverbs 24:3</strong></p><div style="font-size:12px;color:#999;margin-top:8px">'+R.name+' | '+R.brokerage+' | '+R.dre+'</div></div><div class="nav"><button class="btn bs" onclick="go(8)">← Back to My Plan</button></div>';
+      h='<div class="card"><div class="st">Leave a Review</div><p style="font-size:13px;color:#666;line-height:1.7;margin:0 0 16px">How was your experience with this tool? Your feedback helps '+R.name+' serve more families.</p><div style="text-align:center;margin-bottom:16px"><div style="font-size:14px;font-weight:600;color:#444;margin-bottom:10px">How would you rate this tool?</div><div style="display:flex;gap:4px;justify-content:center">'+[1,2,3,4,5].map(function(n){return '<button onclick="S.rating='+n+';paint()" style="font-size:36px;background:none;border:none;cursor:pointer;padding:2px">'+(S.rating>=n?"⭐":"☆")+'</button>';}).join("")+'</div>'+(S.rating?'<div style="font-size:13px;color:#888;margin-top:6px">'+["","😕 Not helpful","😐 It was okay","🙂 Pretty good","😊 Very helpful","🤩 Absolutely loved it!"][S.rating]+'</div>':"")+'</div><div class="fld"><label>Your Name (optional)</label><input type="text" id="reviewName" value="'+S.reviewName+'" placeholder="e.g. Maria S."></div><div class="fld"><label>Share your experience (optional)</label><textarea id="reviewText" placeholder="e.g. This tool helped me understand exactly what I needed to do...">'+S.reviewText+'</textarea></div><button class="btn bp bfull blg" onclick="submitReview()" style="margin-top:6px">Submit Review 🙏</button></div><div class="card gold" style="text-align:center"><p style="font-size:13px;color:#666;line-height:1.9;margin:0"><em>"By wisdom a house is built, and by understanding it is established."</em><br><strong style="color:#8B1C2A">— Proverbs 24:3</strong></p><div style="font-size:12px;color:#999;margin-top:8px">'+R.name+' | '+R.brokerage+' | '+R.dre+'</div></div><div class="navrow"><button class="btn bs" onclick="go(8)">← Back to My Plan</button></div>';
     }
   }
   $("root").innerHTML=h;bindNums();
