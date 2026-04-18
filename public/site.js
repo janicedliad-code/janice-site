@@ -14,69 +14,71 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 });
 
-/* ── SMART SAVE: Merge leads with same email ── */
+/* ── SMART SAVE via lead-router Edge Function (Apr 17, 2026)
+   Replaces the old direct website_leads POST + merge-by-email + separate email call.
+   The router handles everything:
+     1. Matches submitter against contacts by normalized phone OR lowercased email
+     2. Existing contact -> appends a touch, no dupe lead card (better than email-only merge)
+     3. New lead -> auto-creates contact in CRM with tier-appropriate list
+     4. Triages by revenue urgency -> HOT + re-engagements fire email,
+        WARM/FUTURE stay quiet in Lead Gen OS
+   See memory: project_priority_filter.md
+*/
 async function saveLead(data){
   var sourceLabels={buyer_guide:"Buyer's Guide",seller_guide:"Seller's Guide",home_worth:"Home Value Request",buyer_readiness:"Buyer Readiness Tool",consultation:"Book Consultation",contact_form:"Contact Form"};
   var sourceLabel = sourceLabels[data.source] || data.source;
   var timestamp = new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
 
-  if(data.email){
-    try{
-      var checkRes = await fetch(SUPABASE_URL+"/rest/v1/website_leads?email=eq."+encodeURIComponent(data.email)+"&order=created_at.desc&limit=1",{
-        headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY}
-      });
-      if(checkRes.ok){
-        var existing = await checkRes.json();
-        if(existing.length > 0){
-          var lead = existing[0];
-          var newNote = sourceLabel + " (" + timestamp + ")";
-          var updatedNotes = lead.notes ? lead.notes + " | " + newNote : newNote;
-          var updatedSource = lead.source;
-          if(lead.source !== data.source){ updatedSource = data.source; }
-          var patchData = { notes: updatedNotes, source: updatedSource };
-          if(data.phone && !lead.phone) patchData.phone = data.phone;
-          if(data.address && !lead.address) patchData.address = data.address;
-          if(data.name && !lead.name) patchData.name = data.name;
-          await fetch(SUPABASE_URL+"/rest/v1/website_leads?id=eq."+lead.id,{
-            method:"PATCH",
-            headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},
-            body:JSON.stringify(patchData)
-          });
-          console.log("Lead MERGED:",data.source,data.email);
-          sendEdgeFunctionEmail(data);
-          return;
-        }
-      }
-    }catch(e){console.log("Merge check error:",e);}
-  }
+  /* Default motivation mapping — only when a specific motivation wasn't sent.
+     Keeps promises deliverable for each form.
+       consultation   = actually scheduled = HOT  (fires email to Janice)
+       home_worth     = asked about equity = WARM (batched review)
+       buyer_readiness= actively preparing = WARM
+       guides         = casual interest     = FUTURE (newsletter nurture) */
+  var defaultMotivation = null;
+  if (data.source === "consultation") defaultMotivation = "ready";
+  else if (data.source === "home_worth") defaultMotivation = "curious";
+  else if (data.source === "buyer_readiness") defaultMotivation = "soon";
+  else if (data.source === "buyer_guide" || data.source === "seller_guide") defaultMotivation = "exploring";
 
-  try{
-    var noteText = sourceLabel + " (" + timestamp + ")";
-    var postData = {
-      name: data.name || "", email: data.email || "", phone: data.phone || "",
-      source: data.source || "other", address: data.address || "",
-      notes: data.notes ? data.notes + " | " + noteText : noteText, status: "new"
-    };
-    var res = await fetch(SUPABASE_URL+"/rest/v1/website_leads",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Prefer":"return=minimal"},
-      body:JSON.stringify(postData)
+  var noteText = sourceLabel + " (" + timestamp + ")";
+  var payload = {
+    name: data.name || "",
+    email: data.email || "",
+    phone: data.phone || "",
+    source: data.source || "other",
+    address: data.address || "",
+    notes: data.notes ? data.notes + " | " + noteText : noteText,
+    motivation: data.motivation || defaultMotivation,
+    /* Form-specific extras ride in quiz_data jsonb column via `extras` */
+    extras: {
+      consultation_type: data.consultation_type || null,
+      preferred_date: data.preferred_date || null,
+      readiness_score: data.readiness_score || null,
+      timeline: data.timeline || null,
+      budget: data.budget || null,
+      home_type: data.home_type || null,
+      first_time: data.first_time || null,
+      sell_reason: data.sell_reason || null,
+      sell_timeline: data.sell_timeline || null,
+    },
+  };
+
+  try {
+    var res = await fetch(SUPABASE_URL + "/functions/v1/lead-router", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
-    if(!res.ok) console.error("Supabase error:",res.status);
-    else console.log("Lead CREATED:",data.source,data.name);
-  }catch(e){console.error("Save failed:",e);}
-  sendEdgeFunctionEmail(data);
-}
-
-function sendEdgeFunctionEmail(data){
-  fetch(SUPABASE_URL+"/functions/v1/send-lead-email",{
-    method:"POST",
-    headers:{"Content-Type":"application/json","Authorization":"Bearer "+SUPABASE_KEY},
-    body:JSON.stringify(data)
-  }).then(function(res){
-    if(res.ok) console.log("Emails sent for:",data.name);
-    else console.error("Email error:",res.status);
-  }).catch(function(e){console.error("Email failed:",e);});
+    if (res.ok) {
+      var body = await res.json();
+      console.log("Lead routed:", data.source, body.priority_tier || "(no tier)", body.is_existing_contact ? "RE-ENGAGEMENT" : "NEW");
+    } else {
+      console.error("lead-router error:", res.status, await res.text());
+    }
+  } catch (e) {
+    console.error("lead-router failed:", e);
+  }
 }
 
 function getVal(id){var e=document.getElementById(id);return e?e.value.trim():"";}

@@ -274,26 +274,65 @@ async function saveQuizProgress(isComplete){
       checks: d.checks.map(function(c){return{label:c.l,pass:c.pass,great:c.great,detail:c.d}})
     }
   };
-  try{
-    var chk=await fetch(SB+"/rest/v1/website_leads?email=eq."+encodeURIComponent(S.email)+"&order=created_at.desc&limit=1",{headers:{"apikey":SK,"Authorization":"Bearer "+SK}});
-    if(chk.ok){
-      var ex=await chk.json();
-      if(ex.length>0){
-        var ld=ex[0];
-        payload.notes=ld.notes?ld.notes+" | "+noteText:noteText;
-        if(ld.phone && !payload.phone)payload.phone=ld.phone;
-        await fetch(SB+"/rest/v1/website_leads?id=eq."+ld.id,{method:"PATCH",headers:SBH,body:JSON.stringify(payload)});
-        console.log("Quiz progress MERGED:",S.email,"step",S.tab,isComplete?"(COMPLETE)":"");
-        if(isComplete)fetch(SB+"/functions/v1/send-lead-email",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+SK},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness"})});
-        return;
-      }
+  /* Route via lead-router Edge Function (Apr 17, 2026).
+     Router handles contact matching, contact auto-create, touch append, and
+     tier-based notification. Preserves the rich quiz payload via `extras` -> quiz_data. */
+  var routerPayload = {
+    name: payload.name,
+    email: payload.email,
+    phone: payload.phone,
+    source: "buyer_readiness",
+    city: payload.city,
+    notes: noteText,
+    /* Motivation derives from readiness score:
+         90+ ready, 70+ soon, 50+ 3-12mo, <50 exploring */
+    motivation: (payload.readiness_score >= 90) ? "ready"
+              : (payload.readiness_score >= 70) ? "soon"
+              : (payload.readiness_score >= 50) ? "selling_3_12mo"
+              : "exploring",
+    extras: {
+      first_time: payload.first_time,
+      home_type: payload.home_type,
+      timeline: payload.timeline,
+      readiness_score: payload.readiness_score,
+      readiness_label: payload.readiness_label,
+      monthly_income: payload.monthly_income,
+      monthly_expenses: payload.monthly_expenses,
+      monthly_debt: payload.monthly_debt,
+      dti_percent: payload.dti_percent,
+      credit_score: payload.credit_score,
+      credit_utilization_percent: payload.credit_utilization_percent,
+      savings_current: payload.savings_current,
+      savings_monthly: payload.savings_monthly,
+      target_home_price: payload.target_home_price,
+      down_payment_percent: payload.down_payment_percent,
+      down_payment_amount: payload.down_payment_amount,
+      total_funds_needed: payload.total_funds_needed,
+      funds_gap: payload.funds_gap,
+      months_to_save: payload.months_to_save,
+      late_payments: payload.late_payments,
+      collections_count: payload.collections_count,
+      loan_type: payload.loan_type,
+      last_step_completed: payload.last_step_completed,
+      is_complete: isComplete,
+      quiz_detail: payload.quiz_data,
+    },
+  };
+  try {
+    var res = await fetch(SB + "/functions/v1/lead-router", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(routerPayload),
+    });
+    if (res.ok) {
+      var body = await res.json();
+      console.log("Quiz routed:", S.email, "step", S.tab, isComplete ? "(COMPLETE)" : "", body.priority_tier || "(no tier)", body.is_existing_contact ? "RE-ENGAGEMENT" : "NEW");
+    } else {
+      console.error("lead-router error:", res.status, await res.text());
     }
-    payload.notes=noteText;
-    payload.status="new";
-    await fetch(SB+"/rest/v1/website_leads",{method:"POST",headers:{...SBH,"Prefer":"return=minimal"},body:JSON.stringify(payload)});
-    console.log("Quiz progress CREATED:",S.email,"step",S.tab,isComplete?"(COMPLETE)":"");
-    fetch(SB+"/functions/v1/send-lead-email",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+SK},body:JSON.stringify({name:S.name,email:S.email,phone:S.phone,source:"buyer_readiness"})});
-  }catch(e){console.log("Quiz save error:",e);}
+  } catch (e) {
+    console.log("lead-router failed:", e);
+  }
 }
 
 function updateLeadScore(){saveQuizProgress(true);}
