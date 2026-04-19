@@ -63,9 +63,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charco
 .tour-note{padding:12px 30px 22px 30px;font-size:0.8rem;color:var(--text-light);font-style:italic}
 .tour-note::before{content:"📐 ";font-style:normal}
 
-/* Agent access link (subtle, footer only) */
-.agent-access{color:var(--text-light);font-size:0.7rem;text-decoration:none;font-style:italic;opacity:0.6;transition:var(--transition);margin-left:14px}
-.agent-access:hover{opacity:1;color:var(--crimson)}
+/* For Agents section — compact, distinct from buyer flow */
+.for-agents{background:var(--cream);border:1.5px solid var(--silver);border-radius:var(--radius);padding:18px 22px;margin-top:14px}
+.for-agents .fa-kicker{font-size:0.65rem;font-weight:800;letter-spacing:0.18em;color:var(--text-light);text-transform:uppercase;margin-bottom:8px}
+.for-agents .fa-lede{font-size:0.85rem;color:var(--text-mid);margin-bottom:14px;line-height:1.5}
+.for-agents .fa-link{display:flex;align-items:center;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--charcoal);font-size:0.88rem;font-weight:500;transition:var(--transition);border:1px solid transparent;margin-bottom:6px}
+.for-agents .fa-link:hover{background:#fff;border-color:var(--silver);color:var(--crimson)}
+.for-agents .fa-link::before{content:"→";color:var(--gold);font-weight:700;margin-right:10px;transition:var(--transition)}
+.for-agents .fa-link:hover::before{color:var(--crimson);transform:translateX(2px)}
+.for-agents .fa-footnote{font-size:0.75rem;color:var(--text-light);margin-top:10px;padding-top:10px;border-top:1px solid var(--silver);text-align:center}
+.for-agents .fa-footnote a{color:var(--crimson);text-decoration:none;font-weight:600}
 
 /* Main */
 .main{max-width:1100px;margin:0 auto;padding:40px 24px}
@@ -228,6 +235,16 @@ footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8
           </div>
           <a href="tel:2093059401" class="btn-primary" style="margin-top:16px;text-decoration:none;text-align:center;background:var(--white);color:var(--crimson);border:2px solid var(--crimson);box-shadow:none">Call (209) 305-9401</a>
         </div>
+
+        <!-- For Agents section — separate from buyer flow -->
+        <div class="for-agents" id="forAgentsCard" style="display:none">
+          <div class="fa-kicker">For Agents</div>
+          <div class="fa-lede">Representing a buyer? Here's what you need:</div>
+          <a id="faShowing" href="#" class="fa-link">Request a showing</a>
+          <a id="faDisclosures" href="#" class="fa-link">View disclosures</a>
+          <a id="faOffer" href="#" class="fa-link">Submit an offer</a>
+          <div class="fa-footnote">Questions? <a href="tel:2093059401">Call (209) 305-9401</a></div>
+        </div>
       </div>
     </div>
   </div>
@@ -235,7 +252,6 @@ footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8
   <footer>
     Janice Divina Liad · REALTOR® · DRE #02099146 · HomeSmart PV & Associates · Manteca, CA<br>
     All information deemed reliable but not guaranteed. Buyer to verify all details.
-    <a href="https://os.janicedivinarealestate.com/open-house" class="agent-access">Agent Access →</a>
   </footer>
 </div>
 
@@ -384,6 +400,13 @@ function renderListing(l){
 
   /* CTA title */
   if (l.primary_cta_label) $("ctaTitle").textContent = l.primary_cta_label;
+
+  /* For Agents section — routes to OS pages scoped to this listing */
+  var osBase = "https://os.janicedivinarealestate.com";
+  $("faShowing").href = osBase + "/showing-request/" + encodeURIComponent(l.slug);
+  $("faDisclosures").href = osBase + "/disclosures/" + encodeURIComponent(l.slug);
+  $("faOffer").href = osBase + "/submit-offer/" + encodeURIComponent(l.slug);
+  $("forAgentsCard").style.display = "block";
 }
 
 /* Showing request form submits via lead-router */
