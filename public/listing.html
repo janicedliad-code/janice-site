@@ -52,6 +52,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charco
 .hero .specs{display:flex;gap:20px;flex-wrap:wrap;font-size:0.95rem;color:rgba(255,255,255,0.9)}
 .hero .specs strong{color:#fff;font-size:1.3rem;display:block;font-family:'Cormorant Garamond',serif}
 .hero .price{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--gold);margin-top:12px}
+.hero-tour-btn{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 18px;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.4);color:#fff;text-decoration:none;border-radius:10px;font-size:0.85rem;font-weight:600;letter-spacing:0.02em;transition:var(--transition);backdrop-filter:blur(4px)}
+.hero-tour-btn:hover{background:rgba(255,255,255,0.2);border-color:#fff}
+
+/* 3D Tour section */
+.tour-section{padding:0;overflow:hidden}
+.tour-section .tour-header{padding:28px 30px 10px 30px}
+.tour-embed{position:relative;width:100%;padding-bottom:62%;background:var(--silver);border-top:1px solid rgba(221,213,200,0.5)}
+.tour-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tour-note{padding:12px 30px 22px 30px;font-size:0.8rem;color:var(--text-light);font-style:italic}
+.tour-note::before{content:"📐 ";font-style:normal}
+
+/* Agent access link (subtle, footer only) */
+.agent-access{color:var(--text-light);font-size:0.7rem;text-decoration:none;font-style:italic;opacity:0.6;transition:var(--transition);margin-left:14px}
+.agent-access:hover{opacity:1;color:var(--crimson)}
 
 /* Main */
 .main{max-width:1100px;margin:0 auto;padding:40px 24px}
@@ -105,10 +119,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charco
 .success h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--crimson);margin-bottom:10px}
 .success p{color:var(--text-mid);line-height:1.6;margin-bottom:14px}
 
-/* Open house banner */
+/* Open house banner (scheduled, future) */
 .open-house-banner{background:linear-gradient(135deg,var(--gold),var(--gold) 60%,#D4B85A);border-radius:var(--radius);padding:16px 20px;color:#1a0a0a;text-align:center;margin-bottom:20px}
 .open-house-banner .oh-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:4px}
 .open-house-banner .oh-date{font-size:0.9rem}
+
+/* Open house LIVE banner (day-of, prominent — prompts visitor sign-in) */
+.oh-live-banner{background:linear-gradient(135deg,#8B1C2A,#A52535);border-radius:var(--radius-lg);padding:22px 24px;color:#fff;text-align:center;margin-bottom:20px;box-shadow:var(--shadow-lg);border:2px solid var(--gold)}
+.oh-live-banner .oh-live-kicker{font-size:0.7rem;font-weight:700;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.oh-live-banner .oh-live-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;line-height:1.2;margin-bottom:4px}
+.oh-live-banner .oh-live-time{font-size:0.95rem;color:rgba(255,255,255,0.9);margin-bottom:16px}
+.oh-live-banner .oh-signin-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--gold);color:#1a0a0a;text-decoration:none;border-radius:12px;font-size:0.95rem;font-weight:800;letter-spacing:0.04em;transition:var(--transition);box-shadow:0 4px 14px rgba(201,168,76,0.4)}
+.oh-live-banner .oh-signin-btn:hover{transform:translateY(-2px);background:#D4B85A;box-shadow:0 6px 20px rgba(201,168,76,0.6)}
 
 footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8rem;border-top:1px solid var(--silver);margin-top:40px}
 </style>
@@ -136,10 +158,18 @@ footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8
       <div class="address-line" id="addressLine">—</div>
       <div class="price" id="price"></div>
       <div class="specs" id="specs"></div>
+      <a href="#tour" id="heroTourBtn" class="hero-tour-btn" style="display:none">🏠 View 3D Tour & Floor Plan</a>
     </div>
   </section>
 
   <div class="main">
+    <div id="ohLiveBanner" class="oh-live-banner" style="display:none">
+      <div class="oh-live-kicker">● Open House Today</div>
+      <div class="oh-live-title" id="ohLiveTitle">You're Invited In</div>
+      <div class="oh-live-time" id="ohLiveTime"></div>
+      <a id="ohSigninBtn" href="#" class="oh-signin-btn">📝 Sign the Guest Book</a>
+    </div>
+
     <div id="openHouseBanner" class="open-house-banner" style="display:none">
       <div class="oh-title">Open House</div>
       <div class="oh-date" id="openHouseDate"></div>
@@ -152,6 +182,15 @@ footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8
           <h2>About This Home</h2>
           <div id="description"></div>
           <div class="features" id="features"></div>
+        </div>
+        <div class="section tour-section" id="tourSection" style="display:none">
+          <div class="tour-header">
+            <h2 id="tour">3D Tour & Floor Plan</h2>
+          </div>
+          <div class="tour-embed">
+            <iframe id="tourIframe" src="" allow="fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer; vr" allowfullscreen loading="lazy" title="3D Tour"></iframe>
+          </div>
+          <div class="tour-note">Toggle the interactive floor plan inside the tour using the floor-plan icon.</div>
         </div>
         <div class="section" id="neighborhoodSection" style="display:none">
           <h2>Neighborhood</h2>
@@ -196,6 +235,7 @@ footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8
   <footer>
     Janice Divina Liad · REALTOR® · DRE #02099146 · HomeSmart PV & Associates · Manteca, CA<br>
     All information deemed reliable but not guaranteed. Buyer to verify all details.
+    <a href="https://os.janicedivinarealestate.com/open-house" class="agent-access">Agent Access →</a>
   </footer>
 </div>
 
@@ -278,11 +318,27 @@ function renderListing(l){
   if (l.year_built) specs.push("<div><strong>" + l.year_built + "</strong>Year Built</div>");
   $("specs").innerHTML = specs.join("");
 
-  /* Open house banner */
+  /* Open house banner — two states:
+     1) LIVE (same calendar day, event in progress OR within hours of start) → prominent sign-in
+     2) UPCOMING (future day) → subtle gold banner */
   if (l.open_house_datetime) {
     var now = new Date();
-    var oh = new Date(l.open_house_datetime);
-    if (oh > now) {
+    var ohStart = new Date(l.open_house_datetime);
+    var ohEnd = l.open_house_end ? new Date(l.open_house_end) : new Date(ohStart.getTime() + 3*60*60*1000); /* default +3hr */
+
+    var isSameDay = ohStart.toDateString() === now.toDateString();
+    var isLiveWindow = now >= new Date(ohStart.getTime() - 60*60*1000) && now <= ohEnd; /* 1hr before → end */
+
+    if (isSameDay && isLiveWindow) {
+      /* LIVE — show visitor sign-in */
+      var startTime = ohStart.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
+      var endTime = ohEnd.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
+      $("ohLiveTime").textContent = startTime + " – " + endTime + " · " + (l.address || "");
+      /* Sign-in URL — passes listing slug so the signin page can link back */
+      $("ohSigninBtn").href = "https://os.janicedivinarealestate.com/open-house-signin?listing=" + encodeURIComponent(l.slug);
+      $("ohLiveBanner").style.display = "block";
+    } else if (ohStart > now) {
+      /* UPCOMING — subtle banner */
       $("openHouseDate").textContent = fmtDate(l.open_house_datetime);
       $("openHouseBanner").style.display = "block";
     }
@@ -310,6 +366,13 @@ function renderListing(l){
     $("features").innerHTML = features.map(function(f){ return '<div class="feature">' + esc(f) + '</div>'; }).join("");
   } else {
     $("features").style.display = "none";
+  }
+
+  /* 3D Tour + Floor Plan */
+  if (l.virtual_tour_url) {
+    $("tourIframe").src = l.virtual_tour_url;
+    $("tourSection").style.display = "block";
+    $("heroTourBtn").style.display = "inline-flex";
   }
 
   /* Neighborhood */
