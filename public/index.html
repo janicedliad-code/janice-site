@@ -50,6 +50,22 @@ nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(26,16,16,0.97);b
 .stats-bar{background:var(--white);padding:1.8rem 5%;display:flex;justify-content:center;gap:3.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.06);flex-wrap:wrap;border-bottom:3px solid var(--crimson)}
 .stat-item{text-align:center}.stat-number{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--crimson);line-height:1}.stat-stars{color:var(--crimson);font-size:1rem}.stat-label{font-size:0.75rem;color:var(--text-mid);font-weight:600;letter-spacing:0.5px;margin-top:3px;text-transform:uppercase}
 
+/* JUST LISTED strip — dynamic, populated from public_listings where featured_on_homepage=true */
+.just-listed{display:none;background:linear-gradient(135deg,#FBF3E0 0%,#F5EAC6 50%,#FBF3E0 100%);padding:24px 5%;border-bottom:1px solid rgba(201,168,76,0.25);border-top:1px solid rgba(201,168,76,0.25);position:relative;overflow:hidden}
+.just-listed::before{content:"";position:absolute;top:0;bottom:0;left:-50%;width:200%;background:radial-gradient(ellipse at center,rgba(201,168,76,0.12) 0%,transparent 60%);pointer-events:none}
+.jl-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:240px 1fr auto;gap:28px;align-items:center;position:relative;z-index:2}
+@media (max-width:780px){.jl-inner{grid-template-columns:1fr;gap:16px;text-align:center}}
+.jl-photo{width:240px;height:150px;border-radius:12px;background-size:cover;background-position:center;box-shadow:0 6px 24px rgba(26,16,16,0.18);border:3px solid var(--white)}
+@media (max-width:780px){.jl-photo{margin:0 auto}}
+.jl-kicker{display:inline-flex;align-items:center;gap:8px;font-size:0.7rem;font-weight:800;letter-spacing:0.16em;color:var(--crimson);text-transform:uppercase;margin-bottom:8px}
+.jl-kicker::before{content:"●";color:#2A7D2A;animation:jl-pulse 2s ease-in-out infinite}
+@keyframes jl-pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+.jl-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,2.4vw,1.8rem);font-weight:700;color:var(--charcoal);line-height:1.2;margin-bottom:4px}
+.jl-specs{color:var(--text-mid);font-size:0.92rem;font-weight:500}
+.jl-price{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,2.2vw,1.6rem);font-weight:700;color:var(--crimson);margin-top:4px}
+.jl-cta{display:inline-flex;align-items:center;gap:8px;background:var(--crimson);color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.9rem;letter-spacing:0.02em;transition:var(--transition);box-shadow:0 4px 14px rgba(139,28,42,0.3);white-space:nowrap}
+.jl-cta:hover{background:var(--crimson-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(139,28,42,0.4)}
+
 /* SECTIONS */
 section{padding:80px 5%}
 .section-tag{color:var(--crimson);font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.7rem;text-align:center}
@@ -251,6 +267,46 @@ footer{background:#0D0505;color:rgba(255,255,255,0.35);text-align:center;padding
     </div>
   </div>
 </section>
+
+<!-- JUST LISTED strip — hydrated from public_listings (hidden until data arrives) -->
+<section class="just-listed" id="justListedStrip" aria-label="Featured listing">
+  <div class="jl-inner">
+    <div class="jl-photo" id="jlPhoto"></div>
+    <div class="jl-text">
+      <div class="jl-kicker" id="jlKicker">Just Listed</div>
+      <div class="jl-title" id="jlTitle"></div>
+      <div class="jl-specs" id="jlSpecs"></div>
+      <div class="jl-price" id="jlPrice"></div>
+    </div>
+    <a class="jl-cta" id="jlCta" href="#">View Full Listing →</a>
+  </div>
+</section>
+<script>
+(function(){
+  var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+  var K = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+  function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+  function statusLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Just Listed":s==="pending"?"Pending":s==="sold"?"Just Sold":s;}
+  fetch(SB+"/rest/v1/public_listings?published=eq.true&featured_on_homepage=eq.true&archived_at=is.null&select=slug,address,city,state,price,beds,baths,sqft,status,hero_image_url,headline&order=updated_at.desc&limit=1",{
+    headers:{apikey:K,Authorization:"Bearer "+K}
+  }).then(function(r){return r.ok?r.json():[];}).then(function(rows){
+    if(!rows||!rows.length)return;
+    var l=rows[0];
+    if(l.hero_image_url)document.getElementById("jlPhoto").style.backgroundImage="url('"+l.hero_image_url+"')";
+    document.getElementById("jlKicker").textContent=statusLabel(l.status);
+    document.getElementById("jlTitle").textContent=l.headline||l.address;
+    var specs=[];
+    if(l.beds)specs.push(l.beds+" bed");
+    if(l.baths)specs.push(l.baths+" bath");
+    if(l.sqft)specs.push(Number(l.sqft).toLocaleString()+" sqft");
+    var loc=[l.address,l.city,l.state].filter(Boolean).join(", ");
+    document.getElementById("jlSpecs").textContent=(l.headline?loc+" · ":"")+specs.join(" · ");
+    if(l.price)document.getElementById("jlPrice").textContent="$"+Number(l.price).toLocaleString();
+    document.getElementById("jlCta").href="/listing.html?slug="+encodeURIComponent(l.slug);
+    document.getElementById("justListedStrip").style.display="block";
+  }).catch(function(){});
+})();
+</script>
 
 <!-- STATS BAR — Updated with real Zillow data -->
 <div class="stats-bar">
