@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title id="pageTitle">Featured Listing | Janice Divina Liad, REALTOR®</title>
+<meta name="description" id="pageDescription" content="A beautiful home listed by Janice Divina Liad — REALTOR®, HomeSmart PV & Associates."/>
+<meta name="robots" content="index,follow"/>
+<meta property="og:title" content="Featured Listing — Janice Divina Liad" id="ogTitle"/>
+<meta property="og:description" content="Tour this home listed by Janice Divina Liad, REALTOR®" id="ogDescription"/>
+<meta property="og:image" content="https://janicedivinarealestate.com/images/janice-headshot.jpg" id="ogImage"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;--crimson-light:#A52535;--crimson-pale:#F9F0F1;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;
+  --radius:14px;--radius-lg:20px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);--shadow-lg:0 10px 40px rgba(26,16,8,0.12);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* Nav */
+.nav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+.nav-brand{display:flex;flex-direction:column;text-decoration:none}
+.nav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.nav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.nav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;transition:var(--transition);font-weight:500}
+.nav-back:hover{background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.3)}
+
+/* Loading / Error states */
+.state{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
+.state h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--crimson);margin-bottom:10px}
+.state p{color:var(--text-mid);max-width:480px;margin:0 auto}
+
+/* Hero */
+.hero{position:relative;min-height:420px;background:linear-gradient(135deg,#1a0a0a 0%,#4a1018 100%);color:#fff;overflow:hidden;display:flex;align-items:flex-end}
+.hero-image{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.55}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.75) 100%)}
+.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:40px 24px;width:100%}
+.status-chip{display:inline-block;padding:5px 14px;border-radius:99px;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px}
+.status-coming{background:var(--gold);color:#1a0a0a}
+.status-active{background:var(--green);color:#fff}
+.status-pending{background:#C48B2A;color:#fff}
+.status-sold{background:var(--crimson);color:#fff}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:700;line-height:1.1;margin-bottom:8px;letter-spacing:-0.01em}
+.hero .address-line{font-size:1.05rem;color:rgba(255,255,255,0.9);margin-bottom:18px}
+.hero .specs{display:flex;gap:20px;flex-wrap:wrap;font-size:0.95rem;color:rgba(255,255,255,0.9)}
+.hero .specs strong{color:#fff;font-size:1.3rem;display:block;font-family:'Cormorant Garamond',serif}
+.hero .price{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--gold);margin-top:12px}
+
+/* Main */
+.main{max-width:1100px;margin:0 auto;padding:40px 24px}
+.grid{display:grid;grid-template-columns:1fr 360px;gap:30px}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:30px}
+.gallery-item{aspect-ratio:4/3;background:var(--silver);border-radius:10px;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;transition:var(--transition)}
+.gallery-item:hover{transform:scale(1.02);box-shadow:var(--shadow)}
+@media (max-width:620px){.gallery{grid-template-columns:repeat(2,1fr)}}
+
+/* Section */
+.section{background:var(--white);border-radius:var(--radius-lg);padding:28px 30px;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5);margin-bottom:20px}
+.section h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--crimson);font-weight:700;margin-bottom:14px}
+.section p{color:var(--text-mid);line-height:1.8}
+.section p + p{margin-top:12px}
+
+/* Features list */
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 16px;margin-top:12px}
+@media (max-width:540px){.features{grid-template-columns:1fr}}
+.feature{display:flex;align-items:center;gap:10px;font-size:0.95rem;color:var(--text-mid)}
+.feature::before{content:"";width:6px;height:6px;border-radius:3px;background:var(--gold);flex-shrink:0}
+
+/* CTA sidebar (sticky on desktop) */
+.cta-col{display:flex;flex-direction:column;gap:20px}
+@media (min-width:881px){.cta-col{position:sticky;top:100px;align-self:flex-start}}
+.cta-card{background:var(--white);border-radius:var(--radius-lg);padding:28px 26px;box-shadow:var(--shadow-lg);border:1px solid rgba(221,213,200,0.5)}
+.cta-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--crimson);font-weight:700;margin-bottom:6px}
+.cta-card p.lede{color:var(--text-mid);font-size:0.9rem;margin-bottom:20px;line-height:1.6}
+
+/* Form */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:0.7rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px}
+.field input[type=text],.field input[type=email],.field input[type=tel],.field textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:11px 13px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+.field input:focus,.field textarea:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+.field textarea{min-height:70px;resize:vertical}
+
+.btn-primary{display:block;width:100%;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;padding:14px 20px;border-radius:12px;border:none;cursor:pointer;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;font-family:inherit;transition:var(--transition);box-shadow:0 4px 14px rgba(139,28,42,0.25)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,28,42,0.35)}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+/* Agent card */
+.agent-card{background:linear-gradient(135deg,var(--cream),var(--gold-soft));border-radius:var(--radius);padding:20px;display:flex;align-items:center;gap:14px;margin-top:14px}
+.agent-avatar{width:56px;height:56px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;flex-shrink:0}
+.agent-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--charcoal)}
+.agent-title{font-size:0.75rem;color:var(--text-mid);letter-spacing:0.04em}
+
+/* Success */
+.success{text-align:center;padding:30px 10px}
+.success h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--crimson);margin-bottom:10px}
+.success p{color:var(--text-mid);line-height:1.6;margin-bottom:14px}
+
+/* Open house banner */
+.open-house-banner{background:linear-gradient(135deg,var(--gold),var(--gold) 60%,#D4B85A);border-radius:var(--radius);padding:16px 20px;color:#1a0a0a;text-align:center;margin-bottom:20px}
+.open-house-banner .oh-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.open-house-banner .oh-date{font-size:0.9rem}
+
+footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8rem;border-top:1px solid var(--silver);margin-top:40px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <span class="nav-script">Janice Divina Liad</span>
+    <span class="nav-sub">REALTOR® · DRE #02099146</span>
+  </a>
+  <a href="/" class="nav-back">← Home</a>
+</nav>
+
+<div id="loading" class="state"><div><h2>Loading listing...</h2><p>Just a moment.</p></div></div>
+<div id="notfound" class="state" style="display:none"><div><h2>Listing not found</h2><p>This listing may have been sold, withdrawn, or the link you followed is out of date. Check out my other listings or get in touch.</p></div></div>
+
+<div id="content" style="display:none">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-image" id="heroImage"></div>
+    <div class="hero-content">
+      <span class="status-chip" id="statusChip"></span>
+      <h1 id="headline">—</h1>
+      <div class="address-line" id="addressLine">—</div>
+      <div class="price" id="price"></div>
+      <div class="specs" id="specs"></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <div id="openHouseBanner" class="open-house-banner" style="display:none">
+      <div class="oh-title">Open House</div>
+      <div class="oh-date" id="openHouseDate"></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="gallery" id="gallery"></div>
+        <div class="section">
+          <h2>About This Home</h2>
+          <div id="description"></div>
+          <div class="features" id="features"></div>
+        </div>
+        <div class="section" id="neighborhoodSection" style="display:none">
+          <h2>Neighborhood</h2>
+          <p id="neighborhood"></p>
+          <p id="schoolDistrict" style="margin-top:10px;font-size:0.9rem;color:var(--text-light)"></p>
+        </div>
+      </div>
+
+      <div class="cta-col">
+        <div class="cta-card">
+          <h3 id="ctaTitle">Request a Private Showing</h3>
+          <p class="lede" id="ctaLede">Tour this home on your schedule. I'll personally walk you through and answer anything.</p>
+          <form id="showingForm">
+            <div class="field"><label>Your Name *</label><input type="text" id="shName" required></div>
+            <div class="field"><label>Phone *</label><input type="tel" id="shPhone" required></div>
+            <div class="field"><label>Email</label><input type="email" id="shEmail"></div>
+            <div class="field"><label>When works best?</label><input type="text" id="shWhen" placeholder="e.g., Saturday afternoon"></div>
+            <div class="field"><label>Anything to tell me?</label><textarea id="shNotes" placeholder="Pre-approved? Specific questions? Tell me what you're thinking."></textarea></div>
+            <button type="submit" class="btn-primary" id="shSubmit">Request Showing →</button>
+          </form>
+          <div class="agent-card" style="display:none" id="successCard">
+            <!-- populated on success -->
+          </div>
+        </div>
+
+        <div class="cta-card" style="background:linear-gradient(135deg,var(--cream),var(--gold-soft));box-shadow:var(--shadow)">
+          <h3>About Janice</h3>
+          <p class="lede">Relationship-first REALTOR® serving Manteca, Tracy, Lathrop, Ripon, Modesto, and the Central Valley. Faith. Family. Forward.</p>
+          <div class="agent-card" style="margin-top:0">
+            <div class="agent-avatar">JL</div>
+            <div>
+              <div class="agent-name">Janice Divina Liad</div>
+              <div class="agent-title">HomeSmart PV & Associates<br>DRE #02099146</div>
+            </div>
+          </div>
+          <a href="tel:2093059401" class="btn-primary" style="margin-top:16px;text-decoration:none;text-align:center;background:var(--white);color:var(--crimson);border:2px solid var(--crimson);box-shadow:none">Call (209) 305-9401</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Janice Divina Liad · REALTOR® · DRE #02099146 · HomeSmart PV & Associates · Manteca, CA<br>
+    All information deemed reliable but not guaranteed. Buyer to verify all details.
+  </footer>
+</div>
+
+<script>
+var SUPABASE_URL = "https://sutapxqrjwvxoelemkyf.supabase.co";
+var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+
+/* Ship 7d visit tracker */
+(function(){
+  try {
+    var exp = (new URLSearchParams(window.location.search)).get("exp");
+    if (exp && exp.length >= 2 && exp.length <= 100) {
+      fetch(SUPABASE_URL + "/functions/v1/track-experiment-visit", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ exp: exp.trim().toLowerCase() }),
+      }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s||"").replace(/[&<>"']/g, function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+function fmtPrice(n){if(!n)return"";return"$"+Number(n).toLocaleString();}
+function fmtDate(iso){if(!iso)return"";var d=new Date(iso);return d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})+" · "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});}
+function fmtStatus(s){return{coming_soon:"Coming Soon",active:"Active",pending:"Pending",sold:"Sold",withdrawn:"Withdrawn"}[s]||s;}
+
+var currentListing = null;
+
+async function loadListing(){
+  var slug = (new URLSearchParams(window.location.search)).get("slug");
+  if (!slug){
+    $("loading").style.display = "none";
+    $("notfound").style.display = "flex";
+    return;
+  }
+  try {
+    var r = await fetch(SUPABASE_URL + "/rest/v1/public_listings?slug=eq." + encodeURIComponent(slug) + "&published=eq.true&archived_at=is.null&select=*&limit=1", {
+      headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY }
+    });
+    if (!r.ok) throw new Error("fetch failed");
+    var data = await r.json();
+    if (!data || !data.length) {
+      $("loading").style.display = "none";
+      $("notfound").style.display = "flex";
+      return;
+    }
+    currentListing = data[0];
+    renderListing(currentListing);
+  } catch(e) {
+    console.error("Listing load error:", e);
+    $("loading").style.display = "none";
+    $("notfound").style.display = "flex";
+  }
+}
+
+function renderListing(l){
+  $("loading").style.display = "none";
+  $("content").style.display = "block";
+
+  /* Head meta */
+  var title = (l.headline || l.address || "Featured Listing") + " | Janice Divina Liad";
+  $("pageTitle").textContent = title;
+  $("ogTitle").setAttribute("content", title);
+  if (l.meta_description) { $("pageDescription").setAttribute("content", l.meta_description); $("ogDescription").setAttribute("content", l.meta_description); }
+  if (l.og_image_url || l.hero_image_url) $("ogImage").setAttribute("content", l.og_image_url || l.hero_image_url);
+
+  /* Hero */
+  if (l.hero_image_url) $("heroImage").style.backgroundImage = "url('" + l.hero_image_url + "')";
+  var statusEl = $("statusChip");
+  statusEl.textContent = fmtStatus(l.status);
+  statusEl.className = "status-chip " + (l.status === "active" ? "status-active" : l.status === "pending" ? "status-pending" : l.status === "sold" ? "status-sold" : "status-coming");
+  $("headline").textContent = l.headline || l.address || "";
+  $("addressLine").textContent = [l.address, l.city, l.state, l.zip].filter(Boolean).join(", ");
+  if (l.price) $("price").textContent = fmtPrice(l.price);
+  var specs = [];
+  if (l.beds) specs.push("<div><strong>" + l.beds + "</strong>Bedrooms</div>");
+  if (l.baths) specs.push("<div><strong>" + l.baths + "</strong>Bathrooms</div>");
+  if (l.sqft) specs.push("<div><strong>" + Number(l.sqft).toLocaleString() + "</strong>Sq Ft</div>");
+  if (l.lot_sqft) specs.push("<div><strong>" + Number(l.lot_sqft).toLocaleString() + "</strong>Lot Sq Ft</div>");
+  if (l.year_built) specs.push("<div><strong>" + l.year_built + "</strong>Year Built</div>");
+  $("specs").innerHTML = specs.join("");
+
+  /* Open house banner */
+  if (l.open_house_datetime) {
+    var now = new Date();
+    var oh = new Date(l.open_house_datetime);
+    if (oh > now) {
+      $("openHouseDate").textContent = fmtDate(l.open_house_datetime);
+      $("openHouseBanner").style.display = "block";
+    }
+  }
+
+  /* Gallery */
+  var gallery = Array.isArray(l.gallery_urls) ? l.gallery_urls : [];
+  if (gallery.length) {
+    $("gallery").innerHTML = gallery.map(function(url){
+      return '<div class="gallery-item" style="background-image:url(' + "'" + url + "'" + ')"></div>';
+    }).join("");
+  } else {
+    $("gallery").style.display = "none";
+  }
+
+  /* Description */
+  if (l.description) {
+    var paras = l.description.split(/\n\n+/).map(function(p){ return "<p>" + esc(p).replace(/\n/g,"<br>") + "</p>"; }).join("");
+    $("description").innerHTML = paras;
+  }
+
+  /* Features */
+  var features = Array.isArray(l.key_features) ? l.key_features : [];
+  if (features.length) {
+    $("features").innerHTML = features.map(function(f){ return '<div class="feature">' + esc(f) + '</div>'; }).join("");
+  } else {
+    $("features").style.display = "none";
+  }
+
+  /* Neighborhood */
+  if (l.neighborhood_notes || l.school_district) {
+    $("neighborhoodSection").style.display = "block";
+    if (l.neighborhood_notes) $("neighborhood").textContent = l.neighborhood_notes;
+    if (l.school_district) $("schoolDistrict").textContent = "School District: " + l.school_district;
+  }
+
+  /* CTA title */
+  if (l.primary_cta_label) $("ctaTitle").textContent = l.primary_cta_label;
+}
+
+/* Showing request form submits via lead-router */
+$("showingForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+  if (!currentListing) return;
+  var name = $("shName").value.trim();
+  var phone = $("shPhone").value.trim();
+  var email = $("shEmail").value.trim();
+  var when = $("shWhen").value.trim();
+  var notes = $("shNotes").value.trim();
+  if (!name || !phone) { alert("Please enter your name and phone."); return; }
+
+  var btn = $("shSubmit");
+  btn.disabled = true; btn.textContent = "Sending...";
+
+  var notesText = "Showing request for " + currentListing.address;
+  if (when) notesText += " — Prefers: " + when;
+  if (notes) notesText += "\n\n" + notes;
+
+  var payload = {
+    name: name, phone: phone, email: email,
+    source: "listing_showing_request",
+    address: currentListing.address,
+    city: currentListing.city,
+    motivation: "ready", /* showing request = HOT lead */
+    notes: notesText,
+    exp: (new URLSearchParams(window.location.search)).get("exp") || ("listing-" + currentListing.slug),
+    extras: {
+      listing_slug: currentListing.slug,
+      listing_id: currentListing.id,
+      preferred_when: when,
+    },
+  };
+
+  try {
+    var r = await fetch(SUPABASE_URL + "/functions/v1/lead-router", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) throw new Error("router " + r.status);
+    $("showingForm").style.display = "none";
+    var sc = $("successCard");
+    sc.style.display = "flex";
+    sc.innerHTML =
+      '<div class="agent-avatar">✓</div>' +
+      '<div>' +
+      '<div class="agent-name">Got it, ' + esc(name.split(" ")[0]) + '!</div>' +
+      '<div class="agent-title">I\'ll personally reach out within 1 business day to set up your showing.</div>' +
+      '</div>';
+  } catch(err) {
+    console.error(err);
+    alert("Something went wrong. Please call or text me directly at (209) 305-9401.");
+    btn.disabled = false; btn.textContent = "Request Showing →";
+  }
+});
+
+loadListing();
+</script>
+</body>
+</html>
