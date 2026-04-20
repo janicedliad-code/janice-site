@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Open House Feedback | Janice Divina Liad</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--crimson:#8B1C2A;--crimson-dark:#5a1018;--gold:#C9A84C;--teal:#2D7A72;--cream:#FAF6EF;--silver:#DDD5C8;--charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+.nav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.nav-brand{display:flex;flex-direction:column;text-decoration:none}
+.nav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.nav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+
+.hero{background:linear-gradient(135deg,var(--crimson-dark),var(--crimson));color:#fff;padding:40px 24px;text-align:center}
+.hero-kicker{font-size:0.7rem;letter-spacing:0.3em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:10px}
+.hero p{max-width:540px;margin:0 auto;color:rgba(255,255,255,0.9);font-size:0.95rem;line-height:1.6}
+
+.main{max-width:720px;margin:-20px auto 0;padding:0 24px 60px;position:relative;z-index:2}
+.card{background:#fff;border-radius:14px;padding:26px 28px;box-shadow:0 10px 40px rgba(26,16,8,0.1);border:1px solid rgba(221,213,200,0.5)}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-size:0.82rem;font-weight:700;color:var(--charcoal);margin-bottom:5px}
+.field .hint{font-size:0.75rem;color:var(--text-light);margin-bottom:8px;font-style:italic;line-height:1.4}
+.field input,.field textarea{width:100%;border:1.5px solid var(--silver);border-radius:8px;padding:11px 13px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:all 0.2s}
+.field input:focus,.field textarea:focus{border-color:var(--crimson);background:#fff}
+.field textarea{min-height:70px;resize:vertical}
+
+.btn-primary{display:block;width:100%;background:linear-gradient(135deg,var(--teal),#1f5e57);color:#fff;padding:14px 20px;border-radius:10px;border:none;cursor:pointer;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;font-family:inherit;transition:all 0.2s;box-shadow:0 4px 14px rgba(45,122,114,0.25);margin-top:8px}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+.state{min-height:40vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
+.state h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--crimson);margin-bottom:8px}
+
+.success{background:linear-gradient(135deg,#f8fafc,#e8f5f2);border:1.5px solid var(--teal);border-radius:14px;padding:32px;text-align:center}
+.success h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--teal);margin-bottom:10px}
+.success p{color:var(--text-mid);line-height:1.6;margin-bottom:8px}
+
+footer{padding:28px 20px;text-align:center;color:var(--text-light);font-size:0.78rem;border-top:1px solid var(--silver)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <span class="nav-script">Janice Divina Liad</span>
+    <span class="nav-sub">REALTOR® · DRE #02099146</span>
+  </a>
+</nav>
+
+<div id="loading" class="state"><div><h2>Loading...</h2></div></div>
+<div id="notfound" class="state" style="display:none"><div><h2>Not found</h2><p>This feedback link may be expired. Please text Janice at (209) 305-9401.</p></div></div>
+<div id="already" class="state" style="display:none"><div><h2>Thanks!</h2><p>You've already submitted feedback. I appreciate it.</p></div></div>
+
+<div id="content" style="display:none">
+  <div class="hero">
+    <div class="hero-kicker">Open House Feedback</div>
+    <h1 id="headline">How did it go?</h1>
+    <p>Thanks for hosting. Your feedback helps me + the seller. Aggregate only — no visitor PII needed.</p>
+  </div>
+
+  <div class="main">
+    <div class="card" id="formCard">
+      <form id="fbForm">
+        <input type="hidden" id="signupId" />
+
+        <div class="field">
+          <label>How many visitors total?</label>
+          <div class="hint">A rough count is fine.</div>
+          <input type="number" id="visitorCount" min="0" max="500" />
+        </div>
+
+        <div class="field">
+          <label>How did visitors react to the home?</label>
+          <div class="hint">"What's selling" and "what's raising eyebrows" — anything useful.</div>
+          <textarea id="visitorReaction" placeholder="e.g., Loved the open concept. Asked about HOA. Kitchen was a standout..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Anyone want to see it again or submit an offer?</label>
+          <div class="hint">Just notes — I don't need their info.</div>
+          <textarea id="anyoneInterested" placeholder="e.g., One couple asked for a second showing. One investor seemed interested."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Did you meet a potential buyer for YOU? 🤝</label>
+          <div class="hint">They're your lead — keep 'em. Just curious how the event served you.</div>
+          <textarea id="metPotentialBuyer" placeholder="e.g., Yes, met a relocation buyer — adding to my pipeline."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Did everything work smoothly?</label>
+          <div class="hint">Signage, flyers, lockbox, briefing — any hiccups?</div>
+          <textarea id="logisticsFeedback" placeholder="e.g., All good · or · lockbox was sticky, flyers ran out at hour 2"></textarea>
+        </div>
+
+        <div class="field">
+          <label>How was hosting through my system? ✨</label>
+          <div class="hint">This is gold for me — tell me what made it easy or hard, what I should do differently.</div>
+          <textarea id="systemFeedback" placeholder="e.g., The briefing email was clear. Would love a checklist for post-event follow-ups..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submitBtn">Submit Feedback →</button>
+      </form>
+    </div>
+
+    <div class="card" id="successCard" style="display:none">
+      <div class="success">
+        <h2>💚 Got it — thank you!</h2>
+        <p>Your feedback is in. I'll send a personal thank-you note your way this week.</p>
+        <p style="margin-top:14px;font-size:0.85rem">If you met a buyer you're working with who's interested in this home specifically, text me and we can talk co-op.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Janice Divina Liad · REALTOR® · DRE #02099146 · HomeSmart PV & Associates · Manteca, CA
+</footer>
+
+<script>
+var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+var H = { apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json" };
+function $(id) { return document.getElementById(id); }
+
+var signupId = new URLSearchParams(location.search).get("signup_id");
+var signup = null;
+
+async function load() {
+  if (!signupId) { $("loading").style.display="none"; $("notfound").style.display="flex"; return; }
+  try {
+    var r = await fetch(SB + "/rest/v1/co_agent_signups?id=eq." + signupId + "&select=id,co_agent_name,feedback_submitted,listing_id", { headers: H });
+    var rows = r.ok ? await r.json() : [];
+    if (!rows.length) throw "not found";
+    signup = rows[0];
+    if (signup.feedback_submitted) { $("loading").style.display="none"; $("already").style.display="flex"; return; }
+    $("signupId").value = signupId;
+    $("headline").textContent = "Hey " + signup.co_agent_name.split(" ")[0] + " — how did it go?";
+    $("loading").style.display="none";
+    $("content").style.display="block";
+  } catch (e) {
+    $("loading").style.display="none";
+    $("notfound").style.display="flex";
+  }
+}
+
+$("fbForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  var btn = $("submitBtn");
+  btn.disabled = true; btn.textContent = "Submitting...";
+  var payload = {
+    signup_id: signupId,
+    agent_id: "00000000-0000-0000-0000-000000000001",
+    visitor_count: $("visitorCount").value ? parseInt($("visitorCount").value) : null,
+    visitor_reaction: $("visitorReaction").value.trim() || null,
+    anyone_interested: $("anyoneInterested").value.trim() || null,
+    met_potential_buyer: $("metPotentialBuyer").value.trim() || null,
+    logistics_feedback: $("logisticsFeedback").value.trim() || null,
+    system_feedback: $("systemFeedback").value.trim() || null,
+  };
+  try {
+    // 1. Insert feedback
+    var r = await fetch(SB + "/rest/v1/co_agent_feedback", {
+      method: "POST", headers: H, body: JSON.stringify(payload),
+    });
+    if (!r.ok) throw await r.text();
+    // 2. Mark signup feedback_submitted
+    await fetch(SB + "/rest/v1/co_agent_signups?id=eq." + signupId, {
+      method: "PATCH", headers: H, body: JSON.stringify({ feedback_submitted: true }),
+    });
+    // 3. Queue rhythm card task (via co-agent-nurture function or direct insert)
+    await fetch(SB + "/functions/v1/co-agent-queue-card", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ signup_id: signupId }),
+    }).catch(() => {});  // best-effort
+    $("formCard").style.display = "none";
+    $("successCard").style.display = "block";
+    window.scrollTo(0, 0);
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Please text Janice at (209) 305-9401.");
+    btn.disabled = false; btn.textContent = "Submit Feedback →";
+  }
+});
+
+load();
+</script>
+</body>
+</html>
