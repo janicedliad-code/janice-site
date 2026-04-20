@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title id="pageTitle">Open House | Janice Divina Liad, REALTOR®</title>
+<meta name="description" content="Janice Divina Liad is hosting this open house. I'd love to meet you."/>
+<meta name="robots" content="index,follow"/>
+<meta property="og:title" content="Open House Hosted by Janice Divina Liad" id="ogTitle"/>
+<meta property="og:description" content="Tour this home with Janice — relationship-first REALTOR® serving San Joaquin County." id="ogDescription"/>
+<meta property="og:image" content="https://janicedivinarealestate.com/images/janice-headshot.jpg" id="ogImage"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;--crimson-light:#A52535;--crimson-pale:#F9F0F1;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --teal:#2D7A72;--green:#3A7D5A;
+  --radius:14px;--radius-lg:20px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);--shadow-lg:0 10px 40px rgba(26,16,8,0.12);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+.nav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;text-decoration:none}
+.nav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.nav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.nav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px}
+
+.state{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
+.state h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--crimson);margin-bottom:10px}
+.state p{color:var(--text-mid);max-width:480px;margin:0 auto}
+
+/* Hero */
+.hero{position:relative;min-height:480px;background:linear-gradient(135deg,#1a0a0a 0%,#4a1018 100%);color:#fff;overflow:hidden;display:flex;align-items:flex-end}
+.hero-image{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.55}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.78) 100%)}
+.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:40px 24px;width:100%}
+.hero-kicker{font-size:0.75rem;color:var(--gold);font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:700;line-height:1.1;margin-bottom:10px}
+.hero .address{font-size:1.05rem;color:rgba(255,255,255,0.9);margin-bottom:14px}
+.hero .event-pill{display:inline-block;background:var(--gold);color:var(--charcoal);padding:8px 18px;border-radius:99px;font-size:0.9rem;font-weight:700;letter-spacing:0.04em;margin-bottom:20px}
+.hero .specs{display:flex;gap:24px;flex-wrap:wrap;font-size:0.95rem;color:rgba(255,255,255,0.9)}
+.hero .specs strong{color:#fff;font-size:1.35rem;display:block;font-family:'Cormorant Garamond',serif;margin-bottom:2px}
+
+/* Main */
+.main{max-width:1100px;margin:0 auto;padding:40px 24px}
+.grid{display:grid;grid-template-columns:1fr 380px;gap:30px}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+
+/* Section */
+.section{background:var(--white);border-radius:var(--radius-lg);padding:28px 30px;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5);margin-bottom:20px}
+.section h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--crimson);font-weight:700;margin-bottom:14px}
+.section p{color:var(--text-mid);line-height:1.8}
+.section p + p{margin-top:12px}
+
+/* Disclosure callout — prominent */
+.disclosure{background:linear-gradient(135deg,var(--cream),var(--gold-soft));border-left:6px solid var(--gold);border-radius:var(--radius);padding:22px 26px;margin-bottom:20px}
+.disclosure .label{font-size:0.7rem;color:var(--crimson);font-weight:800;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px}
+.disclosure p{color:var(--charcoal);font-size:0.98rem;line-height:1.7;margin:0}
+.disclosure strong{color:var(--crimson)}
+
+/* Sign-in card */
+.signin-col{display:flex;flex-direction:column;gap:20px}
+@media (min-width:881px){.signin-col{position:sticky;top:90px;align-self:flex-start}}
+.signin-card{background:var(--white);border-radius:var(--radius-lg);padding:28px 26px;box-shadow:var(--shadow-lg);border:2px solid var(--teal)}
+.signin-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--teal);font-weight:700;margin-bottom:6px}
+.signin-card p.lede{color:var(--text-mid);font-size:0.88rem;margin-bottom:20px;line-height:1.6}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:0.7rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px}
+.field input[type=text],.field input[type=email],.field input[type=tel],.field select,.field textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:11px 13px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--teal);background:#fff}
+.field textarea{min-height:60px;resize:vertical}
+
+.btn-primary{display:block;width:100%;background:linear-gradient(135deg,var(--teal),#1f5e57);color:#fff;padding:14px 20px;border-radius:12px;border:none;cursor:pointer;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;font-family:inherit;transition:var(--transition);box-shadow:0 4px 14px rgba(45,122,114,0.25)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+.agent-card{background:linear-gradient(135deg,var(--cream),var(--gold-soft));border-radius:var(--radius);padding:20px;display:flex;align-items:center;gap:14px;margin-top:14px}
+.agent-avatar{width:56px;height:56px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;flex-shrink:0}
+.agent-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--charcoal)}
+.agent-title{font-size:0.75rem;color:var(--text-mid);letter-spacing:0.04em}
+
+.success{text-align:center;padding:20px 10px}
+.success h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--teal);margin-bottom:10px}
+.success p{color:var(--text-mid);line-height:1.6;margin-bottom:14px}
+
+footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8rem;border-top:1px solid var(--silver);margin-top:40px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <span class="nav-script">Janice Divina Liad</span>
+    <span class="nav-sub">REALTOR® · DRE #02099146</span>
+  </a>
+  <a href="/" class="nav-back">← Home</a>
+</nav>
+
+<div id="loading" class="state"><div><h2>Loading event...</h2><p>Just a moment.</p></div></div>
+<div id="notfound" class="state" style="display:none"><div><h2>Event not found</h2><p>This link may have expired or been taken down. For other open houses, visit janicedivinarealestate.com.</p></div></div>
+
+<div id="content" style="display:none">
+  <section class="hero">
+    <div class="hero-image" id="heroImage"></div>
+    <div class="hero-content">
+      <div class="hero-kicker">★ OPEN HOUSE YOU'RE INVITED</div>
+      <h1 id="headline">—</h1>
+      <div class="address" id="addressLine">—</div>
+      <div class="event-pill" id="eventPill">—</div>
+      <div class="specs" id="specs"></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <div class="grid">
+      <div>
+        <!-- DRE-compliant disclosure — prominent -->
+        <div class="disclosure">
+          <div class="label">★ A word before you tour</div>
+          <p>I'm <strong>Janice Divina Liad</strong>, and I'm hosting this open house for my colleague <strong id="disclosureAgent">the listing agent</strong>. I do not represent the seller — I'm here to help <strong>you</strong> find the right home.</p>
+          <p style="margin-top:10px">If that's this one, I'll connect you with the listing agent. If it's not, I'd be honored to be your buyer's agent. Either way — come in, look around, ask anything.</p>
+        </div>
+
+        <div class="section">
+          <h2>About This Home</h2>
+          <p id="description">Walk through, take your time. If you see something you love, tell me. If you see something that's a dealbreaker, tell me that too — I want to know what matters to you.</p>
+          <p id="notes" style="margin-top:14px;font-style:italic;color:var(--text-light);display:none"></p>
+          <p id="externalListing" style="margin-top:14px;display:none"><a id="externalLink" href="#" target="_blank" rel="noopener noreferrer" style="color:var(--crimson);font-weight:600">View full property details →</a></p>
+        </div>
+
+        <div class="section">
+          <h2>Meet Janice</h2>
+          <p><strong style="color:var(--charcoal)">Relationship-first REALTOR®</strong> serving Manteca, Tracy, Lathrop, Ripon, Modesto, and San Joaquin County since 2019.</p>
+          <p style="margin-top:10px;font-style:italic;color:var(--crimson)">Faith. Family. Forward. — Flow over force. Serve first.</p>
+          <div class="agent-card">
+            <div class="agent-avatar">JL</div>
+            <div>
+              <div class="agent-name">Janice Divina Liad</div>
+              <div class="agent-title">HomeSmart PV & Associates<br>DRE #02099146</div>
+            </div>
+          </div>
+          <a href="tel:2093059401" class="btn-primary" style="margin-top:16px;text-decoration:none;text-align:center;background:var(--white);color:var(--crimson);border:2px solid var(--crimson);box-shadow:none">Call or Text (209) 305-9401</a>
+        </div>
+      </div>
+
+      <div class="signin-col">
+        <div class="signin-card" id="signinCard">
+          <h3 id="signinTitle">Sign the Guest Book</h3>
+          <p class="lede">Quick sign-in — 30 seconds. I'll send over a short follow-up and some recent market notes for your area.</p>
+          <form id="signinForm">
+            <div class="field"><label>Your Name *</label><input type="text" id="siName" required></div>
+            <div class="field"><label>Phone *</label><input type="tel" id="siPhone" required></div>
+            <div class="field"><label>Email</label><input type="email" id="siEmail"></div>
+            <div class="field"><label>What are you looking for?</label>
+              <select id="siType">
+                <option value="buyer">I'm shopping for a home</option>
+                <option value="neighbor">I'm a neighbor, just curious</option>
+                <option value="seller">I'm thinking of selling too</option>
+                <option value="other">Just looking</option>
+              </select>
+            </div>
+            <div class="field"><label>Working with an agent already?</label>
+              <select id="siAgent">
+                <option value="no">No — open to working with someone</option>
+                <option value="yes">Yes, I have an agent</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+            <div class="field"><label>Anything to tell me? (optional)</label><textarea id="siNotes" placeholder="What do you love about this house? What's on your wishlist?"></textarea></div>
+            <button type="submit" class="btn-primary" id="siSubmit">Sign In →</button>
+          </form>
+          <div class="agent-card success" style="display:none" id="successCard"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Janice Divina Liad · REALTOR® · DRE #02099146 · HomeSmart PV & Associates · Manteca, CA<br>
+    Hosting on behalf of <span id="footerAgent">the listing agent</span>. All information deemed reliable but not guaranteed.
+  </footer>
+</div>
+
+<script>
+var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+var H = { apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json" };
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s||"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function fmtDate(d) { return new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday:"long", month:"long", day:"numeric" }); }
+function fmtTime(t) { if (!t) return ""; var [h,m] = t.split(":"); var hn = parseInt(h); var ampm = hn >= 12 ? "PM" : "AM"; var h12 = hn % 12 || 12; return h12 + ":" + m + " " + ampm; }
+
+var ohId = new URLSearchParams(location.search).get("id");
+var oh = null;
+
+async function load() {
+  if (!ohId) { $("loading").style.display="none"; $("notfound").style.display="flex"; return; }
+  try {
+    var r = await fetch(SB + "/rest/v1/open_houses?id=eq." + ohId + "&select=*&limit=1", { headers: H });
+    var rows = r.ok ? await r.json() : [];
+    if (!rows.length) throw "no event";
+    oh = rows[0];
+    var dj = oh.data_json || {};
+    if (!dj.published) throw "draft";  // Only show published events
+    render(oh, dj);
+  } catch (e) {
+    $("loading").style.display="none";
+    $("notfound").style.display="flex";
+  }
+}
+
+function render(oh, dj) {
+  $("loading").style.display="none";
+  $("content").style.display="block";
+
+  if (dj.heroPhotoUrl) $("heroImage").style.backgroundImage = "url('" + dj.heroPhotoUrl + "')";
+  var city = dj.city ? ", " + dj.city : "";
+  var state = dj.state ? ", " + dj.state : "";
+  var zip = dj.zip ? " " + dj.zip : "";
+  $("headline").textContent = oh.property_address + city;
+  $("addressLine").textContent = oh.property_address + city + state + zip;
+
+  // Event pill
+  var dateStr = oh.event_date ? fmtDate(oh.event_date) : "Date TBD";
+  var timeStr = oh.start_time ? fmtTime(oh.start_time) + " – " + fmtTime(oh.end_time || oh.start_time) : "";
+  $("eventPill").textContent = dateStr + (timeStr ? " · " + timeStr : "");
+
+  // Specs
+  var specs = [];
+  if (dj.price) specs.push("<div><strong>" + dj.price + "</strong>Price</div>");
+  if (dj.beds) specs.push("<div><strong>" + dj.beds + "</strong>Beds</div>");
+  if (dj.baths) specs.push("<div><strong>" + dj.baths + "</strong>Baths</div>");
+  if (dj.sqft) specs.push("<div><strong>" + dj.sqft + "</strong>Sq Ft</div>");
+  $("specs").innerHTML = specs.join("");
+
+  // Page title + OG
+  var title = "Open House at " + oh.property_address + " | Janice Divina Liad";
+  document.getElementById("pageTitle").textContent = title;
+  document.getElementById("ogTitle").setAttribute("content", title);
+  if (dj.heroPhotoUrl) document.getElementById("ogImage").setAttribute("content", dj.heroPhotoUrl);
+
+  // Disclosure
+  $("disclosureAgent").textContent = dj.listingAgentName || "the listing agent";
+  $("footerAgent").textContent = dj.listingAgentName || "the listing agent";
+  if (dj.listingAgentBrokerage) $("footerAgent").textContent += " · " + dj.listingAgentBrokerage;
+
+  // Notes from Janice
+  if (oh.notes) {
+    $("notes").textContent = '"' + oh.notes + '"';
+    $("notes").style.display = "block";
+  }
+
+  // External listing link
+  if (dj.externalListingUrl) {
+    $("externalLink").setAttribute("href", dj.externalListingUrl);
+    $("externalListing").style.display = "block";
+  }
+}
+
+// Sign-in submit
+$("signinForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  var btn = $("siSubmit");
+  btn.disabled = true; btn.textContent = "Signing you in...";
+  var name = $("siName").value.trim();
+  var phone = $("siPhone").value.trim();
+  var email = $("siEmail").value.trim();
+  var type = $("siType").value;
+  var agent = $("siAgent").value;
+  var notes = $("siNotes").value.trim();
+  if (!name || !phone) { alert("Name and phone required."); btn.disabled=false; btn.textContent="Sign In →"; return; }
+
+  try {
+    // 1. Record sign-in in open_house_signins
+    var signinPayload = {
+      agent_id: "00000000-0000-0000-0000-000000000001",
+      open_house_id: ohId,
+      name: name, phone: phone, email: email || null,
+      buyer_type: type,
+      working_with_agent: agent === "yes",
+      pre_approved: null,
+      notes: notes || null,
+      signed_in_at: new Date().toISOString(),
+      data_json: { hearAbout: "hosted-open-house-landing", signedInAt: new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}) },
+    };
+    await fetch(SB + "/rest/v1/open_house_signins", { method: "POST", headers: H, body: JSON.stringify(signinPayload) });
+
+    // 2. Route to lead-router to create buyer lead + fire nurture + send thank-you
+    var routerPayload = {
+      name: name, phone: phone, email: email,
+      source: "hosted_open_house",
+      motivation: type === "buyer" ? (agent === "no" ? "ready" : "soon") : "curious",
+      notes: notes + (oh.property_address ? "\n\nHosted event: " + oh.property_address : ""),
+      extras: { open_house_id: ohId, property_address: oh.property_address, working_with_agent: agent },
+    };
+    await fetch(SB + "/functions/v1/lead-router", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(routerPayload) }).catch(() => {});
+
+    // 3. Success
+    $("signinForm").style.display = "none";
+    var sc = $("successCard");
+    sc.style.display = "flex";
+    sc.innerHTML =
+      '<div class="agent-avatar">✓</div>' +
+      '<div>' +
+      '<div class="agent-name">Thanks, ' + esc(name.split(" ")[0]) + '!</div>' +
+      '<div class="agent-title">You\'re signed in. Enjoy the tour — I\'ll send a quick text follow-up within 2 hours.</div>' +
+      '</div>';
+    $("signinTitle").textContent = "You're signed in 🎉";
+  } catch(err) {
+    console.error(err);
+    alert("Something went wrong. Please let Janice know: (209) 305-9401.");
+    btn.disabled = false; btn.textContent = "Sign In →";
+  }
+});
+
+load();
+</script>
+</body>
+</html>
