@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>How's it going with your lender? | Janice Divina Liad</title>
+<meta name="description" content="Share your experience with your assigned lender — your feedback helps Janice keep her network's quality high."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;--crimson-pale:#F9F0F1;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --teal:#2D7A72;--teal-dark:#1E5450;--teal-soft:#E8F3F1;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;--amber:#B8862A;--red:#B53A3A;
+  --radius:12px;--radius-lg:18px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+.topnav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+.topnav-brand{display:flex;flex-direction:column;text-decoration:none}
+.topnav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.topnav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.topnav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;transition:var(--transition);font-weight:500}
+.topnav-back:hover{background:rgba(255,255,255,0.08);color:#fff}
+.hero{background:linear-gradient(135deg,#0a1a1a 0%,#15403c 50%,var(--teal-dark) 100%);color:#fff;padding:48px 24px 56px;text-align:center}
+.hero-eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;padding:4px 14px;border:1px solid rgba(201,168,76,0.5);border-radius:99px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:10px;letter-spacing:-0.01em;max-width:680px;margin-left:auto;margin-right:auto}
+.hero h1 .name{color:#E5B056}
+.hero p.sub{font-size:0.95rem;color:rgba(255,255,255,0.85);max-width:560px;margin:0 auto;line-height:1.7}
+.shell{max-width:680px;margin:24px auto 60px;padding:0 20px}
+.card{background:var(--white);border-radius:var(--radius-lg);padding:28px 28px;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5);margin-bottom:16px}
+@media (max-width:520px){.card{padding:22px 20px}}
+.st{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--crimson);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--silver);letter-spacing:-0.01em}
+.st::before{content:'';display:inline-block;width:8px;height:8px;border-radius:4px;background:var(--teal)}
+.fld{margin-bottom:14px}
+label{display:block;font-size:0.72rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px}
+.note{font-size:0.78rem;color:var(--text-light);margin:0 0 8px;line-height:1.6;font-style:italic;text-transform:none;letter-spacing:0}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:11px 14px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+input:focus,select:focus,textarea:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+textarea{min-height:90px;resize:vertical;line-height:1.6}
+.iw{display:flex;align-items:stretch;border:1.5px solid var(--silver);border-radius:10px;overflow:hidden;background:var(--cream);transition:var(--transition)}
+.iw:focus-within{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+.ipre{padding:11px 14px;background:rgba(201,168,76,0.12);font-size:0.9rem;color:var(--amber);font-weight:700;border-right:1px solid var(--silver);user-select:none}
+.iw input{flex:1;border:none;outline:none;padding:11px 14px;font-size:0.95rem;background:transparent;color:var(--charcoal)}
+.btn{padding:14px 26px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.95rem;font-family:inherit;transition:var(--transition);letter-spacing:0.02em;width:100%}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.bp{background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;box-shadow:0 3px 12px rgba(139,28,42,0.22)}
+.stars{display:flex;gap:6px;justify-content:center;margin:12px 0}
+.star{font-size:38px;background:none;border:none;cursor:pointer;color:#ccc;padding:2px;transition:var(--transition);line-height:1}
+.star.active{color:var(--gold)}
+.star:hover{transform:scale(1.1)}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cream);border:1.5px solid var(--silver);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:var(--transition)}
+.opt:hover{border-color:var(--gold);background:var(--gold-soft)}
+.opt input{margin-top:3px;flex-shrink:0;accent-color:var(--crimson)}
+.opt .opt-text{flex:1}
+.opt .opt-title{font-size:0.92rem;font-weight:700;color:var(--charcoal);margin-bottom:2px}
+.opt .opt-desc{font-size:0.78rem;color:var(--text-mid);line-height:1.5}
+.consent{background:var(--gold-soft);border:1px solid rgba(201,168,76,0.4);border-radius:10px;padding:14px 16px;margin-top:10px;font-size:0.82rem;line-height:1.6;color:var(--text-mid)}
+.consent strong{color:var(--crimson)}
+.consent input{margin-right:8px;accent-color:var(--crimson)}
+.thanks{background:linear-gradient(135deg,var(--teal-dark),var(--teal));color:#fff;border-radius:var(--radius-lg);padding:48px 28px;text-align:center}
+.thanks .em{font-size:48px;margin-bottom:14px}
+.thanks h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;margin-bottom:10px;color:var(--gold)}
+.thanks p{font-size:0.95rem;line-height:1.7;opacity:0.95;max-width:480px;margin:0 auto 14px}
+.lender-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.2);color:var(--gold);font-size:0.78rem;font-weight:700;padding:6px 14px;border-radius:99px;letter-spacing:0.04em;margin-top:6px}
+.footer{background:#1a0a0a;color:rgba(255,255,255,0.5);padding:28px 24px;text-align:center;font-size:0.78rem;line-height:1.8}
+.footer strong{color:rgba(255,255,255,0.7)}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/" class="topnav-brand">
+    <span class="topnav-script">Janice Divina Liad</span>
+    <span class="topnav-sub">Realtor · HomeSmart PV</span>
+  </a>
+  <a href="/" class="topnav-back">← Back to site</a>
+</nav>
+
+<section class="hero">
+  <span class="hero-eyebrow">Quick Feedback · 2 Minutes</span>
+  <h1 id="heroH1">How's it going with <span class="name" id="lenderName">your lender</span>?</h1>
+  <p class="sub">Your honest feedback helps Janice keep the network's quality high — and gives you the option to talk with her or invite a second-opinion quote.</p>
+</section>
+
+<main class="shell" id="root">
+  <div class="card" style="text-align:center;padding:30px"><p style="font-size:14px;color:var(--text-light)">Loading…</p></div>
+</main>
+
+<footer class="footer">
+  <p><strong>Janice Divina Liad</strong> · REALTOR® · DRE #02099146</p>
+  <p>HomeSmart PV & Associates · (209) 305-9401 · <a href="mailto:janicedivina@janicedivinarealestate.com">janicedivina@janicedivinarealestate.com</a></p>
+</footer>
+
+<script>
+const SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+const SK = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+const SBH = { "Content-Type": "application/json", apikey: SK, Authorization: "Bearer " + SK };
+
+const URL_PARAMS = new URLSearchParams(window.location.search);
+const LENDER_SLUG = (URL_PARAMS.get("lender") || "").trim().toLowerCase().slice(0, 60);
+const AGENT_SLUG = (URL_PARAMS.get("agent") || "").trim().toLowerCase().slice(0, 60);
+const PRESET_EMAIL = (URL_PARAMS.get("email") || "").trim();
+
+const AGENT_ID = "00000000-0000-0000-0000-000000000001"; // Janice (single-agent until SaaS Phase 3)
+
+let LENDER = null;
+let DONE = false;
+const S = {
+  rating: 0,
+  buyer_name: "",
+  buyer_email: PRESET_EMAIL,
+  review_text: "",
+  quote_rate: "",
+  quote_payment: "",
+  quote_loan_type: "",
+  wants_call: false,
+  wants_2nd: false,
+  consent: true,
+  display_name_choice: "first_initial", // or "anonymous"
+};
+
+async function loadLender(){
+  if (!LENDER_SLUG) {
+    document.getElementById("lenderName").textContent = "your lender";
+    render();
+    return;
+  }
+  try {
+    const res = await fetch(SB + "/rest/v1/lender_profiles?slug=eq." + encodeURIComponent(LENDER_SLUG) + "&status=eq.active&select=*&limit=1", { headers: SBH });
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows && rows[0]) LENDER = rows[0];
+    }
+  } catch (e) {}
+  if (LENDER) document.getElementById("lenderName").textContent = LENDER.display_name;
+  render();
+}
+
+function setStar(n){ S.rating = n; render(); }
+
+function setField(k, v){ S[k] = v; }
+
+function render(){
+  if (DONE) {
+    document.getElementById("root").innerHTML = renderThanks();
+    window.scrollTo({top:0,behavior:"smooth"});
+    return;
+  }
+  const lenderName = LENDER ? LENDER.display_name : "your lender";
+  const lenderShort = lenderName.split(" ")[0];
+  const stars = [1,2,3,4,5].map(function(n){
+    return '<button class="star'+(S.rating>=n?' active':'')+'" onclick="setStar('+n+')" type="button">'+(S.rating>=n?'★':'☆')+'</button>';
+  }).join("");
+  const ratingLabel = ["", "1 — Tough experience", "2 — Below expectations", "3 — Got the job done", "4 — Really great", "5 — Absolutely loved it"][S.rating] || "Tap a star";
+  const html = ''
+    + '<div class="card">'
+      + '<div class="st">Rate your experience so far</div>'
+      + '<p class="note">Honest answers only — Janice uses these to keep the network sharp. Lenders can\'t hide reviews; they can only earn better ones.</p>'
+      + '<div class="stars">' + stars + '</div>'
+      + '<div style="text-align:center;font-size:0.85rem;color:var(--text-mid);font-weight:600;margin-top:6px">' + ratingLabel + '</div>'
+    + '</div>'
+
+    + '<div class="card">'
+      + '<div class="st">Anything you\'d like to share?</div>'
+      + '<div class="fld">'
+        + '<label>What worked? What could\'ve been better?</label>'
+        + '<textarea id="review_text" placeholder="e.g. ' + lenderShort + ' explained the FHA process really clearly and answered every question — felt like a real partner, not a salesperson." onchange="setField(\'review_text\',this.value)">' + S.review_text + '</textarea>'
+      + '</div>'
+    + '</div>'
+
+    + '<div class="card">'
+      + '<div class="st">Got a quote? (optional)</div>'
+      + '<p class="note">If they gave you numbers, share them — helps Janice compare lenders + spot any quotes that look way out of line for the market.</p>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+        + '<div class="fld" style="margin-bottom:0"><label>Estimated rate</label><div class="iw"><input type="number" step="0.001" placeholder="6.250" value="' + S.quote_rate + '" onchange="setField(\'quote_rate\',this.value)"><span class="ipre">%</span></div></div>'
+        + '<div class="fld" style="margin-bottom:0"><label>Estimated payment / mo</label><div class="iw"><span class="ipre">$</span><input type="number" placeholder="2400" value="' + S.quote_payment + '" onchange="setField(\'quote_payment\',this.value)"></div></div>'
+      + '</div>'
+      + '<div class="fld" style="margin-top:10px;margin-bottom:0">'
+        + '<label>Loan type they offered</label>'
+        + '<select onchange="setField(\'quote_loan_type\',this.value)">'
+          + '<option value="">— Select if you know —</option>'
+          + ['Conventional 30yr','Conventional 15yr','Conventional 97 (3% down)','FHA 30yr','VA 30yr','USDA','Jumbo','5/1 ARM','Other'].map(function(o){return '<option value="'+o+'"'+(S.quote_loan_type===o?' selected':'')+'>'+o+'</option>';}).join("")
+        + '</select>'
+      + '</div>'
+    + '</div>'
+
+    + '<div class="card">'
+      + '<div class="st">What\'s next?</div>'
+      + '<p class="note">Pick anything that fits — none, one, or both.</p>'
+      + '<label class="opt"><input type="checkbox"' + (S.wants_call?' checked':'') + ' onchange="setField(\'wants_call\',this.checked)">'
+        + '<div class="opt-text"><div class="opt-title">📞 I\'d like to talk to Janice</div><div class="opt-desc">She\'ll call you within 24 hours to walk through your options, your quote, or any questions you have. No pressure.</div></div>'
+      + '</label>'
+      + '<label class="opt"><input type="checkbox"' + (S.wants_2nd?' checked':'') + ' onchange="setField(\'wants_2nd\',this.checked)">'
+        + '<div class="opt-text"><div class="opt-title">🤝 I\'d like a second-opinion quote</div><div class="opt-desc">Janice will connect you with another trusted lender for a side-by-side comparison. Both lenders know about each other from the start. ' + lenderShort + ' stays on the case regardless.</div></div>'
+      + '</label>'
+    + '</div>'
+
+    + '<div class="card">'
+      + '<div class="st">Just need a few details to send</div>'
+      + '<div class="fld"><label>Your name</label><input type="text" placeholder="e.g. Maria Santos" value="' + S.buyer_name + '" onchange="setField(\'buyer_name\',this.value)"></div>'
+      + '<div class="fld"><label>Your email</label><input type="email" placeholder="e.g. maria@email.com" value="' + S.buyer_email + '" onchange="setField(\'buyer_email\',this.value)"></div>'
+      + '<label class="consent"><input type="checkbox"' + (S.consent?' checked':'') + ' onchange="setField(\'consent\',this.checked)">'
+        + '<strong>Allow ' + lenderName + ' to display this review on their public profile?</strong> Only your <strong>first name + last initial</strong> will show. Untick if you\'d rather keep it private (Janice still sees it).'
+      + '</label>'
+    + '</div>'
+
+    + '<button class="btn bp" onclick="submitFeedback()" id="submitBtn"' + (S.rating ? '' : ' disabled') + '>' + (S.rating ? 'Send My Feedback' : 'Tap a star to continue') + '</button>'
+    + '<p style="font-size:0.78rem;color:var(--text-light);text-align:center;margin-top:14px;line-height:1.6;font-style:italic">' + lenderName + ' will be alerted when your feedback comes in — they may reach out to follow up if needed. ' + (LENDER ? lenderName : 'Your lender') + ' is a verified partner in Janice\'s network.</p>';
+  document.getElementById("root").innerHTML = html;
+}
+
+function renderThanks(){
+  const lenderName = LENDER ? LENDER.display_name : "your lender";
+  return '<div class="thanks">'
+    + '<div class="em">🙏</div>'
+    + '<h2>Thank you, ' + (S.buyer_name.split(" ")[0] || "friend") + '!</h2>'
+    + '<p>Your feedback was sent to Janice. ' + (S.consent ? 'Your review may appear on ' + lenderName + '\'s profile (first name + last initial only).' : 'Your review stays private — only Janice can see it.') + '</p>'
+    + (S.wants_call ? '<p><strong>📞 Janice will call you within 24 hours.</strong></p>' : '')
+    + (S.wants_2nd ? '<p><strong>🤝 You\'re on the list for a 2nd-opinion quote.</strong> Janice will connect you with another trusted lender soon.</p>' : '')
+    + '<div class="lender-pill">Faith · Family · Forward</div>'
+  + '</div>'
+  + '<div style="text-align:center;margin-top:24px;font-size:0.85rem;color:var(--text-mid)"><a href="/" style="color:var(--crimson);font-weight:700;text-decoration:none">← Back to janicedivinarealestate.com</a></div>';
+}
+
+async function submitFeedback(){
+  if (!S.rating) { alert("Please tap a star rating to continue."); return; }
+  if (!S.buyer_email || S.buyer_email.indexOf("@") < 0) { alert("Please enter your email so Janice can match this back to your file."); return; }
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("submitBtn").textContent = "Sending…";
+
+  // Compute display_name for public review (first name + last initial)
+  const nameParts = (S.buyer_name || "").trim().split(/\s+/);
+  let displayName = "";
+  if (nameParts.length === 1) displayName = nameParts[0];
+  else if (nameParts.length >= 2) displayName = nameParts[0] + " " + (nameParts[nameParts.length - 1].charAt(0) + ".");
+
+  // 1. Write the review (RLS allows anon insert).
+  const reviewPayload = {
+    agent_id: AGENT_ID,
+    lender_slug: LENDER_SLUG,
+    buyer_email: S.buyer_email,
+    buyer_name: S.buyer_name || null,
+    buyer_display_name: displayName || null,
+    rating: S.rating,
+    review_text: S.review_text || null,
+    quote_rate: S.quote_rate ? parseFloat(S.quote_rate) : null,
+    quote_payment: S.quote_payment ? parseFloat(S.quote_payment) : null,
+    quote_loan_type: S.quote_loan_type || null,
+    wants_call_with_agent: !!S.wants_call,
+    wants_second_opinion: !!S.wants_2nd,
+    consent_to_publish: !!S.consent,
+    source: "lender_feedback_page",
+  };
+  try {
+    await fetch(SB + "/rest/v1/lender_reviews", {
+      method: "POST",
+      headers: { ...SBH, Prefer: "return=minimal" },
+      body: JSON.stringify(reviewPayload),
+    });
+  } catch (e) {}
+
+  // 2. Route through lead-router so Janice sees this in her CRM as a high-priority touch.
+  const motivation = S.wants_call ? "ready" : (S.wants_2nd ? "ready" : (S.rating <= 2 ? "ready" : "soon"));
+  const notes = "Lender feedback for " + (LENDER ? LENDER.display_name : LENDER_SLUG) + ": " + S.rating + "/5 stars."
+    + (S.review_text ? " — \"" + S.review_text.slice(0, 240) + "\"" : "")
+    + (S.wants_call ? " · 📞 WANTS CALL FROM JANICE" : "")
+    + (S.wants_2nd ? " · 🤝 WANTS 2ND OPINION" : "");
+  try {
+    await fetch(SB + "/functions/v1/lead-router", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: S.buyer_name || "",
+        email: S.buyer_email,
+        phone: "",
+        source: "lender_quote_feedback",
+        notes: notes,
+        motivation: motivation,
+        extras: {
+          referred_by_lender: LENDER_SLUG || null,
+          referred_by_agent: AGENT_SLUG || null,
+          rating: S.rating,
+          review_text: S.review_text || null,
+          quote_rate: S.quote_rate ? parseFloat(S.quote_rate) : null,
+          quote_payment: S.quote_payment ? parseFloat(S.quote_payment) : null,
+          quote_loan_type: S.quote_loan_type || null,
+          wants_call: !!S.wants_call,
+          wants_second_opinion: !!S.wants_2nd,
+          consent_to_publish: !!S.consent,
+        },
+      }),
+    });
+  } catch (e) {}
+
+  DONE = true;
+  render();
+}
+
+loadLender();
+</script>
+</body>
+</html>
