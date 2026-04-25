@@ -505,15 +505,15 @@ function _renderProfileCard(p, role){
   const yrsLabel = p.years_experience ? p.years_experience + "+ years " + (isAgent ? "guiding families home" : "in lending") : null;
   const profilePage = "/" + (isAgent ? "agents" : "lenders") + ".html?slug=" + encodeURIComponent(p.slug);
   const photoHtml = clean(p.photo_url)
-    ? '<img src="'+p.photo_url+'" alt="'+p.display_name+'" class="your-team-photo" style="width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid '+accentBorder+';flex-shrink:0">'
-    : '<div class="your-team-photo" style="width:84px;height:84px;border-radius:50%;background:'+photoBg+';display:flex;align-items:center;justify-content:center;color:#fff;font-family:Cormorant Garamond,serif;font-size:32px;font-weight:700;flex-shrink:0;border:3px solid '+accentBorder+'">'+(p.display_name||"P").charAt(0)+'</div>';
+    ? '<img src="'+p.photo_url+'" alt="'+p.display_name+'" class="your-team-photo" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid '+accentBorder+';flex-shrink:0">'
+    : '<div class="your-team-photo" style="width:72px;height:72px;border-radius:50%;background:'+photoBg+';display:flex;align-items:center;justify-content:center;color:#fff;font-family:Cormorant Garamond,serif;font-size:28px;font-weight:700;flex-shrink:0;border:3px solid '+accentBorder+'">'+(p.display_name||"P").charAt(0)+'</div>';
   return ''
-    + '<div class="your-team-card" style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--silver);border-top:3px solid '+accentBorder+';flex:1;min-width:240px;text-align:center">'
-      + '<div class="your-team-rolelabel" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:'+accentBorder+';margin-bottom:14px">'+roleLabel+'</div>'
-      + '<div style="display:flex;justify-content:center;margin-bottom:12px">'+photoHtml+'</div>'
-      + '<div class="your-team-name" style="font-family:Cormorant Garamond,serif;font-size:1.25rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em;margin-bottom:4px">'+p.display_name+'</div>'
-      + (yrsLabel ? '<div class="your-team-years" style="font-size:0.78rem;color:var(--text-mid);margin-bottom:14px">'+yrsLabel+'</div>' : '<div style="height:14px"></div>')
-      + '<a href="'+profilePage+'" class="your-team-link" style="display:inline-block;background:var(--cream);color:'+accentBorder+';padding:7px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.78rem;border:1px solid '+accentBorder+'40">Full profile →</a>'
+    + '<div class="your-team-card" style="background:#fff;border-radius:14px;padding:14px;border:1px solid var(--silver);border-top:3px solid '+accentBorder+';flex:1 1 0;min-width:0;text-align:center">'
+      + '<div class="your-team-rolelabel" style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:'+accentBorder+';margin-bottom:10px">'+roleLabel+'</div>'
+      + '<div style="display:flex;justify-content:center;margin-bottom:10px">'+photoHtml+'</div>'
+      + '<div class="your-team-name" style="font-family:Cormorant Garamond,serif;font-size:1.05rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em;margin-bottom:3px">'+p.display_name+'</div>'
+      + (yrsLabel ? '<div class="your-team-years" style="font-size:0.7rem;color:var(--text-mid);margin-bottom:10px;line-height:1.4">'+yrsLabel+'</div>' : '<div style="height:10px"></div>')
+      + '<a href="'+profilePage+'" class="your-team-link" style="display:inline-block;background:var(--cream);color:'+accentBorder+';padding:5px 12px;border-radius:7px;text-decoration:none;font-weight:700;font-size:0.7rem;border:1px solid '+accentBorder+'40">Full profile →</a>'
     + '</div>';
 }
 
@@ -525,10 +525,10 @@ function renderTeamCard(){
     ? "Your agent + your lender, walking with you. Here to guide and educate &mdash; not to sell you anything."
     : "I built this to guide and educate &mdash; not to sell you anything. Take it at your pace.";
   const headerBlock = ''
-    + '<div class="your-team-header" style="flex:1;min-width:200px;text-align:center;padding:8px 4px">'
-      + '<div style="display:inline-block;font-size:0.6rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--crimson);background:#fff;padding:3px 12px;border-radius:99px;border:1px solid rgba(139,28,42,0.18);margin-bottom:8px">🤝 Relationship-Based</div>'
-      + '<div style="font-family:Cormorant Garamond,serif;font-size:1.25rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em">'+headerCopy+'</div>'
-      + '<p style="font-size:0.78rem;color:var(--text-mid);line-height:1.55;margin-top:6px">'+subCopy+'</p>'
+    + '<div class="your-team-header" style="flex:1 1 0;min-width:0;text-align:center;padding:6px 4px">'
+      + '<div style="display:inline-block;font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--crimson);background:#fff;padding:3px 10px;border-radius:99px;border:1px solid rgba(139,28,42,0.18);margin-bottom:6px">🤝 Relationship-Based</div>'
+      + '<div style="font-family:Cormorant Garamond,serif;font-size:1.05rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em">'+headerCopy+'</div>'
+      + '<p style="font-size:0.72rem;color:var(--text-mid);line-height:1.5;margin-top:5px">'+subCopy+'</p>'
     + '</div>';
   // Layout: agent (LEFT) | header (MIDDLE if lender, RIGHT otherwise) | lender (RIGHT if exists)
   const parts = [];
