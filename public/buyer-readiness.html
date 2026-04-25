@@ -465,10 +465,17 @@ function paint(){
   }
   $("root").innerHTML=h;bindNums();
   ["name","email","phone","city","reviewName","reviewText"].forEach(function(k){var e=$(k);if(e)e.addEventListener("input",function(){S[k]=this.value;});});
-  // Only scroll to top on actual tab change, NOT on every input-triggered repaint
+  // On tab change, scroll to the FORM area (not page top) so users land
+  // right at the progress bar + the new step's first field. Skips re-
+  // showing the hero + team card on every Next click. (Janice feedback Apr 24)
   if (_lastPaintedTab !== S.tab) {
     _lastPaintedTab = S.tab;
-    window.scrollTo({top:0,behavior:"smooth"});
+    var anchor = document.querySelector(".progstrip") || document.querySelector(".shell");
+    if (anchor && anchor.scrollIntoView) {
+      anchor.scrollIntoView({behavior:"smooth", block:"start"});
+    } else {
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
   }
 }
 /* ── SUPABASE CONFIG ── */
