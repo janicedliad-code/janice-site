@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Edit Your Profile | Janice Divina Liad Network</title>
+<meta name="description" content="Request a secure link to edit your agent or lender profile in Janice Divina Liad's network."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --teal:#2D7A72;--teal-dark:#1E5450;--teal-soft:#E8F3F1;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;
+  --radius-lg:18px;--shadow:0 4px 20px rgba(26,16,8,0.08);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+.topnav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.topnav-brand{display:flex;flex-direction:column;text-decoration:none}
+.topnav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.topnav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.topnav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-weight:500}
+.shell{max-width:520px;margin:50px auto;padding:0 20px}
+.card{background:var(--white);border-radius:var(--radius-lg);padding:32px 30px;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5)}
+.eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dark);margin-bottom:12px;padding:4px 12px;background:var(--teal-soft);border-radius:99px}
+h1{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--charcoal);line-height:1.25;margin-bottom:8px;letter-spacing:-0.01em}
+.sub{font-size:0.92rem;color:var(--text-mid);line-height:1.7;margin-bottom:22px}
+label{display:block;font-size:0.72rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px}
+input[type=email]{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:13px 16px;font-size:1rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+input[type=email]:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+.btn{width:100%;padding:14px 22px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.95rem;font-family:inherit;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;box-shadow:0 3px 12px rgba(139,28,42,0.22);transition:var(--transition);margin-top:14px}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.note{background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:8px;padding:14px 16px;margin-top:18px;font-size:0.83rem;line-height:1.65;color:var(--text-mid)}
+.note strong{color:var(--crimson)}
+.success{background:linear-gradient(135deg,var(--teal-dark),var(--teal));color:#fff;border-radius:var(--radius-lg);padding:36px 28px;text-align:center}
+.success .em{font-size:48px;margin-bottom:14px}
+.success h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;margin-bottom:10px;color:var(--gold)}
+.success p{font-size:0.95rem;line-height:1.7;opacity:0.95}
+.footer{background:#1a0a0a;color:rgba(255,255,255,0.5);padding:28px 24px;text-align:center;font-size:0.78rem;line-height:1.8;margin-top:60px}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/" class="topnav-brand">
+    <span class="topnav-script">Janice Divina Liad</span>
+    <span class="topnav-sub">Realtor · HomeSmart PV</span>
+  </a>
+  <a href="/" class="topnav-back">← Back to site</a>
+</nav>
+
+<main class="shell" id="root">
+  <div class="card">
+    <span class="eyebrow">🔒 Profile Edit</span>
+    <h1>Get your secure edit link</h1>
+    <p class="sub">Enter the email Janice has on file for you. We'll send a one-time link so you can update your photo, bio, and contact info — no password required.</p>
+    <form id="claimForm">
+      <label for="email">Your email address</label>
+      <input type="email" id="email" placeholder="you@example.com" required autocomplete="email"/>
+      <button type="submit" class="btn" id="submitBtn">Send My Edit Link →</button>
+    </form>
+    <div class="note">
+      <strong>How this works:</strong> Your link arrives by email and stays good for <strong>30 days</strong>. If you don't get an email within a few minutes, double-check the address (or ask Janice to re-confirm she has you on file).
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p><strong>Janice Divina Liad</strong> · REALTOR® · DRE #02099146</p>
+  <p>HomeSmart PV & Associates · (209) 305-9401 · <a href="mailto:janicedivina@janicedivinarealestate.com">janicedivina@janicedivinarealestate.com</a></p>
+</footer>
+
+<script>
+const SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+const form = document.getElementById("claimForm");
+const btn = document.getElementById("submitBtn");
+const root = document.getElementById("root");
+
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  if (!email) return;
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+  try {
+    const r = await fetch(SB + "/functions/v1/send-profile-edit-link", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email }),
+    });
+    await r.json().catch(function(){});
+  } catch(e) {}
+  // Always show success — never reveal whether email matched a profile.
+  root.innerHTML =
+    '<div class="success">'
+    + '<div class="em">📬</div>'
+    + '<h2>Check your inbox</h2>'
+    + '<p>If <strong>' + email.replace(/[<>]/g,"") + '</strong> is in Janice\'s network, you\'ll get an email with your secure edit link in the next minute or two.</p>'
+    + '<p style="margin-top:12px;opacity:0.85;font-size:0.85rem">Don\'t see it? Check your spam folder, then double-check the email or reach out to Janice directly.</p>'
+    + '</div>';
+});
+</script>
+</body>
+</html>

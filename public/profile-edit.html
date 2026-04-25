@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Edit Your Profile | Janice Divina Liad Network</title>
+<meta name="robots" content="noindex"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#8B1C2A;--crimson-dark:#5a1018;
+  --gold:#C9A84C;--gold-soft:#F5EDD6;
+  --teal:#2D7A72;--teal-dark:#1E5450;--teal-soft:#E8F3F1;
+  --cream:#FAF6EF;--white:#FFFFFF;--silver:#DDD5C8;
+  --charcoal:#1C1008;--text-mid:#4A3728;--text-light:#8A7060;
+  --green:#3A7D5A;--red:#B53A3A;
+  --radius:12px;--radius-lg:18px;
+  --shadow:0 4px 20px rgba(26,16,8,0.08);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+.topnav{background:linear-gradient(135deg,#1a0a0a,#2d0f17);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.topnav-brand{display:flex;flex-direction:column;text-decoration:none}
+.topnav-script{font-family:'Dancing Script',cursive;color:#A52535;font-size:1.4rem;line-height:1}
+.topnav-sub{color:rgba(255,255,255,0.55);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.topnav-back{color:rgba(255,255,255,0.7);font-size:0.75rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-weight:500}
+.shell{max-width:760px;margin:32px auto 60px;padding:0 20px}
+.card{background:var(--white);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow);border:1px solid rgba(221,213,200,0.5);margin-bottom:16px}
+@media(max-width:520px){.card{padding:22px 20px}}
+.eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dark);margin-bottom:10px;padding:4px 12px;background:var(--teal-soft);border-radius:99px}
+h1{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--charcoal);line-height:1.25;margin-bottom:6px;letter-spacing:-0.01em}
+.sub{font-size:0.92rem;color:var(--text-mid);line-height:1.7;margin-bottom:8px}
+.role-pill{display:inline-block;background:var(--gold-soft);color:var(--crimson);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:99px;margin-top:8px}
+
+.st{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--crimson);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--silver);letter-spacing:-0.01em}
+.st::before{content:'';display:inline-block;width:8px;height:8px;border-radius:4px;background:var(--teal)}
+
+.fld{margin-bottom:14px}
+label{display:block;font-size:0.72rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px}
+.note{font-size:0.78rem;color:var(--text-light);margin:0 0 8px;line-height:1.6;font-style:italic;text-transform:none;letter-spacing:0}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=url],select,textarea{width:100%;border:1.5px solid var(--silver);border-radius:10px;padding:11px 14px;font-size:0.95rem;font-family:inherit;color:var(--charcoal);background:var(--cream);outline:none;transition:var(--transition)}
+input:focus,select:focus,textarea:focus{border-color:var(--crimson);background:#fff;box-shadow:0 0 0 3px rgba(139,28,42,0.08)}
+textarea{min-height:90px;resize:vertical;line-height:1.6}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+
+.photo-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.photo-preview{width:96px;height:96px;border-radius:50%;background:var(--cream);border:2px solid var(--silver);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--text-light);font-family:Cormorant Garamond,serif;font-size:32px;font-weight:700;flex-shrink:0}
+.photo-preview img{width:100%;height:100%;object-fit:cover}
+.upload-btn{display:inline-block;background:var(--cream);border:1.5px solid var(--silver);color:var(--text-mid);padding:9px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:var(--transition)}
+.upload-btn:hover{border-color:var(--crimson);color:var(--crimson)}
+.upload-btn input{display:none}
+.upload-status{font-size:0.78rem;color:var(--text-light);margin-top:4px}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--teal-soft);color:var(--teal-dark);font-size:0.78rem;font-weight:600;padding:5px 12px;border-radius:99px;cursor:default}
+.chip button{background:none;border:none;color:var(--teal-dark);font-size:14px;cursor:pointer;padding:0;line-height:1}
+.chip-add{display:flex;gap:6px;margin-top:6px}
+.chip-add input{flex:1}
+.chip-add button{padding:6px 12px;background:var(--gold);color:var(--charcoal);border:none;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer}
+
+.btn{padding:14px 22px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.95rem;font-family:inherit;transition:var(--transition);letter-spacing:0.02em}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.bp{background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;box-shadow:0 3px 12px rgba(139,28,42,0.22);width:100%}
+
+.error-card{background:#fff5f5;border:1px solid #fcc;border-left:4px solid var(--red);border-radius:12px;padding:18px;color:var(--red);font-size:0.92rem;line-height:1.6}
+.error-card strong{display:block;margin-bottom:6px;font-family:Cormorant Garamond,serif;font-size:1.1rem}
+
+.success-banner{background:linear-gradient(135deg,#3A7D5A,#2E6347);color:#fff;border-radius:12px;padding:14px 18px;text-align:center;font-size:0.92rem;font-weight:600;margin-bottom:18px}
+.success-banner a{color:#fff;text-decoration:underline}
+
+.footer{background:#1a0a0a;color:rgba(255,255,255,0.5);padding:28px 24px;text-align:center;font-size:0.78rem;line-height:1.8;margin-top:60px}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/" class="topnav-brand">
+    <span class="topnav-script">Janice Divina Liad</span>
+    <span class="topnav-sub">Realtor · HomeSmart PV</span>
+  </a>
+  <a href="/" class="topnav-back">← Back to site</a>
+</nav>
+
+<main class="shell" id="root">
+  <div class="card" style="text-align:center;padding:30px"><p style="color:var(--text-light)">Loading your profile…</p></div>
+</main>
+
+<footer class="footer">
+  <p><strong>Janice Divina Liad</strong> · REALTOR® · DRE #02099146</p>
+  <p>HomeSmart PV & Associates · (209) 305-9401 · <a href="mailto:janicedivina@janicedivinarealestate.com">janicedivina@janicedivinarealestate.com</a></p>
+</footer>
+
+<script>
+const SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+const URL_PARAMS = new URLSearchParams(window.location.search);
+const TOKEN = (URL_PARAMS.get("token") || "").trim();
+
+let ROLE = null;
+let PROFILE = null;
+let SAVED_ONCE = false;
+
+const ALL_LANG_OPTS = ["English","Tagalog","Spanish","Mandarin","Cantonese","Vietnamese","Korean","Japanese","Hindi","Punjabi","French","Portuguese"];
+const SPEC_OPTS_AGENT = ["First-time buyers","Filipino-American families","Bay Area transplants","Manteca","Tracy","Lathrop","Stockton","Modesto","Ripon","Investment","Luxury","Relocation","Veterans","New construction"];
+const SPEC_OPTS_LENDER = ["First-time buyers","FHA","VA","USDA","Conventional","Conventional 97","Jumbo","Self-employed","Refinance","ITIN","Investment property","Bank statement loans"];
+
+function el(id){ return document.getElementById(id); }
+function root(){ return el("root"); }
+
+async function load(){
+  if (!TOKEN) {
+    showError("No token in the URL. Request a new edit link at <a href=\"/profile-claim.html\">/profile-claim.html</a>.");
+    return;
+  }
+  try {
+    const r = await fetch(SB + "/functions/v1/manage-profile-by-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "fetch", token: TOKEN }),
+    });
+    const data = await r.json();
+    if (!data.ok) {
+      showError(data.error || "Couldn't load this profile. Your link may have expired. Request a fresh one at <a href=\"/profile-claim.html\">/profile-claim.html</a>.");
+      return;
+    }
+    ROLE = data.role;
+    PROFILE = data.profile;
+    render();
+  } catch(e) {
+    showError("Network error. Please try again or refresh the page.");
+  }
+}
+
+function showError(msg){
+  root().innerHTML = '<div class="card"><div class="error-card"><strong>Can\'t open this link</strong>' + msg + '</div></div>';
+}
+
+function render(){
+  const p = PROFILE;
+  const role = ROLE; // 'agent' | 'lender'
+  const idLabel = role === 'agent' ? 'DRE #' : 'NMLS #';
+  const idField = role === 'agent' ? 'dre' : 'nmls_id';
+  const specOpts = role === 'agent' ? SPEC_OPTS_AGENT : SPEC_OPTS_LENDER;
+  const profileLink = '/' + (role === 'agent' ? 'agents' : 'lenders') + '.html?slug=' + encodeURIComponent(p.slug);
+
+  let html = '';
+  if (SAVED_ONCE) {
+    html += '<div class="success-banner">✓ Saved! Your live profile: <a href="'+profileLink+'" target="_blank" rel="noopener">'+profileLink+'</a></div>';
+  }
+  html += '<div class="card">'
+    + '<span class="eyebrow">🔒 Secure Edit · 30-Day Link</span>'
+    + '<h1>' + (p.display_name || 'Your Profile') + '</h1>'
+    + '<p class="sub">Update anything you like below — changes go live the moment you save. Save as many times as you want during your link\'s active window.</p>'
+    + '<div class="role-pill">' + (role === 'agent' ? '🏡 Agent Profile' : '💰 Lender Profile') + '</div>'
+  + '</div>';
+
+  // Photo
+  html += '<div class="card"><div class="st">Profile Photo</div>'
+    + '<div class="photo-row">'
+      + '<div class="photo-preview" id="photoPreview">'
+        + (p.photo_url && p.photo_url.indexOf('[fill in') < 0 ? '<img src="' + p.photo_url + '" alt="' + p.display_name + '"/>' : (p.display_name || 'P').charAt(0))
+      + '</div>'
+      + '<div style="flex:1;min-width:200px">'
+        + '<label class="upload-btn">'
+          + '📷 Upload a photo'
+          + '<input type="file" accept="image/jpeg,image/png,image/webp" onchange="onPhotoSelect(event)">'
+        + '</label>'
+        + '<div class="upload-status" id="photoStatus">JPG, PNG, or WEBP. Max 4MB. Square works best (will be cropped to a circle on your profile).</div>'
+      + '</div>'
+    + '</div>'
+  + '</div>';
+
+  // Identity
+  html += '<div class="card"><div class="st">Identity</div>'
+    + '<div class="row2">'
+      + '<div class="fld"><label>Full name</label><input type="text" id="display_name" value="' + esc(p.display_name) + '" placeholder="e.g. Marylou Ramos"></div>'
+      + '<div class="fld"><label>Brokerage</label><input type="text" id="brokerage" value="' + esc(clean(p.brokerage)) + '" placeholder="e.g. HomeSmart PV"></div>'
+    + '</div>'
+    + '<div class="row2">'
+      + '<div class="fld"><label>' + idLabel + '</label><input type="text" id="' + idField + '" value="' + esc(clean(p[idField])) + '" placeholder="e.g. 02099146"></div>'
+      + '<div class="fld"><label>Years in business</label><input type="number" id="years_experience" value="' + (p.years_experience||'') + '" min="0" max="60" placeholder="e.g. 12"></div>'
+    + '</div>'
+  + '</div>';
+
+  // Bio + strengths
+  html += '<div class="card"><div class="st">Your Story</div>'
+    + '<div class="fld">'
+      + '<label>Bio (in your own voice)</label>'
+      + '<p class="note">Two or three sentences about who you love working with and why. This is the trust paragraph buyers read before they pick up the phone.</p>'
+      + '<textarea id="bio" placeholder="e.g. I love helping first-time families because I remember how overwhelming buying our first home felt. My promise: explain everything, answer every question, never rush you.">' + esc(clean(p.bio)) + '</textarea>'
+    + '</div>'
+    + '<div class="fld" style="margin-bottom:0">'
+      + '<label>Your top strengths (3 short phrases buyers should know)</label>'
+      + '<p class="note">e.g. "Communicates fast" / "Honest about rates" / "Patient with first-timers" / "Speaks Tagalog fluently"</p>'
+      + '<div id="strengths_list"></div>'
+    + '</div>'
+  + '</div>';
+
+  // Languages + Specialties
+  html += '<div class="card"><div class="st">Languages & Specialties</div>'
+    + '<div class="fld">'
+      + '<label>Languages you speak fluently</label>'
+      + '<div id="languages_chips" class="chip-row"></div>'
+      + '<div class="chip-add">'
+        + '<select id="languages_picker">' + ALL_LANG_OPTS.map(function(l){return '<option value="'+l+'">'+l+'</option>';}).join("") + '</select>'
+        + '<button onclick="addChip(\'languages\', el(\'languages_picker\').value)">+ Add</button>'
+      + '</div>'
+    + '</div>'
+    + '<div class="fld" style="margin-bottom:0">'
+      + '<label>Specialties</label>'
+      + '<div id="specialties_chips" class="chip-row"></div>'
+      + '<div class="chip-add">'
+        + '<select id="specialties_picker">' + specOpts.map(function(s){return '<option value="'+s+'">'+s+'</option>';}).join("") + '</select>'
+        + '<button onclick="addChip(\'specialties\', el(\'specialties_picker\').value)">+ Add</button>'
+      + '</div>'
+    + '</div>'
+  + '</div>';
+
+  // Contact
+  html += '<div class="card"><div class="st">Contact</div>'
+    + '<div class="row2">'
+      + '<div class="fld"><label>Phone</label><input type="tel" id="phone" value="' + esc(clean(p.phone)) + '" placeholder="(209) 555-0100"></div>'
+      + '<div class="fld"><label>Email</label><input type="email" id="email" value="' + esc(p.email) + '" placeholder="you@example.com"></div>'
+    + '</div>'
+    + '<div class="row2">'
+      + '<div class="fld"><label>Website (optional)</label><input type="url" id="website" value="' + esc(clean(p.website)) + '" placeholder="https://..."></div>'
+      + '<div class="fld"><label>Schedule a call link (optional)</label><input type="url" id="schedule_link" value="' + esc(clean(p.schedule_link)) + '" placeholder="https://calendly.com/..."></div>'
+    + '</div>'
+  + '</div>';
+
+  html += '<button class="btn bp" onclick="saveProfile()" id="saveBtn">Save & Publish My Profile</button>';
+  html += '<p style="text-align:center;font-size:0.78rem;color:var(--text-light);margin-top:14px">Your live profile will update at <a href="'+profileLink+'" target="_blank" rel="noopener" style="color:var(--crimson)">'+profileLink+'</a> the moment you save.</p>';
+
+  root().innerHTML = html;
+
+  // Render initial chips + strengths
+  renderChips('languages', p.languages || []);
+  renderChips('specialties', p.specialties || []);
+  renderStrengths(p.strengths || []);
+}
+
+function clean(s){ return (s && String(s).indexOf('[fill in') < 0) ? s : ''; }
+function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function renderChips(field, list){
+  const filtered = (list || []).filter(function(x){ return x && String(x).indexOf('[fill in') < 0; });
+  el(field + '_chips').innerHTML = filtered.map(function(x, i){
+    return '<span class="chip">' + esc(x) + ' <button onclick="removeChip(\'' + field + '\',' + i + ')" title="Remove">×</button></span>';
+  }).join("");
+  PROFILE[field] = filtered;
+}
+
+function addChip(field, val){
+  if (!val) return;
+  const list = PROFILE[field] || [];
+  if (list.indexOf(val) < 0) list.push(val);
+  renderChips(field, list);
+}
+
+function removeChip(field, idx){
+  const list = PROFILE[field] || [];
+  list.splice(idx, 1);
+  renderChips(field, list);
+}
+
+function renderStrengths(list){
+  const filtered = (list || []).filter(function(x){ return x && String(x).indexOf('[fill in') < 0; });
+  while (filtered.length < 3) filtered.push('');
+  if (filtered.length > 3) filtered.length = 3;
+  el('strengths_list').innerHTML = filtered.map(function(s, i){
+    return '<input type="text" id="strength_' + i + '" value="' + esc(s) + '" placeholder="Strength ' + (i+1) + '" style="margin-bottom:8px">';
+  }).join("");
+}
+
+async function onPhotoSelect(e){
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const status = el('photoStatus');
+  status.textContent = '⏳ Uploading…';
+  try {
+    const b64 = await fileToBase64(file);
+    const r = await fetch(SB + "/functions/v1/manage-profile-by-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "upload_photo", token: TOKEN, photo_base64: b64, mime: file.type }),
+    });
+    const data = await r.json();
+    if (data.ok && data.photo_url) {
+      PROFILE.photo_url = data.photo_url;
+      el('photoPreview').innerHTML = '<img src="' + data.photo_url + '?t=' + Date.now() + '" alt="">';
+      status.textContent = '✓ Photo uploaded.';
+    } else {
+      status.textContent = '⚠ ' + (data.error || 'Upload failed. Try a different image.');
+    }
+  } catch(e) {
+    status.textContent = '⚠ Upload failed: ' + e.message;
+  }
+}
+
+function fileToBase64(file){
+  return new Promise(function(resolve, reject){
+    const reader = new FileReader();
+    reader.onload = function(){ resolve(reader.result); };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveProfile(){
+  const btn = el('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  // Collect strengths from inputs (drop blanks).
+  const strengths = [];
+  for (let i = 0; i < 3; i++) {
+    const s = el('strength_' + i);
+    if (s && s.value && s.value.trim()) strengths.push(s.value.trim());
+  }
+  const updates = {
+    display_name: el('display_name').value.trim(),
+    brokerage: el('brokerage').value.trim() || null,
+    years_experience: el('years_experience').value ? parseInt(el('years_experience').value, 10) : null,
+    languages: PROFILE.languages || [],
+    specialties: PROFILE.specialties || [],
+    bio: el('bio').value.trim() || null,
+    strengths: strengths,
+    phone: el('phone').value.trim() || null,
+    email: el('email').value.trim(),
+    website: el('website').value.trim() || null,
+    schedule_link: el('schedule_link').value.trim() || null,
+  };
+  if (ROLE === 'agent') updates.dre = el('dre').value.trim() || null;
+  else updates.nmls_id = el('nmls_id').value.trim() || null;
+
+  try {
+    const r = await fetch(SB + "/functions/v1/manage-profile-by-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "save", token: TOKEN, updates: updates }),
+    });
+    const data = await r.json();
+    if (data.ok) {
+      PROFILE = data.profile;
+      SAVED_ONCE = true;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      alert('Save failed: ' + (data.error || 'unknown error'));
+      btn.disabled = false;
+      btn.textContent = 'Save & Publish My Profile';
+    }
+  } catch(e) {
+    alert('Save failed: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = 'Save & Publish My Profile';
+  }
+}
+
+load();
+</script>
+</body>
+</html>

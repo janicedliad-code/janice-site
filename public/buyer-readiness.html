@@ -231,8 +231,9 @@ const APP_URL="https://janicedivinarealestate.com/buyer-readiness.html";
    which (agent, lender) pair to credit + which lender to forward to. */
 const URL_PARAMS = (function(){ try { return new URLSearchParams(window.location.search); } catch(e) { return new URLSearchParams(); } })();
 const REFERRED_LENDER = (URL_PARAMS.get("lender") || "").trim().toLowerCase().slice(0, 60);
-const REFERRED_AGENT = (URL_PARAMS.get("agent") || "").trim().toLowerCase().slice(0, 60);
-let LENDER_PROFILE = null; // populated async by fetchLenderProfile() before paint()
+const REFERRED_AGENT = (URL_PARAMS.get("agent") || "").trim().toLowerCase().slice(0, 60) || "janice"; // default to Janice
+let LENDER_PROFILE = null; // populated async by fetchTeamProfiles()
+let AGENT_PROFILE = null;  // populated async by fetchTeamProfiles()
 const FORMSPREE="YOUR_FORM_ID";
 const TABS=["Welcome","About You","Income","Budget","Debt","Savings","Credit","Calculator","My Plan","Review"];
 const RATES={"30yr_conv":6.22,"15yr_conv":5.54,"30yr_fha":5.96,"30yr_va":5.59,"5yr_arm":6.42};
@@ -310,7 +311,7 @@ function paint(){
   var h="";
   if(t===0){
     var featList = [["Income & budget review","var(--teal)"],["Credit score & action plan","var(--crimson)"],["Savings & down payment goal","var(--gold)"],["Debt-to-income analysis","var(--teal)"],["Live mortgage payment calculator","var(--crimson)"],["Your personalized 90-day plan","var(--gold)"]].map(function(r){return '<div style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--text-mid)"><span style="width:6px;height:6px;border-radius:3px;background:'+r[1]+'"></span>'+r[0]+'</div>';}).join("");
-    h = renderLenderCard()
+    h = renderTeamCard()
       + '<div class="card" style="text-align:center">'
       + '<div style="width:56px;height:56px;border-radius:28px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Cormorant Garamond,serif;font-size:1.6rem;font-weight:700">BR</div>'
       + '<h2 style="font-family:Cormorant Garamond,serif;font-size:1.6rem;font-weight:700;color:var(--crimson);margin-bottom:10px;letter-spacing:-0.01em">Welcome to Your Home Buying Journey</h2>'
@@ -374,7 +375,7 @@ function paint(){
       + '<div style="font-family:Cormorant Garamond,serif;font-size:22px;font-weight:700;color:var(--crimson);letter-spacing:-0.01em;margin-bottom:8px">Thank you for taking the time'+(S.name?', '+S.name.split(" ")[0]:"")+'!</div>'
       + '<p style="font-size:12px;color:var(--text-mid);line-height:1.7;max-width:520px;margin:0 auto">Knowing where you stand financially is the first &mdash; and most important &mdash; step toward owning your home with confidence. This report is yours to keep, share with your spouse, and revisit as life changes. I&rsquo;m here whenever you&rsquo;re ready.</p>'
       + '<p style="font-family:Dancing Script,cursive;font-size:24px;color:var(--crimson);margin-top:14px">&mdash; Janice</p>'
-      + '<p style="font-size:10px;color:var(--text-light);font-style:italic;margin-top:4px">Generated '+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+(LENDER_PROFILE?' &middot; Your lender partner: '+LENDER_PROFILE.display_name:"")+'</p>'
+      + '<p style="font-size:10px;color:var(--text-light);font-style:italic;margin-top:4px">Generated '+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+' &middot; Your team: '+(AGENT_PROFILE?AGENT_PROFILE.display_name:R.name)+(LENDER_PROFILE?' + '+LENDER_PROFILE.display_name:'')+'</p>'
     + '</div>';
     h+='<div class="card" style="text-align:center;padding:22px 20px">'+(S.name?'<div style="font-size:14px;color:#888;margin-bottom:4px">Your Report, <strong style="color:#8B1C2A">'+S.name+'</strong></div>':"")+'<div style="font-size:56px;font-weight:900;color:'+d.rc+';line-height:1">'+d.rp+'%</div><div style="font-size:16px;font-weight:800;color:#333;margin-top:6px">'+d.rl+'</div>'+(S.city?'<div style="font-size:12px;color:#888;margin-top:3px">Target: '+S.city+' · '+S.timeline+' month goal</div>':"")+(d.tot>0?'<div style="margin-top:12px;background:#f9f9f9;border-radius:12px;padding:10px 16px;display:inline-block"><div style="font-size:11px;color:#888">Est. Monthly Payment</div><div style="font-size:22px;font-weight:900;color:#8B1C2A">'+fmt2(d.tot)+'/mo</div><div style="font-size:11px;color:#aaa">on a '+fmt(d.p)+' home at '+d.rate+'%</div></div>':"")+'</div>';
     h+='<div class="card"><div class="st">Readiness Checklist</div>'+d.checks.map(function(c){var col=c.great?"var(--green)":c.pass?"var(--gold)":"var(--red)";return '<div class="cr"><span style="display:inline-block;width:10px;height:10px;border-radius:5px;background:'+col+';flex-shrink:0;margin-top:6px"></span><div><div style="font-weight:700;font-size:0.88rem;color:var(--charcoal)">'+c.l+'</div><div style="font-size:0.78rem;color:var(--text-light);margin-top:2px">'+c.d+'</div></div></div>';}).join("")+'</div>';
@@ -410,7 +411,7 @@ function paint(){
     plan.push(["Month 3","Meet with a lender. Get your free pre-qualification letter."]);
     plan.push(["Month 3","Connect with your REALTOR®. Start touring homes in your area!"]);
     h+='<div class="card"><div class="st">Your 90-Day Plan</div>'+plan.map(function(r){return '<div class="pr"><span class="pd">'+r[0]+'</span><span style="font-size:12px;color:#444;line-height:1.6">'+r[1]+'</span></div>';}).join("")+'</div>';
-    h+='<div class="card navy"><div style="text-align:center;margin-bottom:14px"><div style="font-size:15px;font-weight:800;margin-bottom:3px">📤 Send Results to Your REALTOR®</div><div style="font-size:12px;opacity:.8">'+R.name+' already has your report (saved when you started). Use these to send a quick personal note too.</div></div><div style="display:flex;flex-direction:column;gap:10px"><button class="btn bg bfull" onclick="sendText()">💬 Text My Results to '+R.name+'</button><button class="btn bp bfull" onclick="sendEmail()">✉️ Email My Results to '+R.name+'</button><button class="btn bfull" style="background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);color:#fff" onclick="doPrint()">🖨️ Print / Save as PDF</button></div><div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,0.08);border-radius:8px;font-size:11px;line-height:1.6;text-align:center;opacity:0.9">For detailed guidance on any step, contact your <strong>agent</strong> ('+R.name+' &middot; '+R.phone.replace(/(\\d{3})(\\d{3})(\\d{4})/,"($1) $2-$3")+')'+(REFERRED_LENDER?' or your <strong>connected lender</strong>':'')+' &mdash; we&rsquo;re here for the questions this report can&rsquo;t answer.</div></div>';
+    h+='<div class="card navy"><div style="text-align:center;margin-bottom:14px"><div style="font-size:15px;font-weight:800;margin-bottom:3px">📤 Share With Your Team</div><div style="font-size:12px;opacity:.8">'+(AGENT_PROFILE?AGENT_PROFILE.display_name:R.name)+(LENDER_PROFILE?' &amp; '+LENDER_PROFILE.display_name:'')+' already has your report (saved when you started). Use these to send a quick personal note &mdash; or just keep it for yourself.</div></div><div style="display:flex;flex-direction:column;gap:10px"><button class="btn bg bfull" onclick="sendText()">💬 Text My Results to '+R.name+'</button><button class="btn bp bfull" onclick="sendEmail()">✉️ Email My Results to '+R.name+'</button><button class="btn bfull" style="background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);color:#fff" onclick="doPrint()">🖨️ Print / Save as PDF</button></div><div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,0.08);border-radius:8px;font-size:11px;line-height:1.6;text-align:center;opacity:0.9">Questions this report can&rsquo;t answer? Reach out to your <strong>agent</strong> ('+R.name+' &middot; '+R.phone.replace(/(\\d{3})(\\d{3})(\\d{4})/,"($1) $2-$3")+')'+(REFERRED_LENDER?' or your <strong>connected lender</strong>':'')+'. We&rsquo;re here to guide and educate &mdash; no pressure, no obligation.</div></div>';
     /* 2nd-look removed from this page (Apr 24 2026): now lives on the
        /lender-feedback page that buyers visit AFTER getting their lender's
        quote — that's the right moment for "want a second opinion" + lender
@@ -454,62 +455,87 @@ function paint(){
 /* ── SUPABASE CONFIG ── */
 const SB="https://sutapxqrjwvxoelemkyf.supabase.co";
 
-/* Fetch the assigned lender's profile (Phase 5a-4). Public RLS allows anon
+/* Fetch BOTH agent + lender profiles (Phase 5a-4). Public RLS allows anon
    read of active profiles. Repaints the Welcome tab once loaded so the
-   "Meet Your Lender" card appears even on a slow connection. */
-async function fetchLenderProfile(){
-  if (!REFERRED_LENDER) return;
-  try {
-    const res = await fetch(SB + "/rest/v1/lender_profiles?slug=eq." + encodeURIComponent(REFERRED_LENDER) + "&status=eq.active&select=*&limit=1", {
-      headers: { apikey: SK, Authorization: "Bearer " + SK },
-    });
-    if (!res.ok) return;
-    const rows = await res.json();
-    if (rows && rows[0]) {
-      LENDER_PROFILE = rows[0];
-      paint();
-    }
-  } catch (e) { /* non-fatal — form still works without profile */ }
+   "Your Team" card appears even on a slow connection. */
+async function fetchTeamProfiles(){
+  const SBH = { apikey: SK, Authorization: "Bearer " + SK };
+  const tasks = [
+    fetch(SB + "/rest/v1/agent_profiles?slug=eq." + encodeURIComponent(REFERRED_AGENT) + "&status=eq.active&select=*&limit=1", { headers: SBH }).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];}),
+    REFERRED_LENDER ? fetch(SB + "/rest/v1/lender_profiles?slug=eq." + encodeURIComponent(REFERRED_LENDER) + "&status=eq.active&select=*&limit=1", { headers: SBH }).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];}) : Promise.resolve([])
+  ];
+  const [aRows, lRows] = await Promise.all(tasks);
+  if (aRows && aRows[0]) AGENT_PROFILE = aRows[0];
+  if (lRows && lRows[0]) LENDER_PROFILE = lRows[0];
+  if (AGENT_PROFILE || LENDER_PROFILE) paint();
 }
 
-function renderLenderCard(){
-  const p = LENDER_PROFILE;
+function _renderProfileCard(p, role){
   if (!p) return "";
-  const photo = p.photo_url
-    ? '<img src="'+p.photo_url+'" alt="'+p.display_name+'" style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);flex-shrink:0">'
-    : '<div style="width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-family:Cormorant Garamond,serif;font-size:32px;font-weight:700;flex-shrink:0;border:3px solid var(--gold)">'+(p.display_name||"L").charAt(0)+'</div>';
-  const langs = (p.languages||[]).filter(function(x){return x;});
-  const specs = (p.specialties||[]).filter(function(x){return x;});
-  const strengths = (p.strengths||[]).filter(function(x){return x && x.indexOf("[fill in")<0;});
-  const yrs = p.years_experience ? p.years_experience+'+ years in lending' : null;
-  const bioOk = p.bio && p.bio.indexOf("[fill in")<0;
-  return '<div class="card teal" style="border:none;background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal) 100%);padding:22px 22px 20px">'
-    + '<div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;opacity:0.85;margin-bottom:14px;color:var(--gold)">🤝 Meet Your Lender Partner</div>'
-    + '<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">'
-      + photo
-      + '<div style="flex:1;min-width:180px">'
-        + '<div style="font-family:Cormorant Garamond,serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:2px;letter-spacing:-0.01em">'+p.display_name+'</div>'
-        + (p.brokerage && p.brokerage.indexOf("[fill in")<0 ? '<div style="font-size:0.78rem;opacity:0.85">'+p.brokerage+(p.nmls_id && p.nmls_id.indexOf("[fill in")<0?' · NMLS #'+p.nmls_id:'')+'</div>' : '')
-        + (yrs?'<div style="font-size:0.78rem;opacity:0.85;margin-top:3px">'+yrs+'</div>':'')
+  const isAgent = role === "agent";
+  const accentBorder = isAgent ? "var(--crimson)" : "var(--teal)";
+  const headerLabel = isAgent ? "🏡 Your Agent" : "💰 Your Lender Partner";
+  const photoBg = isAgent ? "linear-gradient(135deg,var(--crimson),var(--crimson-dark))" : "linear-gradient(135deg,var(--teal),var(--teal-dark))";
+  const idLabel = isAgent ? (clean(p.dre) ? " · DRE #" + p.dre : "") : (clean(p.nmls_id) ? " · NMLS #" + p.nmls_id : "");
+  const yrsLabel = p.years_experience ? p.years_experience + "+ years " + (isAgent ? "guiding families" : "in lending") : null;
+  const langs = (p.languages || []).filter(function(x){return x;});
+  const specs = (p.specialties || []).filter(function(x){return x;}).slice(0, 4); // cap so card stays compact
+  const strengths = (p.strengths || []).filter(function(x){return clean(x);}).slice(0, 3);
+  const bioOk = clean(p.bio);
+  const profilePage = "/" + (isAgent ? "agents" : "lenders") + ".html?slug=" + encodeURIComponent(p.slug);
+  const photoHtml = clean(p.photo_url)
+    ? '<img src="'+p.photo_url+'" alt="'+p.display_name+'" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid '+accentBorder+';flex-shrink:0">'
+    : '<div style="width:80px;height:80px;border-radius:50%;background:'+photoBg+';display:flex;align-items:center;justify-content:center;color:#fff;font-family:Cormorant Garamond,serif;font-size:30px;font-weight:700;flex-shrink:0;border:3px solid '+accentBorder+'">'+(p.display_name||"P").charAt(0)+'</div>';
+  return ''
+    + '<div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--silver);border-top:3px solid '+accentBorder+';flex:1;min-width:240px;display:flex;flex-direction:column">'
+      + '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:'+accentBorder+';margin-bottom:10px">'+headerLabel+'</div>'
+      + '<div style="display:flex;gap:14px;align-items:center;margin-bottom:10px">'
+        + photoHtml
+        + '<div style="flex:1;min-width:0">'
+          + '<div style="font-family:Cormorant Garamond,serif;font-size:1.2rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em">'+p.display_name+'</div>'
+          + (clean(p.brokerage) ? '<div style="font-size:0.72rem;color:var(--text-mid);margin-top:2px;line-height:1.4">'+p.brokerage+idLabel+'</div>' : '')
+          + (yrsLabel ? '<div style="font-size:0.72rem;color:var(--text-light);margin-top:2px">'+yrsLabel+'</div>' : '')
+        + '</div>'
       + '</div>'
-    + '</div>'
-    + (bioOk ? '<p style="font-size:0.88rem;line-height:1.65;margin-top:14px;opacity:0.95">'+p.bio+'</p>' : '')
-    + ((langs.length || specs.length || strengths.length) ? '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px">'
-        + langs.map(function(x){return '<span style="background:rgba(201,168,76,0.25);color:var(--gold);font-size:0.7rem;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:0.04em">🗣️ '+x+'</span>';}).join("")
-        + specs.map(function(x){return '<span style="background:rgba(255,255,255,0.15);color:#fff;font-size:0.7rem;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:0.04em">'+x+'</span>';}).join("")
-      + '</div>' : '')
-    + (strengths.length ? '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.18)">'
-        + '<div style="font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:6px">What buyers say about working with '+(p.display_name||"").split(" ")[0]+'</div>'
-        + strengths.map(function(x){return '<div style="font-size:0.85rem;line-height:1.6;display:flex;gap:8px;align-items:flex-start"><span style="color:var(--gold);flex-shrink:0">✓</span><span style="opacity:0.95">'+x+'</span></div>';}).join("")
-      + '</div>' : '')
-    + '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.18);display:flex;gap:8px;flex-wrap:wrap">'
-      + (p.phone && p.phone.indexOf("[fill in")<0 ? '<a href="tel:'+p.phone.replace(/\D/g,"")+'" style="background:var(--gold);color:var(--charcoal);padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.82rem">📞 '+p.phone+'</a>' : '')
-      + (p.schedule_link?'<a href="'+p.schedule_link+'" target="_blank" rel="noopener" style="background:rgba(255,255,255,0.18);color:#fff;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.82rem;border:1px solid rgba(255,255,255,0.3)">📅 Book a Call</a>':'')
-      + '<a href="/lenders.html?slug='+encodeURIComponent(p.slug)+'" style="background:rgba(255,255,255,0.18);color:#fff;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.82rem;border:1px solid rgba(255,255,255,0.3)">View Full Profile →</a>'
-    + '</div>'
-    + '<div style="font-size:0.7rem;opacity:0.7;margin-top:12px;font-style:italic;line-height:1.5">'+(p.display_name||"")+' is a verified partner in '+R.name+'\'s lender network. After your quote, you\'ll get the chance to share feedback or request a 2nd-opinion quote — competition keeps everyone sharp.</div>'
+      + (bioOk ? '<p style="font-size:0.82rem;line-height:1.6;color:var(--text-mid);margin-bottom:10px">'+p.bio+'</p>' : '')
+      + ((langs.length || specs.length) ? '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">'
+          + langs.slice(0, 3).map(function(x){return '<span style="background:var(--gold-soft);color:var(--amber);font-size:0.66rem;font-weight:700;padding:3px 9px;border-radius:99px">🗣️ '+x+'</span>';}).join("")
+          + specs.map(function(x){return '<span style="background:'+accentBorder+'14;color:'+accentBorder+';font-size:0.66rem;font-weight:700;padding:3px 9px;border-radius:99px">'+x+'</span>';}).join("")
+        + '</div>' : '')
+      + (strengths.length ? '<div style="border-top:1px solid var(--silver);padding-top:10px;margin-top:auto">'
+          + strengths.map(function(x){return '<div style="font-size:0.78rem;line-height:1.5;color:var(--text-mid);display:flex;gap:6px;margin-bottom:3px"><span style="color:'+accentBorder+';flex-shrink:0">✓</span><span>'+x+'</span></div>';}).join("")
+        + '</div>' : '')
+      + '<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--silver);display:flex;gap:6px;flex-wrap:wrap">'
+        + (clean(p.phone) ? '<a href="tel:'+p.phone.replace(/\D/g,"")+'" style="background:'+accentBorder+';color:#fff;padding:6px 11px;border-radius:7px;text-decoration:none;font-weight:700;font-size:0.74rem">📞 '+p.phone+'</a>' : '')
+        + '<a href="'+profilePage+'" style="background:var(--cream);color:var(--text-mid);padding:6px 11px;border-radius:7px;text-decoration:none;font-weight:700;font-size:0.74rem;border:1px solid var(--silver)">Full profile →</a>'
+      + '</div>'
     + '</div>';
 }
+
+function renderTeamCard(){
+  if (!AGENT_PROFILE && !LENDER_PROFILE) return "";
+  // Agent always rendered first (left), lender second (right).
+  const cards = [];
+  if (AGENT_PROFILE) cards.push(_renderProfileCard(AGENT_PROFILE, "agent"));
+  if (LENDER_PROFILE) cards.push(_renderProfileCard(LENDER_PROFILE, "lender"));
+  const headerCopy = LENDER_PROFILE
+    ? "Your Team for This Journey"
+    : "Meet Your Guide";
+  const subCopy = LENDER_PROFILE
+    ? "These are the two people walking with you — your agent and your lender. Both are here to guide and educate, not to sell you anything."
+    : "I built this to guide and educate, not to sell you anything. Take it at your pace — I&rsquo;m here when you&rsquo;re ready.";
+  return '<div class="card" style="background:linear-gradient(135deg,#FAF6EF,#F5EDD6);border:1px solid rgba(201,168,76,0.4);padding:22px">'
+    + '<div style="text-align:center;margin-bottom:18px">'
+      + '<div style="display:inline-block;font-size:0.65rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--crimson);background:#fff;padding:4px 14px;border-radius:99px;border:1px solid rgba(139,28,42,0.18);margin-bottom:8px">🤝 Relationship-Based Real Estate</div>'
+      + '<div style="font-family:Cormorant Garamond,serif;font-size:1.4rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em">'+headerCopy+'</div>'
+      + '<p style="font-size:0.85rem;color:var(--text-mid);line-height:1.65;max-width:520px;margin:6px auto 0">'+subCopy+'</p>'
+    + '</div>'
+    + '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch">'+cards.join("")+'</div>'
+  + '</div>';
+}
+
+// Helper: pulled from lenders.html — strip [fill in] placeholders
+function clean(s){ return (s && String(s).indexOf("[fill in") < 0) ? s : null; }
 
 /* Ship 7d — fire visit tracker if page loaded with ?exp=<slug> */
 (function(){
@@ -716,7 +742,7 @@ function submitReview(){
 /* requestSecondLook() removed Apr 24 2026 — moved to the /lender-feedback
    page (post-quote moment). See public/lender-feedback.html. */
 paint();
-fetchLenderProfile();
+fetchTeamProfiles();
 </script>
 </body>
 </html>
