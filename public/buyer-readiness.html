@@ -493,23 +493,28 @@ function _renderProfileCard(p, role){
 
 function renderTeamCard(){
   if (!AGENT_PROFILE && !LENDER_PROFILE) return "";
-  // Agent always rendered first (left), lender second (right).
-  const cards = [];
-  if (AGENT_PROFILE) cards.push(_renderProfileCard(AGENT_PROFILE, "agent"));
-  if (LENDER_PROFILE) cards.push(_renderProfileCard(LENDER_PROFILE, "lender"));
-  const headerCopy = LENDER_PROFILE
-    ? "Your Team for This Journey"
-    : "Meet Your Guide";
-  const subCopy = LENDER_PROFILE
-    ? "These are the two people walking with you — your agent and your lender. Both are here to guide and educate, not to sell you anything."
-    : "I built this to guide and educate, not to sell you anything. Take it at your pace — I&rsquo;m here when you&rsquo;re ready.";
-  return '<div class="card" style="background:linear-gradient(135deg,#FAF6EF,#F5EDD6);border:1px solid rgba(201,168,76,0.4);padding:22px">'
-    + '<div style="text-align:center;margin-bottom:18px">'
-      + '<div style="display:inline-block;font-size:0.65rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--crimson);background:#fff;padding:4px 14px;border-radius:99px;border:1px solid rgba(139,28,42,0.18);margin-bottom:8px">🤝 Relationship-Based Real Estate</div>'
-      + '<div style="font-family:Cormorant Garamond,serif;font-size:1.4rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em">'+headerCopy+'</div>'
-      + '<p style="font-size:0.85rem;color:var(--text-mid);line-height:1.65;max-width:520px;margin:6px auto 0">'+subCopy+'</p>'
-    + '</div>'
-    + '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch">'+cards.join("")+'</div>'
+  const hasLender = !!LENDER_PROFILE;
+  const headerCopy = hasLender ? "Your Team for This Journey" : "Meet Your Guide";
+  const subCopy = hasLender
+    ? "Your agent + your lender, walking with you. Here to guide and educate &mdash; not to sell you anything."
+    : "I built this to guide and educate &mdash; not to sell you anything. Take it at your pace.";
+  const headerBlock = ''
+    + '<div style="flex:1;min-width:200px;text-align:center;padding:8px 4px">'
+      + '<div style="display:inline-block;font-size:0.6rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--crimson);background:#fff;padding:3px 12px;border-radius:99px;border:1px solid rgba(139,28,42,0.18);margin-bottom:8px">🤝 Relationship-Based</div>'
+      + '<div style="font-family:Cormorant Garamond,serif;font-size:1.25rem;font-weight:700;color:var(--charcoal);line-height:1.2;letter-spacing:-0.01em">'+headerCopy+'</div>'
+      + '<p style="font-size:0.78rem;color:var(--text-mid);line-height:1.55;margin-top:6px">'+subCopy+'</p>'
+    + '</div>';
+  // Layout: agent (LEFT) | header (MIDDLE if lender, RIGHT otherwise) | lender (RIGHT if exists)
+  const parts = [];
+  if (AGENT_PROFILE) parts.push(_renderProfileCard(AGENT_PROFILE, "agent"));
+  if (hasLender) {
+    parts.push(headerBlock);
+    parts.push(_renderProfileCard(LENDER_PROFILE, "lender"));
+  } else {
+    parts.push(headerBlock);
+  }
+  return '<div class="card" style="background:linear-gradient(135deg,#FAF6EF,#F5EDD6);border:1px solid rgba(201,168,76,0.4);padding:16px">'
+    + '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center">'+parts.join("")+'</div>'
   + '</div>';
 }
 
