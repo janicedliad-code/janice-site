@@ -3,6 +3,33 @@ console.log("✅ Janice Site JS loaded");
 var SUPABASE_URL="https://sutapxqrjwvxoelemkyf.supabase.co";
 var SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
 
+/* ── SPAM GUARD ──
+   Honeypot input + 1.5s time-trap. Mirrors lib/spamGuard.js in janice-os repo
+   (commit 53167f2). Bots fill hidden fields and submit instantly; humans don't.
+   On detection, saveLead silently returns — the success modal still shows so
+   bots don't learn what triggered rejection. */
+var __mountTs = Date.now();
+function __isLikelyBot(){
+  var hps = document.querySelectorAll('input[name="company_website_url"]');
+  for (var i = 0; i < hps.length; i++) { if (hps[i].value) return true; }
+  if (Date.now() - __mountTs < 1500) return true;
+  return false;
+}
+/* Wrap fetch globally so any inline lead-router POST across HTML files inherits
+   the guard — not just calls routed through saveLead(). Narrowly scoped: only
+   intercepts the lead-router URL, every other fetch passes through untouched. */
+(function(){
+  var __origFetch = window.fetch;
+  window.fetch = function(url, opts){
+    var u = (typeof url === "string") ? url : (url && url.url) || "";
+    if (u.indexOf("/functions/v1/lead-router") !== -1 && __isLikelyBot()) {
+      console.log("Lead suppressed: spam guard triggered");
+      return Promise.resolve(new Response('{"ok":true,"suppressed":true}', { status: 200, headers: { "Content-Type": "application/json" } }));
+    }
+    return __origFetch.apply(this, arguments);
+  };
+})();
+
 /* ── Experiment attribution (Ship 7d, Apr 2026) ──
    Any page loaded with ?exp=<slug> fires a visit tracker and stores the slug
    on a module-level variable so form submissions can attach it.
@@ -38,6 +65,17 @@ document.addEventListener("DOMContentLoaded",function(){
   });
   document.querySelectorAll("form").forEach(function(f){
     f.setAttribute("autocomplete","off");
+    /* Inject honeypot if not already present */
+    if (!f.querySelector('input[name="company_website_url"]')) {
+      var hp = document.createElement("input");
+      hp.type = "text";
+      hp.name = "company_website_url";
+      hp.tabIndex = -1;
+      hp.setAttribute("autocomplete","off");
+      hp.setAttribute("aria-hidden","true");
+      hp.style.cssText = "position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0";
+      f.appendChild(hp);
+    }
   });
 });
 
@@ -52,6 +90,8 @@ document.addEventListener("DOMContentLoaded",function(){
    See memory: project_priority_filter.md
 */
 async function saveLead(data){
+  /* Spam guard: silently swallow bot submissions before they hit lead-router */
+  if (__isLikelyBot()) { console.log("Lead suppressed: spam guard triggered"); return; }
   var sourceLabels={buyer_guide:"Buyer's Guide",seller_guide:"Seller's Guide",home_worth:"Home Value Request",buyer_readiness:"Buyer Readiness Tool",consultation:"Book Consultation",contact_form:"Contact Form"};
   var sourceLabel = sourceLabels[data.source] || data.source;
   var timestamp = new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
