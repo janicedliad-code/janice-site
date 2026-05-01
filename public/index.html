@@ -32,7 +32,8 @@ nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(26,16,16,0.97);b
 .pill-book{background:var(--crimson);color:white}.pill-book:hover{background:var(--crimson-light)}
 
 /* HERO — Full-width stock photo background */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center;padding:100px 5% 80px}
+.hero{min-height:55vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center;padding:60px 5% 60px}
+@media (max-width:780px){.hero{min-height:50vh;padding:50px 5%}}
 .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80') center/cover no-repeat;z-index:0}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,10,10,0.82) 0%,rgba(107,21,32,0.6) 50%,rgba(26,10,10,0.78) 100%)}
 .hero-content{position:relative;z-index:2;max-width:800px}
@@ -127,6 +128,22 @@ section{padding:80px 5%}
 .idx-placeholder .idx-icon{font-size:3.5rem;margin-bottom:1rem;opacity:0.5}
 .idx-placeholder h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--charcoal);margin-bottom:0.5rem}
 .idx-placeholder p{color:var(--text-mid);font-size:0.9rem;line-height:1.6;max-width:500px;margin:0 auto}
+/* Listings grid — dynamic from public_listings */
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem;max-width:1100px;margin:2rem auto 0}
+.listing-card{background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(26,16,16,0.08);transition:var(--transition);text-decoration:none;color:inherit;display:flex;flex-direction:column;border:1px solid rgba(212,208,203,0.5)}
+.listing-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(139,28,42,0.15);border-color:rgba(139,28,42,0.3)}
+.listing-card-img{aspect-ratio:4/3;background-size:cover;background-position:center;background-color:var(--silver);position:relative}
+.listing-card-status{position:absolute;top:12px;left:12px;padding:4px 12px;border-radius:99px;font-size:0.65rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;background:var(--gold);color:#1a0a0a}
+.listing-card-status.s-active{background:#3A7D5A;color:#fff}
+.listing-card-status.s-pending{background:#C48B2A;color:#fff}
+.listing-card-status.s-sold{background:var(--crimson);color:#fff}
+.listing-card-body{padding:1.2rem 1.4rem 1.4rem}
+.listing-card-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--charcoal);line-height:1.25;margin-bottom:6px}
+.listing-card-loc{font-size:0.82rem;color:var(--text-mid);margin-bottom:10px}
+.listing-card-specs{display:flex;gap:14px;font-size:0.78rem;color:var(--text-mid);margin-bottom:10px;flex-wrap:wrap}
+.listing-card-specs span strong{color:var(--charcoal);font-weight:700}
+.listing-card-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--crimson)}
+.listings-loading{text-align:center;color:var(--text-light);padding:2.5rem;font-size:0.9rem;font-style:italic}
 
 /* YOUTUBE */
 .youtube-section{background:var(--charcoal)}
@@ -251,6 +268,45 @@ footer{background:#0D0505;color:rgba(255,255,255,0.35);text-align:center;padding
   </div>
 </nav>
 
+<!-- JUST LISTED strip — leads the page; hydrated from public_listings -->
+<section class="just-listed" id="justListedStrip" aria-label="Featured listing">
+  <div class="jl-inner">
+    <div class="jl-photo" id="jlPhoto"></div>
+    <div class="jl-text">
+      <div class="jl-kicker" id="jlKicker">Just Listed</div>
+      <div class="jl-title" id="jlTitle"></div>
+      <div class="jl-specs" id="jlSpecs"></div>
+      <div class="jl-price" id="jlPrice"></div>
+    </div>
+    <a class="jl-cta" id="jlCta" href="#">View Full Listing →</a>
+  </div>
+</section>
+<script>
+(function(){
+  var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+  var K = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+  function statusLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Just Listed":s==="pending"?"Pending":s==="sold"?"Just Sold":s;}
+  fetch(SB+"/rest/v1/public_listings?published=eq.true&featured_on_homepage=eq.true&archived_at=is.null&select=slug,address,city,state,price,beds,baths,sqft,status,hero_image_url,headline&order=updated_at.desc&limit=1",{
+    headers:{apikey:K,Authorization:"Bearer "+K}
+  }).then(function(r){return r.ok?r.json():[];}).then(function(rows){
+    if(!rows||!rows.length)return;
+    var l=rows[0];
+    if(l.hero_image_url)document.getElementById("jlPhoto").style.backgroundImage="url('"+l.hero_image_url+"')";
+    document.getElementById("jlKicker").textContent=statusLabel(l.status);
+    document.getElementById("jlTitle").textContent=l.headline||l.address;
+    var specs=[];
+    if(l.beds)specs.push(l.beds+" bed");
+    if(l.baths)specs.push(l.baths+" bath");
+    if(l.sqft)specs.push(Number(l.sqft).toLocaleString()+" sqft");
+    var loc=[l.address,l.city,l.state].filter(Boolean).join(", ");
+    document.getElementById("jlSpecs").textContent=(l.headline?loc+" · ":"")+specs.join(" · ");
+    if(l.price)document.getElementById("jlPrice").textContent="$"+Number(l.price).toLocaleString();
+    document.getElementById("jlCta").href="/listing.html?slug="+encodeURIComponent(l.slug);
+    document.getElementById("justListedStrip").style.display="block";
+  }).catch(function(){});
+})();
+</script>
+
 <!-- HERO — Stock photo background, centered text -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
@@ -285,46 +341,6 @@ footer{background:#0D0505;color:rgba(255,255,255,0.35);text-align:center;padding
     <p style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:14px;font-style:italic">Already saved hundreds of California families thousands by knowing where they stand <em>before</em> talking to lenders.</p>
   </div>
 </section>
-
-<!-- JUST LISTED strip — hydrated from public_listings (hidden until data arrives) -->
-<section class="just-listed" id="justListedStrip" aria-label="Featured listing">
-  <div class="jl-inner">
-    <div class="jl-photo" id="jlPhoto"></div>
-    <div class="jl-text">
-      <div class="jl-kicker" id="jlKicker">Just Listed</div>
-      <div class="jl-title" id="jlTitle"></div>
-      <div class="jl-specs" id="jlSpecs"></div>
-      <div class="jl-price" id="jlPrice"></div>
-    </div>
-    <a class="jl-cta" id="jlCta" href="#">View Full Listing →</a>
-  </div>
-</section>
-<script>
-(function(){
-  var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
-  var K = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
-  function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
-  function statusLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Just Listed":s==="pending"?"Pending":s==="sold"?"Just Sold":s;}
-  fetch(SB+"/rest/v1/public_listings?published=eq.true&featured_on_homepage=eq.true&archived_at=is.null&select=slug,address,city,state,price,beds,baths,sqft,status,hero_image_url,headline&order=updated_at.desc&limit=1",{
-    headers:{apikey:K,Authorization:"Bearer "+K}
-  }).then(function(r){return r.ok?r.json():[];}).then(function(rows){
-    if(!rows||!rows.length)return;
-    var l=rows[0];
-    if(l.hero_image_url)document.getElementById("jlPhoto").style.backgroundImage="url('"+l.hero_image_url+"')";
-    document.getElementById("jlKicker").textContent=statusLabel(l.status);
-    document.getElementById("jlTitle").textContent=l.headline||l.address;
-    var specs=[];
-    if(l.beds)specs.push(l.beds+" bed");
-    if(l.baths)specs.push(l.baths+" bath");
-    if(l.sqft)specs.push(Number(l.sqft).toLocaleString()+" sqft");
-    var loc=[l.address,l.city,l.state].filter(Boolean).join(", ");
-    document.getElementById("jlSpecs").textContent=(l.headline?loc+" · ":"")+specs.join(" · ");
-    if(l.price)document.getElementById("jlPrice").textContent="$"+Number(l.price).toLocaleString();
-    document.getElementById("jlCta").href="/listing.html?slug="+encodeURIComponent(l.slug);
-    document.getElementById("justListedStrip").style.display="block";
-  }).catch(function(){});
-})();
-</script>
 
 <!-- STATS BAR — Updated with real Zillow data -->
 <div class="stats-bar">
@@ -505,13 +521,49 @@ footer{background:#0D0505;color:rgba(255,255,255,0.35);text-align:center;padding
   <div class="section-header-flex">
     <div><p class="section-tag">Properties</p><h2 class="section-title">Featured Listings</h2></div>
   </div>
-  <div class="idx-placeholder">
-    <div class="idx-icon">🏘️</div>
-    <h3>Live MLS Listings Coming Soon</h3>
-    <p>I'm setting up IDX integration to show you real-time MLS listings right here. In the meantime, contact me directly for the latest properties!</p>
-    <a href="#booking" class="btn-crimson" style="margin-top:1.5rem;display:inline-block;">📅 Ask About Available Homes</a>
-  </div>
+  <div id="listingsGrid" class="listings-loading">Loading listings…</div>
 </section>
+<script>
+(function(){
+  var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
+  var K = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
+  function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+  function statusLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Active":s==="pending"?"Pending":s==="sold"?"Sold":s;}
+  var STATUS_ORDER={active:0,coming_soon:1,pending:2,sold:3,withdrawn:4};
+  function placeholder(){
+    return '<div class="idx-placeholder"><div class="idx-icon">🏘️</div><h3>More listings coming soon</h3><p>Contact me directly for the latest properties — I have homes in the pipeline that haven\'t hit the market yet.</p><a href="#booking" class="btn-crimson" style="margin-top:1.5rem;display:inline-block;">📅 Ask About Available Homes</a></div>';
+  }
+  fetch(SB+"/rest/v1/public_listings?published=eq.true&archived_at=is.null&select=slug,address,city,state,price,beds,baths,sqft,status,hero_image_url,headline&order=updated_at.desc",{
+    headers:{apikey:K,Authorization:"Bearer "+K}
+  }).then(function(r){return r.ok?r.json():[];}).then(function(rows){
+    var grid=document.getElementById("listingsGrid");
+    if(!rows||!rows.length){grid.className="";grid.innerHTML=placeholder();return;}
+    rows.sort(function(a,b){return (STATUS_ORDER[a.status]||9)-(STATUS_ORDER[b.status]||9);});
+    grid.className="listings-grid";
+    grid.innerHTML=rows.map(function(l){
+      var specs=[];
+      if(l.beds)specs.push('<span><strong>'+l.beds+'</strong> bed</span>');
+      if(l.baths)specs.push('<span><strong>'+l.baths+'</strong> bath</span>');
+      if(l.sqft)specs.push('<span><strong>'+Number(l.sqft).toLocaleString()+'</strong> sqft</span>');
+      var loc=[l.city,l.state].filter(Boolean).join(", ");
+      var statusClass="s-"+(l.status||"").replace("_","-");
+      var photo=l.hero_image_url?'style="background-image:url('+"'"+esc(l.hero_image_url)+"'"+')"':"";
+      return '<a class="listing-card" href="/listing.html?slug='+encodeURIComponent(l.slug)+'">'+
+        '<div class="listing-card-img" '+photo+'><span class="listing-card-status '+statusClass+'">'+esc(statusLabel(l.status))+'</span></div>'+
+        '<div class="listing-card-body">'+
+          '<div class="listing-card-title">'+esc(l.headline||l.address||"")+'</div>'+
+          '<div class="listing-card-loc">'+esc([l.address,loc].filter(Boolean).join(" · "))+'</div>'+
+          (specs.length?'<div class="listing-card-specs">'+specs.join("")+'</div>':"")+
+          (l.price?'<div class="listing-card-price">$'+Number(l.price).toLocaleString()+'</div>':"")+
+        '</div>'+
+      '</a>';
+    }).join("");
+  }).catch(function(){
+    var grid=document.getElementById("listingsGrid");
+    grid.className="";grid.innerHTML=placeholder();
+  });
+})();
+</script>
 
 <!-- YOUTUBE -->
 <section class="youtube-section" id="youtube-section">
