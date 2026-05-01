@@ -51,21 +51,28 @@ nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(26,16,16,0.97);b
 .stats-bar{background:var(--white);padding:1.8rem 5%;display:flex;justify-content:center;gap:3.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.06);flex-wrap:wrap;border-bottom:3px solid var(--crimson)}
 .stat-item{text-align:center}.stat-number{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--crimson);line-height:1}.stat-stars{color:var(--crimson);font-size:1rem}.stat-label{font-size:0.75rem;color:var(--text-mid);font-weight:600;letter-spacing:0.5px;margin-top:3px;text-transform:uppercase}
 
-/* JUST LISTED strip — dynamic, populated from public_listings where featured_on_homepage=true */
-.just-listed{display:none;background:linear-gradient(135deg,#FBF3E0 0%,#F5EAC6 50%,#FBF3E0 100%);padding:24px 5%;border-bottom:1px solid rgba(201,168,76,0.25);border-top:1px solid rgba(201,168,76,0.25);position:relative;overflow:hidden}
-.just-listed::before{content:"";position:absolute;top:0;bottom:0;left:-50%;width:200%;background:radial-gradient(ellipse at center,rgba(201,168,76,0.12) 0%,transparent 60%);pointer-events:none}
-.jl-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:240px 1fr auto;gap:28px;align-items:center;position:relative;z-index:2}
-@media (max-width:780px){.jl-inner{grid-template-columns:1fr;gap:16px;text-align:center}}
-.jl-photo{width:240px;height:150px;border-radius:12px;background-size:cover;background-position:center;box-shadow:0 6px 24px rgba(26,16,16,0.18);border:3px solid var(--white)}
-@media (max-width:780px){.jl-photo{margin:0 auto}}
-.jl-kicker{display:inline-flex;align-items:center;gap:8px;font-size:0.7rem;font-weight:800;letter-spacing:0.16em;color:var(--crimson);text-transform:uppercase;margin-bottom:8px}
-.jl-kicker::before{content:"●";color:#2A7D2A;animation:jl-pulse 2s ease-in-out infinite}
-@keyframes jl-pulse{0%,100%{opacity:0.5}50%{opacity:1}}
-.jl-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,2.4vw,1.8rem);font-weight:700;color:var(--charcoal);line-height:1.2;margin-bottom:4px}
-.jl-specs{color:var(--text-mid);font-size:0.92rem;font-weight:500}
-.jl-price{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,2.2vw,1.6rem);font-weight:700;color:var(--crimson);margin-top:4px}
-.jl-cta{display:inline-flex;align-items:center;gap:8px;background:var(--crimson);color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.9rem;letter-spacing:0.02em;transition:var(--transition);box-shadow:0 4px 14px rgba(139,28,42,0.3);white-space:nowrap}
-.jl-cta:hover{background:var(--crimson-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(139,28,42,0.4)}
+/* FEATURED LISTING HERO — full-width, hydrated from public_listings */
+.listing-hero{display:none;position:relative;min-height:70vh;color:#fff;overflow:hidden;background:#1a0a0a}
+@media (max-width:780px){.listing-hero{min-height:62vh}}
+.lh-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.lh-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,10,10,0.35) 0%,rgba(26,10,10,0.55) 50%,rgba(26,10,10,0.85) 100%)}
+.lh-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:80px 5% 60px;display:flex;flex-direction:column;justify-content:flex-end;min-height:70vh}
+@media (max-width:780px){.lh-inner{min-height:62vh;padding:70px 5% 40px}}
+.lh-status{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:6px 16px;border-radius:99px;font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px;background:#3A7D5A;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+.lh-status::before{content:"●";animation:lh-pulse 2s ease-in-out infinite}
+.lh-status.s-coming-soon{background:var(--gold);color:#1a0a0a}
+.lh-status.s-pending{background:#C48B2A;color:#fff}
+.lh-status.s-sold{background:var(--crimson);color:#fff}
+@keyframes lh-pulse{0%,100%{opacity:0.55}50%{opacity:1}}
+.lh-kicker{font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,0.4)}
+.lh-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.05;letter-spacing:-0.01em;margin-bottom:8px;text-shadow:0 4px 24px rgba(0,0,0,0.5)}
+.lh-subline{font-size:clamp(0.95rem,1.4vw,1.1rem);color:rgba(255,255,255,0.88);margin-bottom:18px;text-shadow:0 2px 12px rgba(0,0,0,0.5)}
+.lh-price{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:700;color:var(--gold);margin-bottom:26px;text-shadow:0 3px 14px rgba(0,0,0,0.5)}
+.lh-cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.lh-btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--crimson);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;letter-spacing:0.02em;transition:var(--transition);box-shadow:0 6px 20px rgba(139,28,42,0.4)}
+.lh-btn-primary:hover{background:var(--crimson-light);transform:translateY(-2px);box-shadow:0 10px 28px rgba(139,28,42,0.55)}
+.lh-btn-ghost{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.5);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:600;font-size:0.95rem;letter-spacing:0.02em;transition:var(--transition);backdrop-filter:blur(6px)}
+.lh-btn-ghost:hover{background:rgba(255,255,255,0.2);border-color:#fff}
 
 /* SECTIONS */
 section{padding:80px 5%}
@@ -268,41 +275,53 @@ footer{background:#0D0505;color:rgba(255,255,255,0.35);text-align:center;padding
   </div>
 </nav>
 
-<!-- JUST LISTED strip — leads the page; hydrated from public_listings -->
-<section class="just-listed" id="justListedStrip" aria-label="Featured listing">
-  <div class="jl-inner">
-    <div class="jl-photo" id="jlPhoto"></div>
-    <div class="jl-text">
-      <div class="jl-kicker" id="jlKicker">Just Listed</div>
-      <div class="jl-title" id="jlTitle"></div>
-      <div class="jl-specs" id="jlSpecs"></div>
-      <div class="jl-price" id="jlPrice"></div>
+<!-- FEATURED LISTING HERO — leads the page; hydrated from public_listings -->
+<section class="listing-hero" id="listingHero" aria-label="Featured listing">
+  <div class="lh-bg" id="lhBg"></div>
+  <div class="lh-inner">
+    <span class="lh-status" id="lhStatus">Active</span>
+    <div class="lh-kicker" id="lhKicker">Just Listed</div>
+    <h1 class="lh-headline" id="lhHeadline"></h1>
+    <div class="lh-subline" id="lhSubline"></div>
+    <div class="lh-price" id="lhPrice"></div>
+    <div class="lh-cta-row">
+      <a class="lh-btn-primary" id="lhCtaPrimary" href="#">View Listing →</a>
+      <a class="lh-btn-ghost" id="lhCtaGhost" href="#">Schedule a Showing</a>
     </div>
-    <a class="jl-cta" id="jlCta" href="#">View Full Listing →</a>
   </div>
 </section>
 <script>
 (function(){
   var SB = "https://sutapxqrjwvxoelemkyf.supabase.co";
   var K = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
-  function statusLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Just Listed":s==="pending"?"Pending":s==="sold"?"Just Sold":s;}
+  function statusLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Active":s==="pending"?"Pending":s==="sold"?"Sold":s;}
+  function kickerLabel(s){return s==="coming_soon"?"Coming Soon":s==="active"?"Just Listed":s==="pending"?"Sale Pending":s==="sold"?"Just Sold":"Featured";}
   fetch(SB+"/rest/v1/public_listings?published=eq.true&featured_on_homepage=eq.true&archived_at=is.null&select=slug,address,city,state,price,beds,baths,sqft,status,hero_image_url,headline&order=updated_at.desc&limit=1",{
     headers:{apikey:K,Authorization:"Bearer "+K}
   }).then(function(r){return r.ok?r.json():[];}).then(function(rows){
     if(!rows||!rows.length)return;
     var l=rows[0];
-    if(l.hero_image_url)document.getElementById("jlPhoto").style.backgroundImage="url('"+l.hero_image_url+"')";
-    document.getElementById("jlKicker").textContent=statusLabel(l.status);
-    document.getElementById("jlTitle").textContent=l.headline||l.address;
+    if(l.hero_image_url)document.getElementById("lhBg").style.backgroundImage="url('"+l.hero_image_url+"')";
+    var statusEl=document.getElementById("lhStatus");
+    statusEl.textContent=statusLabel(l.status);
+    statusEl.className="lh-status s-"+(l.status||"").replace(/_/g,"-");
+    document.getElementById("lhKicker").textContent=kickerLabel(l.status);
+    document.getElementById("lhHeadline").textContent=l.headline||l.address||"";
+    var loc=[l.city,l.state].filter(Boolean).join(", ");
     var specs=[];
     if(l.beds)specs.push(l.beds+" bed");
     if(l.baths)specs.push(l.baths+" bath");
     if(l.sqft)specs.push(Number(l.sqft).toLocaleString()+" sqft");
-    var loc=[l.address,l.city,l.state].filter(Boolean).join(", ");
-    document.getElementById("jlSpecs").textContent=(l.headline?loc+" · ":"")+specs.join(" · ");
-    if(l.price)document.getElementById("jlPrice").textContent="$"+Number(l.price).toLocaleString();
-    document.getElementById("jlCta").href="/listing.html?slug="+encodeURIComponent(l.slug);
-    document.getElementById("justListedStrip").style.display="block";
+    var subBits=[];
+    if(l.headline&&l.address)subBits.push(l.address);
+    if(loc)subBits.push(loc);
+    if(specs.length)subBits.push(specs.join(" · "));
+    document.getElementById("lhSubline").textContent=subBits.join(" · ");
+    if(l.price)document.getElementById("lhPrice").textContent="$"+Number(l.price).toLocaleString();
+    var listingUrl="/listing.html?slug="+encodeURIComponent(l.slug);
+    document.getElementById("lhCtaPrimary").href=listingUrl;
+    document.getElementById("lhCtaGhost").href=listingUrl+"#showing";
+    document.getElementById("listingHero").style.display="block";
   }).catch(function(){});
 })();
 </script>
