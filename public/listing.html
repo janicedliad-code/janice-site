@@ -259,7 +259,7 @@ footer{padding:30px 20px;text-align:center;color:var(--text-light);font-size:0.8
 var SUPABASE_URL = "https://sutapxqrjwvxoelemkyf.supabase.co";
 var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1dGFweHFyand2eG9lbGVta3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0ODIxODQsImV4cCI6MjA5MDA1ODE4NH0.I08GWewsc9kNcg102-5nDCWPDU1f3o11kEHMgCe9J-c";
 
-/* Ship 7d visit tracker */
+/* Ship 7d visit tracker — counts experiment visits (?exp=) */
 (function(){
   try {
     var exp = (new URLSearchParams(window.location.search)).get("exp");
@@ -269,6 +269,30 @@ var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
         body: JSON.stringify({ exp: exp.trim().toLowerCase() }),
       }).catch(function(){});
     }
+  } catch (e) {}
+})();
+
+/* Listing-view beacon — anonymous page view + UTM capture for /listings-admin analytics */
+(function(){
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var slug = p.get("slug");
+    if (!slug || slug.length < 2 || slug.length > 80) return;
+    fetch(SUPABASE_URL + "/functions/v1/track-listing-view", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        slug: slug,
+        referrer: document.referrer || null,
+        utm_source: p.get("utm_source"),
+        utm_medium: p.get("utm_medium"),
+        utm_campaign: p.get("utm_campaign"),
+        utm_content: p.get("utm_content"),
+        utm_term: p.get("utm_term"),
+        exp: p.get("exp"),
+      }),
+      keepalive: true,
+    }).catch(function(){});
   } catch (e) {}
 })();
 
